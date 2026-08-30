@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAWACH Child Protection Chatbot</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,Helvetica,sans-serif;
+  background:#0b0d12;color:#f4f4f4;min-height:100vh;
+}
+header{
+  padding:20px 6%;border-bottom:1px solid #292d36;
+  background:#11141b;position:sticky;top:0;z-index:10;
+}
+.brand{font-size:22px;font-weight:800;color:#d9a441}
+.tagline{font-size:12px;color:#aeb4c0;margin-top:5px}
+.wrap{max-width:1050px;margin:auto;padding:30px 18px}
+.hero{text-align:center;padding:20px 0 28px}
+.hero h1{font-size:38px;margin:8px 0;color:#f4f4f4}
+.hero p{color:#b8bec9;font-size:16px}
+.quick{
+ display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0;
+}
+.quick button{
+ background:#151922;color:#fff;border:1px solid #343945;border-radius:12px;
+ padding:14px 10px;cursor:pointer;font-weight:700;
+}
+.quick button small{display:block;font-size:11px;margin-top:4px;color:#b8bec9}.quick button:hover{border-color:#d9a441;color:#e9bd5e}
+.chat{
+ background:#11141b;border:1px solid #2b303a;border-radius:18px;
+ overflow:hidden;box-shadow:0 12px 35px rgba(0,0,0,.3);
+}
+.chat-head{padding:16px 18px;border-bottom:1px solid #292d36;font-weight:800}
+.messages{height:410px;overflow:auto;padding:18px}
+.msg{max-width:82%;padding:12px 14px;border-radius:14px;margin:9px 0;line-height:1.5}
+.bot{background:#1a1f29;border:1px solid #303641}
+.user{background:#d9a441;color:#111;margin-left:auto}
+.inputbar{display:flex;gap:10px;padding:14px;border-top:1px solid #292d36}
+input{
+ flex:1;background:#0b0d12;border:1px solid #343945;color:#fff;
+ border-radius:12px;padding:13px 14px;outline:none;
+}
+input:focus{border-color:#d9a441}
+.send{
+ background:#d9a441;border:0;border-radius:12px;padding:0 20px;
+ font-weight:800;cursor:pointer;
+}
+.help{
+ margin-top:22px;padding:18px;border-radius:15px;
+ background:#241a12;border:1px solid #8b6120;
+}
+.help strong{color:#f0c66d}
+.help a{
+ display:inline-block;margin:10px 8px 0 0;padding:10px 15px;
+ border-radius:10px;background:#d9a441;color:#111;text-decoration:none;font-weight:800;
+}
+.note{text-align:center;color:#8f96a3;font-size:12px;margin-top:18px;line-height:1.5}
+@media(max-width:700px){
+ .hero h1{font-size:29px}
+ .quick{grid-template-columns:repeat(2,1fr)}
+ .messages{height:390px}
+ .msg{max-width:90%}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">🛡️ KAWACH Child Protection Chatbot</div>
+  <div class="tagline">Know Your Rights • Stay Safe • Speak Up</div>
+</header>
+
+<main class="wrap">
+<section class="hero">
+  <h1>Welcome to KAWACH</h1>
+  <p>Child Protection, Child Rights and Safety ke baare mein sawal poochhein.</p>
+</section>
+
+<div class="quick">
+ <button onclick="quickAsk('Child marriage kya hoti hai?')">💍 Child Marriage<br><small>बाल विवाह</small></button>
+ <button onclick="quickAsk('Child labour kya hai?')">🧒 Child Labour<br><small>बाल श्रम</small></button>
+ <button onclick="quickAsk('Child abuse ke baare mein batao')">🛡️ Child Abuse<br><small>बाल शोषण</small></button>
+ <button onclick="quickAsk('Child rights kya hain?')">⚖️ Child Rights<br><small>बाल अधिकार</small></button>
+ <button onclick="quickAsk('Online safety ke tips batao')">📱 Online Safety<br><small>ऑनलाइन सुरक्षा</small></button>
+ <button onclick="quickAsk('What is POCSO?')">⚖️ POCSO<br><small>पॉक्सो</small></button>
+ <button onclick="quickAsk('What is Juvenile Justice?')">⚖️ Juvenile Justice<br><small>किशोर न्याय</small></button>
+ <button onclick="quickAsk('What is Mission Vatsalya?')">🏛️ Mission Vatsalya<br><small>मिशन वात्सल्य</small></button>
+ <button onclick="quickAsk('How do I report cyber crime against a child?')">💻 Cyber Crime<br><small>साइबर अपराध</small></button>
+ <button onclick="quickAsk('Mujhe help chahiye')">🚨 I Need Help<br><small>मुझे मदद चाहिए</small></button>
+ <button onclick="quickAsk('Helpline aur reporting number kya hai?')">📞 Helpline<br><small>हेल्पलाइन</small></button>
+ <button onclick="quickAsk('Main ek question poochna chahta hoon')">💬 Ask KAWACH<br><small>KAWACH से पूछें</small></button>
+</div>
+
+<section class="chat">
+ <div class="chat-head">🤖 Ask KAWACH / KAWACH से पूछें</div>
+ <div id="messages" class="messages">
+  <div class="msg bot">
+   Hello! 👋 I am the <b>KAWACH Child Protection Chatbot</b>.<br>
+You can ask questions about Child Protection, Child Rights and Safety.<br><br>
+<b>Important:</b> If you are in immediate danger, contact <b>112</b> for emergency help or <b>1098</b> for Child Helpline.
+<hr style="border:0;border-top:1px solid #343945;margin:14px 0">
+नमस्ते! 👋 मैं <b>KAWACH Child Protection Chatbot</b> हूँ।<br>
+आप बाल संरक्षण, बाल अधिकार और सुरक्षा से जुड़े सवाल पूछ सकते हैं।<br><br>
+<b>महत्वपूर्ण:</b> अगर आप तत्काल खतरे में हैं, तो आपातकालीन सहायता के लिए <b>112</b> या Child Helpline के लिए <b>1098</b> पर संपर्क करें।
+  </div>
+ </div>
+ <div class="inputbar">
+  <input id="input" placeholder="Type your question... / अपना सवाल लिखें..." onkeydown="if(event.key==='Enter')send()">
+  <button class="send" onclick="send()">Send</button>
+ </div>
+</section>
+
+
+<section class="chat" style="margin-top:22px">
+ <div class="chat-head">📚 Official Legal & Help Knowledge Base / आधिकारिक कानूनी एवं सहायता जानकारी</div>
+ <div style="padding:18px;line-height:1.6;color:#d9dde5">
+  <div class="msg bot">
+   <b>English — Official sources used for KAWACH:</b><br>
+   • <b>Child Helpline 1098:</b> Under Mission Vatsalya, Child Helpline is coordinated with State/District functionaries and integrated with ERSS-112. The official Ministry page states that the service operates through 24×7 state control rooms and district Child Helpline units.<br>
+   • <b>Emergency 112:</b> Use for emergency/police assistance.<br>
+   • <b>Juvenile Justice (Care and Protection of Children) Act, 2015:</b> A key legal framework for care, protection, rehabilitation and child-friendly processes.<br>
+   • <b>Protection of Children from Sexual Offences Act, 2012 (POCSO):</b> Key law protecting children from sexual offences.<br>
+   • <b>Prohibition of Child Marriage Act, 2006:</b> Provides the legal framework for prohibition of child marriage and related offences.<br>
+   • <b>Mission Vatsalya:</b> Includes child protection structures and services such as Child Welfare Committees, Juvenile Justice Boards, District Child Protection Units, emergency outreach and family-based care.<br>
+   • <b>Cyber Crime Reporting:</b> The National Cyber Crime Reporting Portal has a special focus on cyber crimes against women and children. Cyber Crime Helpline: <b>1930</b>.<br><br>
+   <b>Hindi — KAWACH में इस्तेमाल होने वाले आधिकारिक स्रोत:</b><br>
+   • <b>Child Helpline 1098:</b> Mission Vatsalya के तहत Child Helpline राज्य/जिला तंत्र के साथ संचालित होती है और ERSS-112 से integrated है। आधिकारिक Ministry page के अनुसार State और District level पर 24×7 व्यवस्था उपलब्ध है।<br>
+   • <b>Emergency 112:</b> आपातकालीन/पुलिस सहायता के लिए।<br>
+   • <b>Juvenile Justice (Care and Protection of Children) Act, 2015:</b> बच्चों की care, protection, rehabilitation और child-friendly processes के लिए प्रमुख कानूनी framework।<br>
+   • <b>POCSO Act, 2012:</b> बच्चों को sexual offences से protection देने वाला प्रमुख कानून।<br>
+   • <b>Prohibition of Child Marriage Act, 2006:</b> बाल विवाह की रोकथाम और संबंधित अपराधों के लिए कानूनी framework।<br>
+   • <b>Mission Vatsalya:</b> Child Welfare Committees, Juvenile Justice Boards, District Child Protection Units, emergency outreach और family-based care जैसी child-protection services/structures को शामिल करता है।<br>
+   • <b>Cyber Crime Reporting:</b> National Cyber Crime Reporting Portal पर women/children से संबंधित cyber crime reporting की सुविधा है। Cyber Crime Helpline: <b>1930</b>।<br><br>
+   <b>Official-source note / आधिकारिक स्रोत सूचना:</b><br>Legal and helpline information should be checked against the latest Government of India/state guidance before being relied upon in a specific case.<br><br><b>Safety note / सुरक्षा सूचना:</b> KAWACH awareness and guidance platform है। यह police, emergency service, doctor या lawyer का replacement नहीं है। किसी specific case में appropriate authority से संपर्क करना चाहिए।
+  </div>
+ </div>
+</section>
+<div class="help">
+ <strong>🚨 Need Help Now?</strong><br>
+ Agar aap ya koi child immediate danger mein hai, trusted adult/police/appropriate child protection service se help lein.
+ <br>
+ <a href="tel:1098">📞 Call 1098</a>
+ <a href="tel:112">🚨 Call 112</a><a href="tel:1930">💻 Cyber Crime 1930</a>
+</div>
+
+<div class="note">
+KAWACH information and guidance platform hai. Yeh emergency service, police, doctor, lawyer ya government authority ka replacement nahi hai.
+Sensitive personal information jaise Aadhaar, password ya unnecessary private details chat mein share na karein.
+</div>
+
+<div class="note" style="margin-top:18px">
+ <b>Official references / आधिकारिक संदर्भ:</b><br>
+ <a href="https://spniwcd.wcd.gov.in/child-helpline" target="_blank" rel="noopener" style="color:#d9a441">Child Helpline 1098 – Government of India</a> ·
+ <a href="https://www.indiacode.nic.in/" target="_blank" rel="noopener" style="color:#d9a441">India Code</a> ·
+ <a href="https://cybercrime.gov.in/" target="_blank" rel="noopener" style="color:#d9a441">National Cyber Crime Reporting Portal</a>
+</div>
+</main>
+
+<script>
+const messages=document.getElementById('messages');
+const input=document.getElementById('input');
+
+function add(text,who){
+ const d=document.createElement('div');
+ d.className='msg '+who;
+ d.innerHTML=text;
+ messages.appendChild(d);
+ messages.scrollTop=messages.scrollHeight;
+}
+
+function quickAsk(q){ input.value=q; send(); }
+
+function answer(q){
+ const x=q.toLowerCase();
+
+ if(x.includes('marriage') || x.includes('shaadi') || x.includes('बाल विवाह')){
+   return `<b>English:</b><br>Under the Prohibition of Child Marriage Act, 2006, “child” is defined in relation to the marriage as a male who has not completed 21 years and a female who has not completed 18 years. The Act provides for prohibition and penalties related to child marriage. If a child’s marriage is being arranged or is going to happen soon, seek help from a trusted adult, teacher or appropriate authority. If there is immediate danger, contact <b>112</b>. You can also contact Child Helpline <b>1098</b>.<br><br>
+   <b>Hindi:</b><br>Prohibition of Child Marriage Act, 2006 के अनुसार विवाह के संदर्भ में “child” की परिभाषा पुरुष के लिए 21 वर्ष से कम और महिला के लिए 18 वर्ष से कम आयु से जुड़ी है। यह कानून बाल विवाह की रोकथाम और उससे संबंधित दंड का प्रावधान करता है। यदि किसी बच्चे की शादी कराई जा रही है या जल्द होने वाली है, तो किसी भरोसेमंद बड़े व्यक्ति, शिक्षक या संबंधित अधिकारी से मदद लें। यदि तत्काल खतरा है तो <b>112</b> पर संपर्क करें। Child Helpline के लिए <b>1098</b> पर संपर्क किया जा सकता है।<br><br>
+   <b>Privacy / गोपनीयता:</b> अपना नाम, पूरा पता या अन्य निजी जानकारी यहाँ देना जरूरी नहीं है।`;
+ }
+ if(x.includes('labour') || x.includes('बाल श्रम')){
+   return `<b>English:</b><br>Child labour is a child-protection concern. I can explain general rights, safety and reporting steps. If a child is in an unsafe situation, tell a trusted adult, teacher or appropriate authority. For immediate danger call <b>112</b>; Child Helpline is <b>1098</b>.<br><br>
+   <b>Hindi:</b><br>बाल श्रम बाल संरक्षण से जुड़ा गंभीर विषय है। मैं सामान्य अधिकार, सुरक्षा और रिपोर्टिंग के तरीके समझा सकता हूँ। यदि कोई बच्चा असुरक्षित स्थिति में है, तो किसी भरोसेमंद बड़े व्यक्ति, शिक्षक या संबंधित अधिकारी को बताएं। तत्काल खतरे में <b>112</b> और Child Helpline के लिए <b>1098</b> पर संपर्क करें।`;
+ }
+ if(x.includes('abuse') || x.includes('maar') || x.includes('violence') || x.includes('हिंसा')){
+   return `<b>English:</b><br>If a child is facing abuse, violence or harm, first try to reach a safe place and a trusted adult. If there is immediate danger, contact <b>112</b>. Child Helpline is <b>1098</b>. You do not need to share your name or exact address here.<br><br>
+   <b>Hindi:</b><br>अगर किसी बच्चे के साथ शोषण, हिंसा या नुकसान हो रहा है, तो पहले सुरक्षित जगह और किसी भरोसेमंद बड़े व्यक्ति की मदद लें। यदि तत्काल खतरा है तो <b>112</b> पर संपर्क करें। Child Helpline के लिए <b>1098</b> है। यहाँ अपना नाम या पूरा पता बताना जरूरी नहीं है।`;
+ }
+ if(x.includes('right') || x.includes('अधिकार')){
+   return `<b>English:</b><br>Every child deserves dignity, safety, care, education and protection. Ask me about any specific Child Right and I will explain it in simple language.<br><br>
+   <b>Hindi:</b><br>हर बच्चे को सम्मान, सुरक्षा, देखभाल, शिक्षा और संरक्षण जैसे अधिकारों के बारे में जानकारी मिलनी चाहिए। आप किसी भी विशेष बाल अधिकार के बारे में पूछ सकते हैं और मैं उसे सरल भाषा में समझाऊँगा।`;
+ }
+ if(x.includes('pocso') || x.includes('पॉक्सो') || x.includes('sexual offence') || x.includes('sexual abuse')){
+   return `<b>English:</b><br>The Protection of Children from Sexual Offences (POCSO) Act, 2012 is a law dealing with sexual offences against children. KAWACH can explain the law in simple language, but it is not a substitute for police, legal or professional advice. If a child is in immediate danger, contact <b>112</b> or Child Helpline <b>1098</b>.<br><br>
+   <b>Hindi:</b><br>Protection of Children from Sexual Offences (POCSO) Act, 2012 बच्चों के खिलाफ sexual offences से संबंधित प्रमुख कानून है। KAWACH कानून को सरल भाषा में समझा सकता है, लेकिन यह पुलिस, कानूनी या professional advice का विकल्प नहीं है। यदि बच्चा तत्काल खतरे में है तो <b>112</b> या Child Helpline <b>1098</b> पर संपर्क करें।`;
+ }
+ if(x.includes('juvenile justice') || x.includes('jj act') || x.includes('किशोर न्याय')){
+   return `<b>English:</b><br>The Juvenile Justice (Care and Protection of Children) Act, 2015 provides a legal framework for children in need of care and protection and children in conflict with law, including child-friendly processes, care, protection, rehabilitation and related institutions.<br><br>
+   <b>Hindi:</b><br>Juvenile Justice (Care and Protection of Children) Act, 2015 उन बच्चों के लिए कानूनी framework देता है जिन्हें care and protection की जरूरत है तथा children in conflict with law के लिए भी child-friendly processes, care, protection और rehabilitation की व्यवस्था से संबंधित प्रावधान करता है।`;
+ }
+ if(x.includes('mission vatsalya') || x.includes('mission vatsalya') || x.includes('वात्सल्य')){
+   return `<b>English:</b><br>Mission Vatsalya focuses on improving the wellbeing of children in difficult circumstances and reducing vulnerabilities to abuse, neglect, exploitation, abandonment and separation. Its child-protection structures include State Child Protection Societies, District Child Protection Units, Child Welfare Committees and Juvenile Justice Boards, along with family-based care and emergency outreach services.<br><br>
+   <b>Hindi:</b><br>Mission Vatsalya का उद्देश्य कठिन परिस्थितियों में रहने वाले बच्चों के wellbeing को बेहतर करना और abuse, neglect, exploitation, abandonment तथा family separation जैसी vulnerabilities को कम करना है। इसके child-protection structures में State Child Protection Societies, District Child Protection Units, Child Welfare Committees और Juvenile Justice Boards के साथ family-based care और emergency outreach services शामिल हैं।`;
+ }
+ if((x.includes('cyber') && (x.includes('report') || x.includes('crime'))) || x.includes('साइबर अपराध')){
+   return `<b>English:</b><br>For cyber crime involving women or children, the National Cyber Crime Reporting Portal provides online reporting options, including a women/children-related crime section and anonymous reporting option. For emergency situations or crimes other than cyber crime, contact local police/112. The official Cyber Crime Helpline is <b>1930</b>.<br><br>
+   <b>Hindi:</b><br>महिलाओं या बच्चों से संबंधित cyber crime के लिए National Cyber Crime Reporting Portal पर online reporting की सुविधा है, जिसमें women/children-related crime section और anonymous reporting option भी उपलब्ध है। Emergency या cyber crime के अलावा अन्य अपराधों के लिए local police/112 से संपर्क करें। Official Cyber Crime Helpline <b>1930</b> है।`;
+ }
+ if(x.includes('online') || x.includes('internet') || x.includes('cyber')){
+   return `<b>English:</b><br>For online safety, do not share passwords or sensitive information, avoid unknown links/files, keep evidence of harmful messages and tell a trusted adult if something feels unsafe.<br><br>
+   <b>Hindi:</b><br>ऑनलाइन सुरक्षा के लिए पासवर्ड या संवेदनशील जानकारी साझा न करें, अनजान लिंक/फाइल से बचें, परेशान करने वाले संदेशों का रिकॉर्ड सुरक्षित रखें और कुछ असुरक्षित लगे तो किसी भरोसेमंद बड़े व्यक्ति को बताएं।`;
+ }
+ if(x.includes('help') || x.includes('report') || x.includes('helpline') || x.includes('number')){
+   return `<b>English:</b><br><b>Child Helpline: 1098</b><br><b>Emergency: 112</b><br><br>
+   Depending on the situation, you can also contact a trusted adult, teacher, police or relevant child-protection authority.<hr style="border:0;border-top:1px solid #343945;margin:14px 0">
+   <b>Hindi:</b><br><b>Child Helpline: 1098</b><br><b>आपातकालीन सहायता: 112</b><br><br>
+   स्थिति के अनुसार किसी भरोसेमंद बड़े व्यक्ति, शिक्षक, पुलिस या संबंधित बाल संरक्षण अधिकारी से भी संपर्क किया जा सकता है।`;
+ }
+ return `<b>English:</b><br>I can help with Child Protection and Child Rights questions. You can ask things like:<br><br>
+ “What is child marriage?”<br>
+ “My friend’s marriage is being arranged. What should I do?”<br>
+ “What are child rights?”<br>
+ “How can child abuse be reported?”<br><br>
+ If there is immediate danger, contact <b>112</b> or Child Helpline <b>1098</b>.<hr style="border:0;border-top:1px solid #343945;margin:14px 0">
+ <b>Hindi:</b><br>मैं बाल संरक्षण और बाल अधिकारों से जुड़े सवालों में मदद कर सकता हूँ। आप ऐसे सवाल पूछ सकते हैं:<br><br>
+ “बाल विवाह क्या है?”<br>
+ “मेरी दोस्त की शादी हो रही है, मैं क्या करूँ?”<br>
+ “बाल अधिकार क्या हैं?”<br>
+ “बाल शोषण की रिपोर्ट कैसे करें?”<br><br>
+ अगर तत्काल खतरा है, तो <b>112</b> या Child Helpline <b>1098</b> पर संपर्क करें।`;
+}
+
+async function send(){
+ const q=input.value.trim();
+ if(!q)return;
+ add(q,'user'); input.value='';
+ const typing=document.createElement('div');
+ typing.className='msg bot';
+ typing.id='typing';
+ typing.textContent='KAWACH is thinking... / KAWACH जवाब तैयार कर रहा है...';
+ messages.appendChild(typing);
+ messages.scrollTop=messages.scrollHeight;
+ try{
+   const r=await fetch('/api/chat',{
+     method:'POST',
+     headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({message:q})
+   });
+   const data=await r.json();
+   typing.remove();
+   if(!r.ok) throw new Error(data.error||'Request failed');
+   add(String(data.answer||''),'bot');
+ }catch(e){
+   typing.remove();
+   add(`<b>English:</b><br>KAWACH is temporarily unavailable. If you need immediate help, call <b>1098</b> or <b>112</b>.<hr style="border:0;border-top:1px solid #343945;margin:14px 0"><b>Hindi:</b><br>KAWACH अभी उपलब्ध नहीं है। यदि आपको तत्काल मदद चाहिए तो <b>1098</b> या <b>112</b> पर संपर्क करें।`,'bot');
+ }
+}
+</script>
+</body>
+</html>
