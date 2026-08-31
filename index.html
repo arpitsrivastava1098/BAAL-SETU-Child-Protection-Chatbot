@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KAWACH Child Protection Chatbot</title>
+
+<title>KAWACH – Child Protection Chatbot</title>
 
 <style>
 *{
@@ -13,513 +14,419 @@
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(135deg,#07152b,#123b63,#07152b);
-  color:#fff;
+  background:linear-gradient(135deg,#fff7e6,#eaf8ff,#f4edff);
+  color:#20242b;
   min-height:100vh;
-  overflow-x:hidden;
 }
 
-/* Background Animation */
-.bg-ball{
-  position:fixed;
-  border-radius:50%;
-  opacity:.12;
-  pointer-events:none;
-  animation:floatBall 7s infinite ease-in-out;
-}
-
-.ball1{
-  width:110px;
-  height:110px;
-  background:#ffd166;
-  left:3%;
-  top:18%;
-}
-
-.ball2{
-  width:150px;
-  height:150px;
-  background:#4cc9f0;
-  right:2%;
-  top:35%;
-  animation-delay:2s;
-}
-
-.ball3{
-  width:80px;
-  height:80px;
-  background:#ff70a6;
-  left:20%;
-  bottom:5%;
-  animation-delay:4s;
-}
-
-@keyframes floatBall{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-25px);}
-}
-
-/* Header */
+/* HEADER */
 header{
-  padding:17px 6%;
-  background:rgba(4,13,27,.96);
-  border-bottom:2px solid rgba(255,255,255,.08);
-  position:sticky;
-  top:0;
-  z-index:20;
-  backdrop-filter:blur(12px);
+  background:linear-gradient(90deg,#ff7a18,#ffb000,#ff6f91);
+  color:white;
+  padding:16px 6%;
+  box-shadow:0 5px 18px rgba(0,0,0,.15);
+}
+
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
 .brand{
   font-size:23px;
   font-weight:900;
-  color:#ffd166;
 }
 
 .tagline{
   font-size:12px;
-  color:#cbd5e1;
-  margin-top:5px;
+  margin-top:4px;
 }
 
-/* Main */
+/* MAIN */
 .wrap{
   max-width:1100px;
   margin:auto;
-  padding:25px 16px 0;
+  padding:25px 18px 50px;
 }
 
-/* Hero */
+/* HERO */
 .hero{
   text-align:center;
-  padding:10px 0 25px;
+  padding:15px 0 25px;
 }
 
 .hero h1{
-  font-size:42px;
-  margin:5px 0;
+  margin:8px 0;
+  font-size:40px;
+  color:#ff6b35;
+  font-weight:900;
 }
 
-.hero h1 span{
-  color:#ffd166;
+.hero-sub{
+  font-size:18px;
+  font-weight:700;
+  color:#343b46;
 }
 
-.hero p{
-  color:#d5deeb;
-  font-size:16px;
+.hero-small{
+  margin-top:8px;
+  color:#69717d;
+  font-size:15px;
 }
 
-/* Cartoon */
-.cartoon-wrap{
-  width:190px;
-  height:180px;
-  margin:0 auto 8px;
+/* CARTOON */
+.mascot-area{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:5px 0 18px;
+}
+
+.mascot{
   position:relative;
+  width:180px;
+  height:175px;
 }
 
-.cartoon-head{
+/* head */
+.face{
   position:absolute;
-  width:105px;
-  height:105px;
-  background:#f3b27d;
+  width:115px;
+  height:115px;
+  left:32px;
+  top:30px;
+  background:#ffd29b;
+  border:5px solid #222;
   border-radius:50%;
-  left:42px;
-  top:15px;
-  border:4px solid #172033;
   z-index:3;
+  box-shadow:0 7px 0 rgba(0,0,0,.08);
 }
 
-.hair{
+.face:before{
+  content:"";
   position:absolute;
   width:92px;
-  height:48px;
-  background:#21160f;
-  border-radius:60% 60% 35% 35%;
-  top:6px;
-  left:48px;
-  z-index:4;
-  transform:rotate(-4deg);
+  height:35px;
+  background:#4d2a1a;
+  left:7px;
+  top:-14px;
+  border-radius:55% 55% 35% 35%;
 }
 
+/* eyes */
 .eye{
   position:absolute;
-  width:11px;
-  height:15px;
-  background:#111;
+  width:12px;
+  height:17px;
+  background:#222;
   border-radius:50%;
-  top:55px;
-  z-index:5;
+  top:45px;
 }
 
-.eye.left{
-  left:67px;
-}
+.eye.left{left:30px}
+.eye.right{right:30px}
 
-.eye.right{
-  left:111px;
-}
-
+/* smile */
 .smile{
   position:absolute;
-  width:32px;
-  height:17px;
-  border-bottom:4px solid #8b3030;
+  width:42px;
+  height:20px;
+  border-bottom:5px solid #222;
   border-radius:50%;
-  left:79px;
-  top:78px;
-  z-index:5;
+  left:32px;
+  top:72px;
 }
 
-.cartoon-body{
+/* body */
+.body{
   position:absolute;
-  width:110px;
+  width:115px;
   height:75px;
-  background:#e63946;
-  border:4px solid #172033;
-  border-radius:35px 35px 18px 18px;
-  left:39px;
-  top:104px;
+  left:32px;
+  top:122px;
+  background:#39a0ff;
+  border:5px solid #222;
+  border-radius:30px 30px 18px 18px;
   z-index:2;
 }
 
-.belt{
+.shield{
   position:absolute;
-  width:110px;
-  height:14px;
-  background:#ffd166;
-  left:39px;
-  top:138px;
-  z-index:4;
-  border-left:4px solid #172033;
-  border-right:4px solid #172033;
+  width:38px;
+  height:45px;
+  left:34px;
+  top:12px;
+  background:#ffd23f;
+  border:3px solid #222;
+  clip-path:polygon(50% 0,90% 15%,82% 68%,50% 100%,18% 68%,10% 15%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
 }
 
-.arm-left{
+/* waving arm */
+.arm{
   position:absolute;
-  width:65px;
+  width:62px;
   height:18px;
-  background:#f3b27d;
-  border:4px solid #172033;
+  background:#ffd29b;
+  border:5px solid #222;
   border-radius:20px;
-  left:0;
-  top:108px;
-  transform:rotate(25deg);
-  transform-origin:right center;
-  z-index:1;
-  animation:waveLeft 1s infinite ease-in-out;
-}
-
-.hand-left{
-  position:absolute;
-  width:25px;
-  height:25px;
-  background:#f3b27d;
-  border:3px solid #172033;
-  border-radius:50%;
-  left:0;
-  top:82px;
-  z-index:4;
-  animation:handWave 1s infinite ease-in-out;
-}
-
-.arm-right{
-  position:absolute;
-  width:70px;
-  height:18px;
-  background:#f3b27d;
-  border:4px solid #172033;
-  border-radius:20px;
-  right:0;
-  top:107px;
-  transform:rotate(-28deg);
+  right:-8px;
+  top:116px;
   transform-origin:left center;
-  z-index:1;
-}
-
-.hand-right{
-  position:absolute;
-  width:27px;
-  height:27px;
-  background:#f3b27d;
-  border:3px solid #172033;
-  border-radius:50%;
-  right:0;
-  top:70px;
   z-index:4;
-  animation:handWave 1s infinite ease-in-out;
+  animation:wave 1s infinite ease-in-out;
 }
 
-@keyframes handWave{
-  0%{transform:rotate(-20deg);}
-  50%{transform:rotate(25deg);}
-  100%{transform:rotate(-20deg);}
+.hand{
+  position:absolute;
+  right:-19px;
+  top:-12px;
+  font-size:38px;
+  transform:rotate(15deg);
 }
 
-@keyframes waveLeft{
-  0%{transform:rotate(25deg);}
-  50%{transform:rotate(5deg);}
-  100%{transform:rotate(25deg);}
+@keyframes wave{
+  0%,100%{transform:rotate(-12deg)}
+  50%{transform:rotate(28deg)}
 }
 
-/* Question Tabs */
+/* speech bubble */
+.speech{
+  position:absolute;
+  right:-180px;
+  top:12px;
+  background:white;
+  border:3px solid #222;
+  border-radius:18px;
+  padding:11px 15px;
+  font-weight:800;
+  box-shadow:0 7px 15px rgba(0,0,0,.12);
+  animation:bubble 2s infinite;
+}
+
+@keyframes bubble{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-5px)}
+}
+
+/* QUICK BUTTONS */
+.quick-title{
+  text-align:center;
+  font-size:22px;
+  font-weight:900;
+  color:#333;
+  margin:15px 0;
+}
+
 .quick{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin:20px 0 25px;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin:15px 0 25px;
 }
 
 .quick button{
-  border:1px solid rgba(255,255,255,.12);
-  background:linear-gradient(145deg,#163555,#0e243d);
-  color:#fff;
+  border:0;
   border-radius:18px;
-  padding:15px 8px;
+  padding:17px 12px;
   cursor:pointer;
-  font-size:14px;
-  font-weight:800;
-  transition:.25s;
-  box-shadow:0 8px 18px rgba(0,0,0,.22);
+  color:#222;
+  font-size:16px;
+  font-weight:900;
+  box-shadow:0 6px 0 rgba(0,0,0,.12);
+  transition:.2s;
 }
 
 .quick button:hover{
-  transform:translateY(-5px);
-  border-color:#ffd166;
-  box-shadow:0 14px 28px rgba(0,0,0,.35);
+  transform:translateY(-4px);
+  box-shadow:0 10px 0 rgba(0,0,0,.12);
 }
 
 .quick button:active{
-  transform:scale(.96);
+  transform:translateY(2px);
+  box-shadow:0 3px 0 rgba(0,0,0,.12);
 }
+
+.q1{background:#ffd166}
+.q2{background:#ff9f68}
+.q3{background:#9be7ff}
+.q4{background:#b8f2c8}
+.q5{background:#d6c2ff}
+.q6{background:#ffb7d5}
+.q7{background:#a9d6ff}
+.q8{background:#ffe59a}
+.q9{background:#ffaaa5}
 
 .quick small{
   display:block;
   margin-top:5px;
-  color:#afc0d3;
-  font-weight:500;
+  font-weight:600;
 }
 
-/* Chat */
+/* CHAT */
 .chat{
-  background:rgba(8,22,40,.97);
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:24px;
+  background:white;
+  border:2px solid #e2e6eb;
+  border-radius:22px;
   overflow:hidden;
-  box-shadow:0 20px 55px rgba(0,0,0,.38);
+  box-shadow:0 12px 35px rgba(0,0,0,.12);
 }
 
 .chat-head{
-  padding:17px 20px;
-  background:linear-gradient(90deg,#173b62,#102b48);
-  border-bottom:1px solid rgba(255,255,255,.1);
-  font-weight:900;
-  font-size:17px;
-}
-
-.status{
-  float:right;
-  font-size:12px;
-  color:#7ef29a;
-}
-
-.messages{
-  height:500px;
-  overflow-y:auto;
-  padding:20px;
-  scroll-behavior:smooth;
-}
-
-.msg{
-  max-width:86%;
-  padding:14px 16px;
-  border-radius:18px;
-  margin:10px 0;
-  line-height:1.65;
-  font-size:15px;
-  animation:messageIn .35s ease;
-}
-
-@keyframes messageIn{
-  from{
-    opacity:0;
-    transform:translateY(10px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-.bot{
-  background:linear-gradient(145deg,#1a3450,#14283f);
-  border:1px solid rgba(255,255,255,.1);
-  border-bottom-left-radius:5px;
-}
-
-.user{
-  background:linear-gradient(145deg,#ffd166,#f4b942);
-  color:#172033;
-  margin-left:auto;
-  border-bottom-right-radius:5px;
-  font-weight:700;
-}
-
-.hello{
-  color:#ffd166;
+  padding:17px;
+  background:linear-gradient(90deg,#6c63ff,#8f7cff);
+  color:white;
   font-size:18px;
   font-weight:900;
 }
 
-/* Input */
+.messages{
+  height:430px;
+  overflow:auto;
+  padding:18px;
+  background:#f8fbff;
+}
+
+.msg{
+  max-width:82%;
+  padding:13px 15px;
+  border-radius:17px;
+  margin:10px 0;
+  line-height:1.55;
+  white-space:normal;
+}
+
+.bot{
+  background:#fff;
+  border:1px solid #dce2ea;
+  box-shadow:0 3px 9px rgba(0,0,0,.06);
+}
+
+.user{
+  background:#6c63ff;
+  color:white;
+  margin-left:auto;
+}
+
 .inputbar{
   display:flex;
   gap:10px;
   padding:14px;
-  background:#08172a;
-  border-top:1px solid rgba(255,255,255,.1);
+  border-top:1px solid #e1e5ea;
+  background:white;
 }
 
 input{
   flex:1;
-  background:#061322;
-  border:1px solid #38516d;
-  color:#fff;
-  border-radius:15px;
+  border:2px solid #dce1e7;
+  border-radius:14px;
   padding:14px;
   font-size:15px;
   outline:none;
 }
 
 input:focus{
-  border-color:#ffd166;
+  border-color:#6c63ff;
 }
 
 .send{
-  background:#ffd166;
   border:0;
-  border-radius:15px;
-  padding:0 23px;
+  background:#ff8c42;
+  color:white;
+  border-radius:14px;
+  padding:0 22px;
+  font-size:16px;
   font-weight:900;
   cursor:pointer;
-  color:#172033;
 }
 
-.send:hover{
-  transform:scale(1.05);
-}
-
-/* Info Cards */
-.info{
-  margin-top:22px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-
-.card{
-  background:rgba(15,35,58,.88);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:18px;
-  padding:18px;
-  transition:.25s;
-}
-
-.card:hover{
-  transform:translateY(-4px);
-  border-color:#ffd166;
-}
-
-.card h3{
-  margin-top:0;
-  color:#ffd166;
-}
-
-/* Help */
+/* HELP */
 .help{
   margin-top:22px;
   padding:20px;
+  background:linear-gradient(135deg,#fff0e6,#ffe1e1);
+  border:2px solid #ff9b71;
   border-radius:20px;
-  background:linear-gradient(135deg,#421d28,#2b1720);
-  border:1px solid #91485b;
   text-align:center;
 }
 
 .help strong{
-  color:#ffcfda;
-  font-size:18px;
+  font-size:20px;
+  color:#e84c27;
 }
 
 .help a{
   display:inline-block;
   margin:12px 5px 0;
-  padding:11px 17px;
+  padding:11px 16px;
   border-radius:12px;
-  background:#ffd166;
-  color:#151b28;
+  color:white;
   text-decoration:none;
   font-weight:900;
+  background:#e84c27;
 }
 
-.note{
-  text-align:center;
-  color:#9eafc2;
-  font-size:12px;
-  margin-top:22px;
-  line-height:1.6;
-}
-
-/* Footer */
+/* FOOTER */
 .footer{
-  margin-top:30px;
-  padding:22px 10px;
   text-align:center;
-  background:rgba(3,12,24,.98);
-  border-top:1px solid rgba(255,255,255,.1);
-  color:#9eafc2;
+  margin-top:35px;
+  padding:18px 10px;
+  color:#66707c;
   font-size:13px;
 }
 
-.footer b{
-  color:#ffd166;
+.developer{
+  margin-top:10px;
+  color:#343a40;
+  font-size:15px;
+  font-weight:900;
 }
 
-/* Mobile */
-@media(max-width:750px){
+/* MOBILE */
+@media(max-width:800px){
+
+  .header-inner{
+    display:block;
+    text-align:center;
+  }
 
   .hero h1{
-    font-size:31px;
+    font-size:30px;
   }
 
   .quick{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .info{
-    grid-template-columns:1fr;
+  .speech{
+    display:none;
   }
 
   .messages{
-    height:450px;
+    height:390px;
   }
 
   .msg{
-    max-width:94%;
+    max-width:92%;
   }
 }
 
-@media(max-width:450px){
+@media(max-width:500px){
 
-  .brand{
-    font-size:18px;
-  }
-
-  .cartoon-wrap{
-    transform:scale(.9);
-    margin-bottom:0;
+  .quick{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
   }
 
   .quick button{
-    font-size:12px;
+    font-size:14px;
+    padding:14px 7px;
   }
 
   .inputbar{
@@ -535,295 +442,193 @@ input:focus{
 
 <body>
 
-<div class="bg-ball ball1"></div>
-<div class="bg-ball ball2"></div>
-<div class="bg-ball ball3"></div>
-
 <header>
-  <div class="brand">
-    🛡️ KAWACH Child Protection Chatbot
-  </div>
-
-  <div class="tagline">
-    Safe • Simple • Child Friendly
+  <div class="header-inner">
+    <div>
+      <div class="brand">🛡️ KAWACH</div>
+      <div class="tagline">Child Protection • Child Rights • Safety</div>
+    </div>
+    <div>🌈 Safe • Friendly • Helpful</div>
   </div>
 </header>
-
 
 <main class="wrap">
 
 <section class="hero">
 
-<div class="cartoon-wrap">
+  <div class="mascot-area">
 
-  <div class="hair"></div>
+    <div class="mascot">
 
-  <div class="cartoon-head">
-    <div class="eye left"></div>
-    <div class="eye right"></div>
-    <div class="smile"></div>
+      <div class="speech">
+        👋 Hello Baccho!
+      </div>
+
+      <div class="face">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="smile"></div>
+      </div>
+
+      <div class="body">
+        <div class="shield">🛡️</div>
+      </div>
+
+      <div class="arm">
+        <div class="hand">👋</div>
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="cartoon-body"></div>
-  <div class="belt"></div>
+  <h1>👋 Hello Baccho!</h1>
 
-  <div class="arm-left"></div>
-  <div class="hand-left"></div>
+  <div class="hero-sub">
+    मैं KAWACH हूँ।
+  </div>
 
-  <div class="arm-right"></div>
-  <div class="hand-right"></div>
-
-</div>
-
-<h1>
-  Hello <span>Baccho!</span> 👋
-</h1>
-
-<p>
-  KAWACH se apna sawal poochho 😊
-</p>
+  <div class="hero-small">
+    जो पूछना है, बिना झिझक पूछो। 😊
+  </div>
 
 </section>
 
-
-<!-- QUESTION TABS -->
+<div class="quick-title">
+  💬 अपना सवाल चुनें
+</div>
 
 <div class="quick">
 
-<button onclick="quickAsk('Mission Vatsalya kya hai?')">
+<button class="q1" onclick="quickAsk('Child Marriage')">
+💍 बाल विवाह
+<small>Child Marriage</small>
+</button>
+
+<button class="q2" onclick="quickAsk('Child Labour')">
+🧒 बाल श्रम
+<small>Child Labour</small>
+</button>
+
+<button class="q3" onclick="quickAsk('Child Safety and Child Abuse')">
+🛡️ बाल सुरक्षा
+<small>Child Safety</small>
+</button>
+
+<button class="q4" onclick="quickAsk('Child Rights')">
+🌈 बाल अधिकार
+<small>Child Rights</small>
+</button>
+
+<button class="q5" onclick="quickAsk('POCSO')">
+⚖️ POCSO
+<small>बच्चों की सुरक्षा</small>
+</button>
+
+<button class="q6" onclick="quickAsk('Mission Vatsalya')">
 🏛️ Mission Vatsalya
 <small>मिशन वात्सल्य</small>
 </button>
 
-<button onclick="quickAsk('Juvenile Justice kya hai?')">
+<button class="q7" onclick="quickAsk('Juvenile Justice')">
 ⚖️ Juvenile Justice
 <small>किशोर न्याय</small>
 </button>
 
-<button onclick="quickAsk('Child Rights kya hain?')">
-🌈 Child Rights
-<small>बाल अधिकार</small>
-</button>
-
-<button onclick="quickAsk('CWC kya hai?')">
-👥 CWC
-<small>बाल कल्याण समिति</small>
-</button>
-
-<button onclick="quickAsk('DCPU kya hai?')">
-🏢 DCPU
-<small>जिला बाल संरक्षण इकाई</small>
-</button>
-
-<button onclick="quickAsk('JJB kya hai?')">
-⚖️ JJB
-<small>किशोर न्याय बोर्ड</small>
-</button>
-
-<button onclick="quickAsk('Child Marriage')">
-💍 Child Marriage
-<small>बाल विवाह</small>
-</button>
-
-<button onclick="quickAsk('Child Labour')">
-🧒 Child Labour
-<small>बाल श्रम</small>
-</button>
-
-<button onclick="quickAsk('Child Abuse')">
-🛡️ Child Abuse
-<small>बाल शोषण</small>
-</button>
-
-<button onclick="quickAsk('Online Safety')">
-💻 Online Safety
+<button class="q8" onclick="quickAsk('Online Safety')">
+📱 Online Safety
 <small>ऑनलाइन सुरक्षा</small>
 </button>
 
-<button onclick="quickAsk('POCSO')">
-⚖️ POCSO
-<small>पॉक्सो</small>
-</button>
-
-<button onclick="quickAsk('Mujhe help chahiye')">
-🚨 Need Help
-<small>मुझे मदद चाहिए</small>
+<button class="q9" onclick="quickAsk('I Need Help')">
+🚨 मुझे मदद चाहिए
+<small>I Need Help</small>
 </button>
 
 </div>
 
 
-<!-- CHAT -->
-
 <section class="chat">
 
 <div class="chat-head">
-
-  🤖 KAWACH se Baat Karo
-
-  <span class="status">
-    ● Online
-  </span>
-
+🤖 KAWACH से पूछें
 </div>
 
 <div id="messages" class="messages">
 
 <div class="msg bot">
 
-  <div class="hello">
-    Hello Baccho! 👋😊
-  </div>
+<b>👋 Hello Baccho!</b><br><br>
 
-  <br>
+मैं <b>KAWACH</b> हूँ। 😊<br>
+जो पूछना है, बिना झिझक पूछो।
 
-  Main <b>KAWACH</b> hoon।
+<br><br>
 
-  <br><br>
+आप ऊपर दिए किसी भी topic पर click कर सकते हैं या नीचे अपना सवाल लिख सकते हैं।
 
-  Neeche diye gaye kisi bhi topic par click karo
-  ya apna sawaal likho।
+<br><br>
 
-  <br><br>
-
-  Main tumhe simple language mein samjhane
-  ki koshish karunga। 💛
-
-  <br><br>
-
-  🚨 Agar koi bachcha immediate danger mein hai,
-  to <b>112</b> par emergency help ya
-  <b>1098</b> Child Helpline se सहायता ली जा सकती है।
+अगर आप या कोई बच्चा तत्काल खतरे में है तो <b>112</b> पर emergency help या <b>1098</b> Child Helpline से संपर्क करें।
 
 </div>
 
 </div>
-
 
 <div class="inputbar">
 
-  <input
-    id="input"
-    placeholder="Apna sawal likho... 👇"
-    onkeydown="if(event.key==='Enter')send()"
-  >
+<input
+id="input"
+placeholder="अपना सवाल लिखें..."
+onkeydown="if(event.key==='Enter')send()">
 
-  <button class="send" onclick="send()">
-    Send 🚀
-  </button>
+<button class="send" onclick="send()">
+पूछें ➤
+</button>
 
 </div>
 
 </section>
 
-
-<!-- INFO -->
-
-<div class="info">
-
-<div class="card">
-
-<h3>🌈 बाल अधिकार</h3>
-
-<p>
-शिक्षा, स्वास्थ्य, सुरक्षा, विकास और अपनी बात
-रखने जैसे बच्चों के महत्वपूर्ण अधिकारों के बारे में जानें।
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>🛡️ बाल सुरक्षा</h3>
-
-<p>
-बाल विवाह, बाल श्रम, हिंसा, शोषण और ऑनलाइन
-जोखिमों से बच्चों की सुरक्षा के बारे में जानकारी।
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>🏛️ सरकारी व्यवस्था</h3>
-
-<p>
-Mission Vatsalya, CWC, DCPU और JJB जैसी
-child-protection व्यवस्था के बारे में आसान जानकारी।
-</p>
-
-</div>
-
-</div>
-
-
-<!-- HELP -->
 
 <section class="help">
 
-<strong>
-🚨 अगर मदद चाहिए
-</strong>
+<strong>🚨 मदद चाहिए?</strong>
 
 <br><br>
 
-अगर कोई बच्चा मुश्किल में है या तुरंत सहायता की जरूरत है:
+अगर आप या कोई बच्चा खतरे में है तो किसी भरोसेमंद बड़े व्यक्ति से मदद लें।
 
 <br>
 
-<a href="tel:1098">
-📞 Child Helpline 1098
-</a>
+<a href="tel:1098">📞 1098</a>
 
-<a href="tel:112">
-🚨 Emergency 112
-</a>
+<a href="tel:112">🚨 112</a>
 
-<a href="tel:1930">
-💻 Cyber Crime 1930
-</a>
+<a href="tel:1930">💻 1930</a>
 
 </section>
 
 
-<div class="note">
+<div class="footer">
 
-KAWACH awareness और guidance platform है।
-यह police, emergency service, doctor, lawyer या
-किसी competent authority का replacement नहीं है।
+KAWACH एक awareness और guidance platform है।
+यह police, emergency service, doctor, lawyer या government authority का replacement नहीं है।
 
-<br><br>
-
-Sensitive information जैसे Aadhaar number,
-password, OTP या unnecessary private details
-chat में share न करें।
+<div class="developer">
+Designed & Developed by Arpit Srivastava
+</div>
 
 </div>
 
 </main>
 
 
-<!-- FINAL FOOTER -->
-
-<footer class="footer">
-  Designed and Developed By <b>Arpit Srivastava</b>
-</footer>
-
-
 <script>
 
-/* Elements */
+const messages=document.getElementById("messages");
+const input=document.getElementById("input");
 
-const messages =
-document.getElementById("messages");
-
-const input =
-document.getElementById("input");
-
-
-/* Add Message */
 
 function add(text,who){
 
@@ -836,592 +641,17 @@ function add(text,who){
   messages.appendChild(d);
 
   messages.scrollTop=messages.scrollHeight;
-
 }
 
 
-/* Quick Question */
+function quickAsk(q){
 
-function quickAsk(question){
-
-  input.value=question;
+  input.value=q;
 
   send();
 
 }
 
-
-/* =====================================================
-   LOCAL ANSWERS
-===================================================== */
-
-function localAnswer(q){
-
-  const x=q.toLowerCase().trim();
-
-
-  /* Mission Vatsalya */
-
-  if(
-    x.includes("mission vatsalya") ||
-    x.includes("मिशन वात्सल्य") ||
-    x.includes("vatsalya")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>🏛️ मिशन वात्सल्य</b>
-
-    <br><br>
-
-    <b>मिशन वात्सल्य</b> भारत सरकार की एक योजना है,
-    जो बच्चों की सुरक्षा और देखभाल के लिए बनाई गई है।
-
-    <br><br>
-
-    इसका मकसद है कि हर बच्चे को सुरक्षित माहौल,
-    अच्छी परवरिश और जरूरत पड़ने पर सही मदद मिले।
-
-    <br><br>
-
-    यह योजना अनाथ, बेसहारा या मुश्किल हालात में
-    रहने वाले बच्चों की देखभाल और संरक्षण से जुड़ी
-    सेवाओं को मजबूत करने में मदद करती है।
-
-    `;
-
-  }
-
-
-  /* Juvenile Justice */
-
-  if(
-    x.includes("juvenile justice") ||
-    x.includes("juvenile") ||
-    x.includes("किशोर न्याय") ||
-    x.includes("jj act")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>⚖️ किशोर न्याय (Juvenile Justice)</b>
-
-    <br><br>
-
-    <b>किशोर न्याय अधिनियम</b> बच्चों और किशोरों से
-    जुड़े मामलों के लिए एक विशेष कानूनी व्यवस्था है।
-
-    <br><br>
-
-    भारत में <b>Juvenile Justice (Care and Protection
-    of Children) Act, 2015</b> बच्चों की care,
-    protection, development और rehabilitation से
-    जुड़े मामलों का framework देता है।
-
-    <br><br>
-
-    इसका उद्देश्य बच्चों के best interest को ध्यान में
-    रखते हुए child-friendly तरीके से care, protection
-    और rehabilitation पर ध्यान देना है।
-
-    `;
-
-  }
-
-
-  /* Child Rights */
-
-  if(
-    x.includes("child rights") ||
-    x.includes("child right") ||
-    x.includes("बाल अधिकार") ||
-    x.includes("baal adhikar") ||
-    x.includes("बच्चों के अधिकार")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>🌈 बाल अधिकार (Child Rights)</b>
-
-    <br><br>
-
-    हर बच्चे को कुछ बुनियादी अधिकार मिले हुए हैं।
-
-    <br><br>
-
-    <b>1. जीने का अधिकार</b><br>
-    हर बच्चे को जीवन, स्वास्थ्य, पोषण और देखभाल
-    का अवसर मिलना चाहिए।
-
-    <br><br>
-
-    <b>2. विकास का अधिकार</b><br>
-    बच्चों को शिक्षा, खेल, मनोरंजन और विकास के
-    अवसर मिलने चाहिए।
-
-    <br><br>
-
-    <b>3. सुरक्षा का अधिकार</b><br>
-    बच्चों को हिंसा, शोषण, बाल श्रम, तस्करी और
-    अन्य नुकसान से सुरक्षा मिलनी चाहिए।
-
-    <br><br>
-
-    <b>4. सहभागिता का अधिकार</b><br>
-    बच्चों को अपनी उम्र और समझ के अनुसार अपनी
-    बात और राय रखने का अवसर मिलना चाहिए।
-
-    <br><br>
-
-    💛 <b>याद रखो:</b><br>
-
-    हर बच्चा महत्वपूर्ण है और उसकी सुरक्षा,
-    सम्मान और विकास जरूरी है।
-
-    `;
-
-  }
-
-
-  /* CWC */
-
-  if(
-    x.includes("cwc") ||
-    x.includes("child welfare committee") ||
-    x.includes("बाल कल्याण समिति")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>👥 CWC – Child Welfare Committee</b>
-
-    <br><br>
-
-    <b>CWC (बाल कल्याण समिति)</b> देखभाल और सुरक्षा
-    की जरूरत वाले बच्चों के मामलों को देखने वाली
-    वैधानिक समिति है।
-
-    <br><br>
-
-    यह ऐसे बच्चों के मामलों में महत्वपूर्ण भूमिका
-    निभाती है जिन्हें care and protection की जरूरत होती है।
-
-    <br><br>
-
-    उदाहरण के लिए बेसहारा, खोए हुए, परिवार से अलग
-    या शोषण/neglect का सामना कर रहे बच्चों के मामले।
-
-    `;
-
-  }
-
-
-  /* DCPU */
-
-  if(
-    x.includes("dcpu") ||
-    x.includes("district child protection unit") ||
-    x.includes("जिला बाल संरक्षण इकाई") ||
-    x.includes("बाल संरक्षण इकाई")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>🏢 DCPU – District Child Protection Unit</b>
-
-    <br><br>
-
-    <b>DCPU</b> यानी District Child Protection Unit,
-    जिला स्तर पर child protection व्यवस्था में
-    महत्वपूर्ण भूमिका निभाने वाली इकाई है।
-
-    <br><br>
-
-    यह जिले में बच्चों की सुरक्षा और protection से
-    जुड़ी योजनाओं और सेवाओं के implementation और
-    coordination में सहयोग करती है।
-
-    `;
-
-  }
-
-
-  /* JJB */
-
-  if(
-    x.includes("jjb") ||
-    x.includes("juvenile justice board") ||
-    x.includes("किशोर न्याय बोर्ड")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>⚖️ JJB – Juvenile Justice Board</b>
-
-    <br><br>
-
-    <b>Juvenile Justice Board (JJB)</b> उन मामलों से
-    संबंधित वैधानिक बोर्ड है जिनमें बच्चा
-    <b>Child in Conflict with Law</b> के रूप में सामने आता है।
-
-    <br><br>
-
-    JJB का उद्देश्य बच्चों से जुड़े मामलों में
-    child-friendly approach अपनाना और कानून के अनुसार
-    care, protection, rehabilitation तथा social
-    reintegration पर ध्यान देना है।
-
-    `;
-
-  }
-
-
-  /* =================================================
-     CHILD MARRIAGE
-     EXACT ANSWER
-  ================================================= */
-
-  if(
-    x.includes("child marriage") ||
-    x.includes("बाल विवाह") ||
-    x.includes("baal vivah") ||
-    x.includes("बालविवाह")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>💍 बाल विवाह (Child Marriage)</b>
-
-    <br><br>
-
-    <b>बाल विवाह</b> यानी 18 साल से कम उम्र की लड़की
-    या 21 साल से कम उम्र के लड़के की शादी करना,
-    जो कानूनन अपराध है।
-
-    <br><br>
-
-    यह बच्चों की सेहत, पढ़ाई और भविष्य को नुकसान पहुँचाता है।
-
-    <br><br>
-
-    भारत में बाल विवाह रोकने के लिए कानून है —
-    <b>बाल विवाह निषेध अधिनियम</b>।
-
-    `;
-
-  }
-
-
-  /* Child Labour */
-
-  if(
-    x.includes("child labour") ||
-    x.includes("बाल श्रम") ||
-    x.includes("baal shram") ||
-    x.includes("बाल मजदूरी")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>🧒 बाल श्रम (Child Labour)</b>
-
-    <br><br>
-
-    बाल श्रम का मतलब बच्चों से ऐसा काम करवाना है
-    जो उनकी शिक्षा, स्वास्थ्य, सुरक्षा या विकास को
-    नुकसान पहुंचा सकता है।
-
-    <br><br>
-
-    बच्चों को ऐसे काम से बचाना जरूरी है जो उनके
-    स्वास्थ्य, सुरक्षा या शिक्षा के लिए नुकसानदायक हो।
-
-    <br><br>
-
-    📞 Child Helpline: <b>1098</b><br>
-    🚨 Emergency: <b>112</b>
-
-    `;
-
-  }
-
-
-  /* Child Abuse */
-
-  if(
-    x.includes("child abuse") ||
-    x.includes("abuse") ||
-    x.includes("बाल शोषण") ||
-    x.includes("हिंसा") ||
-    x.includes("violence")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>🛡️ बाल शोषण (Child Abuse)</b>
-
-    <br><br>
-
-    बाल शोषण में बच्चे के साथ शारीरिक, मानसिक या
-    यौन तरीके से नुकसान या बुरा व्यवहार शामिल हो सकता है।
-
-    <br><br>
-
-    अगर किसी बच्चे के साथ ऐसा हो रहा है तो
-    उसकी safety सबसे पहले जरूरी है।
-
-    <br><br>
-
-    किसी trusted adult, teacher या संबंधित authority
-    को बताएं।
-
-    <br><br>
-
-    🚨 Immediate danger: <b>112</b><br>
-    📞 Child Helpline: <b>1098</b>
-
-    `;
-
-  }
-
-
-  /* Online Safety */
-
-  if(
-    x.includes("online safety") ||
-    x.includes("internet safety") ||
-    x.includes("online") ||
-    x.includes("इंटरनेट") ||
-    x.includes("ऑनलाइन सुरक्षा")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>💻 ऑनलाइन सुरक्षा (Online Safety)</b>
-
-    <br><br>
-
-    इंटरनेट इस्तेमाल करते समय कुछ जरूरी बातों का ध्यान रखें:
-
-    <br><br>
-
-    🔐 अपना password किसी के साथ share न करें।
-
-    <br><br>
-
-    🚫 अनजान links या suspicious files पर click न करें।
-
-    <br><br>
-
-    📱 अनजान लोगों के साथ personal information,
-    photos या private details share न करें।
-
-    <br><br>
-
-    🧑‍🏫 अगर कोई online परेशान करे तो किसी trusted
-    adult को तुरंत बताएं।
-
-    <br><br>
-
-    💻 Cyber crime के लिए
-    <b>cybercrime.gov.in</b> पर reporting की जा सकती है।
-
-    `;
-
-  }
-
-
-  /* POCSO */
-
-  if(
-    x.includes("pocso") ||
-    x.includes("पॉक्सो") ||
-    x.includes("sexual abuse") ||
-    x.includes("sexual offence") ||
-    x.includes("यौन शोषण")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>⚖️ POCSO Act</b>
-
-    <br><br>
-
-    <b>POCSO</b> का पूरा नाम
-    <b>Protection of Children from Sexual Offences Act, 2012</b>
-    है।
-
-    <br><br>
-
-    यह कानून बच्चों को sexual offences से protection
-    देने के लिए बनाया गया है।
-
-    <br><br>
-
-    अगर किसी बच्चे के साथ sexual abuse या sexual
-    offence हुआ है, तो बच्चे की safety सबसे पहले जरूरी है।
-
-    <br><br>
-
-    🚨 Immediate danger: <b>112</b><br>
-    📞 Child Helpline: <b>1098</b>
-
-    `;
-
-  }
-
-
-  /* Help */
-
-  if(
-    x.includes("mujhe help") ||
-    x.includes("need help") ||
-    x==="help" ||
-    x.includes("मदद चाहिए") ||
-    x.includes("मदद")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    <b>🚨 अगर आपको या किसी बच्चे को मदद चाहिए</b>
-
-    <br><br>
-
-    सबसे पहले किसी trusted adult, teacher या
-    responsible person को बताएं।
-
-    <br><br>
-
-    📞 <b>Child Helpline – 1098</b>
-
-    <br><br>
-
-    🚨 <b>Emergency / Police – 112</b>
-
-    <br><br>
-
-    💻 <b>Cyber Crime – 1930</b>
-
-    `;
-
-  }
-
-
-  /* Greeting */
-
-  if(
-    x==="hi" ||
-    x==="hello" ||
-    x==="hii" ||
-    x==="hey" ||
-    x.includes("namaste") ||
-    x.includes("नमस्ते")
-  ){
-
-    return `
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    Main <b>KAWACH</b> hoon।
-
-    <br><br>
-
-    Neeche diye gaye kisi bhi topic par click karo
-    ya apna sawaal likho।
-
-    <br><br>
-
-    Main tumhe simple language mein samjhaunga। 💛
-
-    `;
-
-  }
-
-
-  return null;
-
-}
-
-
-/* =====================================================
-   SEND
-===================================================== */
 
 async function send(){
 
@@ -1429,30 +659,9 @@ async function send(){
 
   if(!q)return;
 
-
   add(q,"user");
 
   input.value="";
-
-
-  /* Local answer first */
-
-  const local=localAnswer(q);
-
-  if(local){
-
-    setTimeout(function(){
-
-      add(local,"bot");
-
-    },350);
-
-    return;
-
-  }
-
-
-  /* AI Typing */
 
   const typing=document.createElement("div");
 
@@ -1460,24 +669,12 @@ async function send(){
 
   typing.id="typing";
 
-  typing.innerHTML=`
-
-    <div class="hello">
-      Hello Baccho! 👋😊
-    </div>
-
-    <br>
-
-    🤖 KAWACH jawab तैयार कर रहा है...
-
-  `;
+  typing.innerHTML="🤖 KAWACH सोच रहा है... 😊";
 
   messages.appendChild(typing);
 
   messages.scrollTop=messages.scrollHeight;
 
-
-  /* Backend */
 
   try{
 
@@ -1503,65 +700,33 @@ async function send(){
 
     if(!r.ok){
 
-      throw new Error(
-        data.error || "Request failed"
-      );
+      throw new Error(data.error || "Request failed");
 
     }
 
 
-    add(`
-
-      <div class="hello">
-        Hello Baccho! 👋😊
-      </div>
-
-      <br>
-
-      ${String(
-        data.answer ||
-        "Sorry Baccho, mujhe iska answer nahi mila।"
-      )}
-
-    `,"bot");
+    add(String(data.answer || ""),"bot");
 
 
-  }catch(error){
+  }catch(e){
 
     typing.remove();
 
     add(`
 
-      <div class="hello">
-        Hello Baccho! 👋😊
-      </div>
+    <b>English:</b><br>
 
-      <br>
+    KAWACH is temporarily unavailable.
 
-      Mujhe is sawaal ka answer abhi nahi mil paaya। 😊
+    If you need immediate help, contact <b>1098</b> or <b>112</b>.
 
-      <br><br>
+    <hr>
 
-      Tum in topics ke baare mein pooch sakte ho:
+    <b>Hindi:</b><br>
 
-      <br><br>
+    KAWACH अभी उपलब्ध नहीं है।
 
-      🌈 Child Rights<br>
-      🏛️ Mission Vatsalya<br>
-      ⚖️ Juvenile Justice<br>
-      👥 CWC<br>
-      🏢 DCPU<br>
-      ⚖️ JJB<br>
-      💍 Child Marriage<br>
-      🧒 Child Labour<br>
-      🛡️ Child Abuse<br>
-      💻 Online Safety<br>
-      ⚖️ POCSO
-
-      <br><br>
-
-      🚨 Emergency में <b>112</b> या
-      Child Helpline <b>1098</b> पर संपर्क करें।
+    यदि आपको तत्काल मदद चाहिए तो <b>1098</b> या <b>112</b> पर संपर्क करें।
 
     `,"bot");
 
