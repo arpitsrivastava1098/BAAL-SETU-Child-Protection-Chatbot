@@ -15,142 +15,166 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // =====================================================
-// PATHS
+// PDF KNOWLEDGE SOURCES
 // =====================================================
 
-const knowledgePath = path.join(__dirname, "knowledge");
+const PDF_URLS = [
+  "https://arpitsrivastava.co.in/resources/Kawach%20Madule.pdf",
+  "https://arpitsrivastava.co.in/resources/Meena%20munch%20module.pdf",
+  "https://arpitsrivastava.co.in/resources/CWPC%20Strengthening%20and%20Activation%20Process%20Document.pdf",
+  "https://arpitsrivastava.co.in/resources/Bal%20sanrakshan%2010-03-2026%20(1).pdf",
+  "https://arpitsrivastava.co.in/resources/SHG%20Module.pdf",
+  "https://arpitsrivastava.co.in/resources/Yojana%20Module%2004-26.pdf",
+  "https://arpitsrivastava.co.in/resources/Child-Trafficking-Resource.pdf"
+];
+
 const textKnowledgePath = path.join(__dirname, "knowledge.txt");
 
+let documents = [];
+let pdfCount = 0;
+let knowledge = "";
+
 // =====================================================
-// PDF KNOWLEDGE BASE
+// LOAD PDF FROM URL
 // =====================================================
 
-let knowledge = "";
-let pdfCount = 0;
+async function loadPdfFromUrl(url) {
+  const response = await fetch(url, {
+    redirect: "follow"
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status} ${response.statusText}`);
+  }
+
+  const arrayBuffer = await response.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+  const pdf = await pdfParse(buffer);
+
+  return {
+    text: (pdf.text || "").trim(),
+    pages: pdf.numpages || 0
+  };
+}
+
+// =====================================================
+// LOAD KNOWLEDGE BASE
+// =====================================================
 
 async function loadKnowledgeBase() {
-  let combinedKnowledge = "";
+  documents = [];
+  pdfCount = 0;
+  knowledge = "";
 
-  // -----------------------------------------------
   // Existing knowledge.txt
-  // -----------------------------------------------
-
   try {
     if (fs.existsSync(textKnowledgePath)) {
-      const textKnowledge = fs.readFileSync(
-        textKnowledgePath,
-        "utf8"
-      );
-
-      if (textKnowledge.trim()) {
-        combinedKnowledge +=
-          "\n\n===== GENERAL KAWACH KNOWLEDGE =====\n\n";
-
-        combinedKnowledge += textKnowledge;
-
-        console.log(
-          "knowledge.txt loaded successfully."
-        );
+      const text = fs.readFileSync(textKnowledgePath, "utf8").trim();
+      if (text) {
+        documents.push({
+          name: "knowledge.txt",
+          text
+        });
       }
     }
   } catch (error) {
-    console.error(
-      "Error loading knowledge.txt:",
-      error.message
-    );
+    console.error("knowledge.txt error:", error.message);
   }
 
-  // -----------------------------------------------
-  // PDF folder
-  // -----------------------------------------------
+  console.log(`Loading ${PDF_URLS.length} PDF resources...`);
 
-  if (!fs.existsSync(knowledgePath)) {
-    console.warn(
-      "knowledge folder not found. Creating it..."
-    );
-
-    fs.mkdirSync(knowledgePath, {
-      recursive: true
-    });
-  }
-
-  let files = [];
-
-  try {
-    files = fs.readdirSync(knowledgePath);
-  } catch (error) {
-    console.error(
-      "Could not read knowledge folder:",
-      error.message
-    );
-  }
-
-  const pdfFiles = files.filter(
-    file =>
-      path.extname(file).toLowerCase() === ".pdf"
-  );
-
-  console.log(
-    `Found ${pdfFiles.length} PDF file(s).`
-  );
-
-  // -----------------------------------------------
-  // Read every PDF
-  // -----------------------------------------------
-
-  for (const file of pdfFiles) {
-    const filePath = path.join(
-      knowledgePath,
-      file
-    );
+  for (const url of PDF_URLS) {
+    const fileName = decodeURIComponent(url.split("/").pop());
 
     try {
-      const data = fs.readFileSync(
-        filePath
-      );
+      const result = await loadPdfFromUrl(url);
 
-      const pdf = await pdfParse(data);
-
-      const pdfText =
-        pdf.text?.trim() || "";
-
-      if (!pdfText) {
-        console.warn(
-          `No readable text found in PDF: ${file}`
-        );
-
+      if (!result.text) {
+        console.warn(`No readable text: ${fileName}`);
         continue;
       }
 
+      documents.push({
+        name: fileName,
+        text: result.text,
+        url
+      });
+
       pdfCount++;
 
-      combinedKnowledge +=
-        `\n\n===== PDF SOURCE: ${file} =====\n\n`;
-
-      combinedKnowledge += pdfText;
-
       console.log(
-        `PDF loaded successfully: ${file} | Pages: ${pdf.numpages} | Characters: ${pdfText.length}`
+        `PDF loaded: ${fileName} | pages=${result.pages} | characters=${result.text.length}`
       );
-
     } catch (error) {
-
-      console.error(
-        `Could not read PDF: ${file}`,
-        error.message
-      );
+      console.error(`PDF failed: ${fileName} | ${error.message}`);
     }
   }
 
-  knowledge = combinedKnowledge.trim();
+  knowledge = documents
+    .map(doc => `===== SOURCE: ${doc.name} =====\n${doc.text}`)
+    .join("\n\n");
 
-  console.log(
-    `Knowledge base ready. PDFs loaded: ${pdfCount}`
-  );
+  console.log(`Knowledge base ready. PDFs loaded: ${pdfCount}`);
+  console.log(`Total knowledge characters: ${knowledge.length}`);
+}
 
-  console.log(
-    `Total knowledge characters: ${knowledge.length}`
-  );
+// =====================================================
+// RELEVANT PDF SEARCH
+// =====================================================
+
+function getRelevantKnowledge(question) {
+  const words = question
+    .toLowerCase()
+    .replace(/[^a-z0-9\u0900-\u097F\s]/gi, " ")
+    .split(/\s+/)
+    .filter(word => word.length >= 3);
+
+  if (!words.length) {
+    return documents
+      .slice(0, 3)
+      .map(doc => `SOURCE: ${doc.name}\n${doc.text.slice(0, 5000)}`)
+      .join("\n\n");
+  }
+
+  const scored = documents.map(doc => {
+    const text = doc.text.toLowerCase();
+    let score = 0;
+
+    for (const word of words) {
+      let index = 0;
+      while ((index = text.indexOf(word, index)) !== -1) {
+        score++;
+        index += word.length;
+        if (score >= 80) break;
+      }
+      if (score >= 80) break;
+    }
+
+    return { ...doc, score };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+
+  const selected = scored
+    .filter(doc => doc.score > 0)
+    .slice(0, 4);
+
+  // If no exact word match, provide a small sample from the first documents.
+  const finalDocs = selected.length
+    ? selected
+    : scored.slice(0, 3);
+
+  const MAX_CHARS_PER_DOC = 12000;
+
+  return finalDocs
+    .map(doc => {
+      const text = doc.text.length > MAX_CHARS_PER_DOC
+        ? doc.text.slice(0, MAX_CHARS_PER_DOC) + "\n[Document excerpt truncated]"
+        : doc.text;
+
+      return `SOURCE: ${doc.name}\n${text}`;
+    })
+    .join("\n\n--------------------------------\n\n");
 }
 
 // =====================================================
@@ -158,9 +182,7 @@ async function loadKnowledgeBase() {
 // =====================================================
 
 if (!process.env.GEMINI_API_KEY) {
-  console.warn(
-    "WARNING: GEMINI_API_KEY is not configured."
-  );
+  console.warn("WARNING: GEMINI_API_KEY is not configured.");
 }
 
 const ai = new GoogleGenAI({
@@ -171,23 +193,15 @@ const ai = new GoogleGenAI({
 // KAWACH INSTRUCTIONS
 // =====================================================
 
-const instructions = `
-You are KAWACH Child Protection Chatbot for children
-and adolescents in India.
+const baseInstructions = `
+You are KAWACH Child Protection Chatbot for children and adolescents in India.
 
-Your purpose is to provide child-friendly education,
-child protection information, safety guidance and
-directions to appropriate official help.
+Your purpose is to provide child-friendly education, child protection information,
+safety guidance and directions to appropriate official help.
 
-You are NOT a police officer, lawyer, doctor,
-emergency service, or substitute for a qualified
-professional.
+You are NOT a police officer, lawyer, doctor, emergency service, or substitute for a qualified professional.
 
-=====================================================
-MANDATORY RESPONSE FORMAT
-=====================================================
-
-Always answer in exactly this format:
+MANDATORY RESPONSE FORMAT:
 
 English:
 [Answer in simple, clear English]
@@ -197,144 +211,37 @@ Hindi:
 
 Always provide both English and Hindi.
 
-=====================================================
-KNOWLEDGE BASE RULES
-=====================================================
+KNOWLEDGE RULES:
+- Use the supplied KAWACH PDF excerpts as the primary source for factual answers.
+- Do not invent facts, laws, sections, penalties, procedures, schemes, contacts or government claims.
+- If the supplied resources do not support a specific fact, say that you cannot verify it from the available KAWACH resources.
+- When useful, mention the source PDF name.
+- Do not claim that information came from a PDF if it is not present in the supplied excerpts.
+- General safety guidance may be given when necessary even if it is not in the PDFs.
 
-The KAWACH knowledge base below contains information
-from official/project PDF documents and knowledge files.
-
-Use this knowledge base as the primary source for
-questions related to:
-
-- Child protection
-- Child rights
-- Child marriage
-- Child labour
-- Child trafficking
-- Child abuse
-- Child sexual abuse
-- CWPC
-- Child Welfare Committee
-- Government systems
-- Schemes
-- Meena Manch
-- KAWACH
-- Referral mechanisms
-- Social protection
-- Community awareness
-- Government procedures
-- Training modules
-- Programme implementation
-
-IMPORTANT:
-
-1. Prefer information from the knowledge base.
-
-2. Do NOT invent information that is not supported
-   by the knowledge base.
-
-3. If a specific fact cannot be verified from the
-   knowledge base, clearly say:
-
-   English:
-   "I cannot verify this specific information
-   from the available KAWACH resources."
-
-   Hindi:
-   "मैं उपलब्ध KAWACH संसाधनों से इस विशेष जानकारी
-   की पुष्टि नहीं कर सकता/सकती हूँ।"
-
-4. When possible, identify the PDF/source document
-   from which the information comes.
-
-5. Do not claim that a procedure, law, penalty,
-   government order, phone number or authority exists
-   unless it is supported by the knowledge base or is
-   a clearly established emergency contact.
-
-6. If the user asks about something unrelated to
-   child protection, answer briefly if appropriate,
-   but do not pretend it came from a KAWACH PDF.
-
-=====================================================
-SAFETY
-=====================================================
-
-- If the user says they are in immediate danger,
-  prioritize getting to a safe place.
-
+SAFETY:
+- If the user is in immediate danger, prioritize getting to a safe place.
 - Encourage contacting a trusted adult.
-
-- Encourage contacting 112 for emergency assistance.
-
-- Encourage contacting Child Helpline 1098.
-
-- Keep urgent safety answers concise.
-
-- Do not ask for unnecessary identifying information.
-
-- Never ask for passwords, OTPs, Aadhaar numbers,
-  bank details, exact home address, or other sensitive
-  private information.
-
+- Encourage 112 for emergency assistance.
+- Encourage Child Helpline 1098.
+- Do not ask for passwords, OTPs, Aadhaar numbers, bank details, exact home address, or other unnecessary sensitive information.
 - Never promise secrecy.
-
-- Do not blame, shame, threaten, or pressure a child.
-
-For sexual abuse, trafficking, violence, child marriage,
-child labour, exploitation, neglect, missing children,
-online safety, or self-harm, focus on safety and
-appropriate real-world support.
-
-If self-harm or suicide is mentioned:
-
-- Encourage immediate support from a trusted adult.
-- Encourage emergency assistance when there is immediate danger.
-- Do not provide methods or instructions.
-
-For specific legal cases, explain that the answer is
-general information and recommend an appropriate
-authority or qualified legal professional.
-
-Be calm, respectful, child-friendly and non-judgmental.
-
-=====================================================
-KAWACH KNOWLEDGE BASE
-=====================================================
-
-${knowledge}
-
-=====================================================
-END KNOWLEDGE BASE
-=====================================================
+- Do not blame, shame, threaten or pressure a child.
+- For sexual abuse, trafficking, violence, child marriage, child labour, exploitation, neglect, missing children, online safety or self-harm, focus on safety and appropriate real-world support.
+- If self-harm or suicide is mentioned, encourage immediate support from a trusted adult and emergency assistance if there is immediate danger. Never provide methods or instructions.
+- For specific legal cases, explain that the answer is general information and recommend an appropriate authority or qualified legal professional.
+- Be calm, respectful, child-friendly and non-judgmental.
 `;
 
 // =====================================================
 // MIDDLEWARE
 // =====================================================
 
-app.use(
-  express.json({
-    limit: "32kb"
-  })
-);
-
-// =====================================================
-// FRONTEND
-// =====================================================
-
-app.use(
-  express.static(__dirname)
-);
+app.use(express.json({ limit: "32kb" }));
+app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
-  res.sendFile(
-    path.join(
-      __dirname,
-      "index.html"
-    )
-  );
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // =====================================================
@@ -342,34 +249,24 @@ app.get("/", (req, res) => {
 // =====================================================
 
 app.get("/health", (req, res) => {
-
   res.json({
     status: "ok",
-    service:
-      "KAWACH Child Protection Chatbot",
+    service: "KAWACH Child Protection Chatbot",
     ai: "Gemini",
-    pdfKnowledgeBase:
-      pdfCount > 0
-        ? "loaded"
-        : "no PDFs loaded",
-    pdfCount: pdfCount
+    pdfKnowledgeBase: pdfCount > 0 ? "loaded" : "no PDFs loaded",
+    pdfCount,
+    documentCount: documents.length
   });
-
 });
 
-// =====================================================
-// KNOWLEDGE STATUS
-// =====================================================
-
 app.get("/api/knowledge-status", (req, res) => {
-
   res.json({
     status: "ok",
-    pdfCount: pdfCount,
-    knowledgeCharacters:
-      knowledge.length
+    pdfCount,
+    documentCount: documents.length,
+    knowledgeCharacters: knowledge.length,
+    sources: documents.map(doc => doc.name)
   });
-
 });
 
 // =====================================================
@@ -377,6 +274,16 @@ app.get("/api/knowledge-status", (req, res) => {
 // =====================================================
 
 async function generateGeminiResponse(message) {
+  const relevantKnowledge = getRelevantKnowledge(message);
+
+  const systemInstruction = `${baseInstructions}
+
+RELEVANT KAWACH RESOURCE CONTENT FOR THIS QUESTION:
+
+${relevantKnowledge}
+
+END RESOURCE CONTENT.
+`;
 
   const models = [
     "gemini-3.5-flash-lite",
@@ -386,74 +293,33 @@ async function generateGeminiResponse(message) {
   let lastError = null;
 
   for (const model of models) {
-
-    for (
-      let attempt = 1;
-      attempt <= 3;
-      attempt++
-    ) {
-
+    for (let attempt = 1; attempt <= 3; attempt++) {
       try {
+        console.log(`Trying model: ${model} | Attempt: ${attempt}`);
 
-        console.log(
-          `Trying model: ${model} | Attempt: ${attempt}`
-        );
+        const response = await ai.models.generateContent({
+          model,
+          contents: message,
+          config: {
+            systemInstruction,
+            maxOutputTokens: 1200
+          }
+        });
 
-        const response =
-          await ai.models.generateContent({
-
-            model: model,
-
-            contents: message,
-
-            config: {
-              systemInstruction:
-                instructions,
-
-              maxOutputTokens: 1200
-            }
-
-          });
-
-        const answer =
-          response.text ||
-          "No response was generated.";
-
-        console.log(
-          `Successful response from model: ${model}`
-        );
-
+        const answer = response.text || "No response was generated.";
+        console.log(`Successful response from model: ${model}`);
         return answer;
-
       } catch (error) {
-
         lastError = error;
-
-        const errorMessage =
-          error?.message ||
-          JSON.stringify(error);
 
         console.error(
           `Gemini error | Model: ${model} | Attempt: ${attempt}:`,
-          errorMessage
+          error?.message || JSON.stringify(error)
         );
 
         if (attempt < 3) {
-
-          const delay =
-            attempt * 2000;
-
-          console.log(
-            `Retrying in ${delay}ms...`
-          );
-
-          await new Promise(
-            resolve =>
-              setTimeout(
-                resolve,
-                delay
-              )
-          );
+          const delay = attempt * 2000;
+          await new Promise(resolve => setTimeout(resolve, delay));
         }
       }
     }
@@ -466,148 +332,69 @@ async function generateGeminiResponse(message) {
 // CHAT API
 // =====================================================
 
-app.post(
-  "/api/chat",
-  async (req, res) => {
+app.post("/api/chat", async (req, res) => {
+  try {
+    const message = String(req.body?.message || "").trim();
 
-    try {
-
-      const message =
-        String(
-          req.body?.message || ""
-        ).trim();
-
-      // -----------------------------------------------
-      // VALIDATION
-      // -----------------------------------------------
-
-      if (!message) {
-
-        return res.status(400).json({
-          error:
-            "Please enter a question."
-        });
-
-      }
-
-      if (message.length > 4000) {
-
-        return res.status(400).json({
-          error:
-            "Question is too long. Please keep it under 4000 characters."
-        });
-
-      }
-
-      // -----------------------------------------------
-      // API KEY CHECK
-      // -----------------------------------------------
-
-      if (!process.env.GEMINI_API_KEY) {
-
-        console.error(
-          "GEMINI_API_KEY is missing."
-        );
-
-        return res.status(503).json({
-          error:
-            "AI service is not configured yet."
-        });
-
-      }
-
-      // -----------------------------------------------
-      // GEMINI
-      // -----------------------------------------------
-
-      const answer =
-        await generateGeminiResponse(
-          message
-        );
-
-      return res.json({
-        answer: answer
+    if (!message) {
+      return res.status(400).json({
+        error: "Please enter a question."
       });
-
-    } catch (error) {
-
-      console.error(
-        "KAWACH GEMINI FINAL ERROR:",
-        error?.message ||
-        JSON.stringify(error)
-      );
-
-      return res.status(503).json({
-
-        error:
-          "KAWACH is temporarily busy. Please try again in a few seconds. If you need immediate help, contact 1098 or 112."
-
-      });
-
     }
 
-  }
-);
+    if (message.length > 4000) {
+      return res.status(400).json({
+        error: "Question is too long. Please keep it under 4000 characters."
+      });
+    }
 
-// =====================================================
-// 404 HANDLER
-// =====================================================
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(503).json({
+        error: "AI service is not configured yet."
+      });
+    }
 
-app.use(
-  (req, res) => {
+    const answer = await generateGeminiResponse(message);
 
-    res.status(404).json({
-      error:
-        "Page or API endpoint not found."
+    return res.json({ answer });
+  } catch (error) {
+    console.error(
+      "KAWACH GEMINI FINAL ERROR:",
+      error?.message || JSON.stringify(error)
+    );
+
+    return res.status(503).json({
+      error: "KAWACH is temporarily busy. Please try again in a few seconds. If you need immediate help, contact 1098 or 112."
     });
-
   }
-);
+});
+
+// =====================================================
+// 404
+// =====================================================
+
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Page or API endpoint not found."
+  });
+});
 
 // =====================================================
 // START SERVER
 // =====================================================
 
 async function startServer() {
-
-  // Load PDFs BEFORE starting server
   await loadKnowledgeBase();
 
-  app.listen(
-    port,
-    "0.0.0.0",
-    () => {
-
-      console.log(
-        `KAWACH running on port ${port}`
-      );
-
-      console.log(
-        `Environment: ${
-          process.env.NODE_ENV ||
-          "production"
-        }`
-      );
-
-      console.log(
-        "AI Provider: Gemini"
-      );
-
-      console.log(
-        `PDF Knowledge Base: ${pdfCount} PDF(s)`
-      );
-
-    }
-  );
+  app.listen(port, "0.0.0.0", () => {
+    console.log(`KAWACH running on port ${port}`);
+    console.log(`Environment: ${process.env.NODE_ENV || "production"}`);
+    console.log("AI Provider: Gemini");
+    console.log(`PDF Knowledge Base: ${pdfCount} PDF(s)`);
+  });
 }
 
 startServer().catch(error => {
-
-  console.error(
-    "KAWACH SERVER START ERROR:",
-    error
-  );
-
+  console.error("KAWACH SERVER START ERROR:", error);
   process.exit(1);
-
 });
