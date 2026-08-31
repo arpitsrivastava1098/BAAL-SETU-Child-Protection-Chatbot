@@ -19,10 +19,7 @@ body{
   overflow-x:hidden;
 }
 
-/* =========================
-   ANIMATED BACKGROUND
-========================= */
-
+/* Background Animation */
 .bg-ball{
   position:fixed;
   border-radius:50%;
@@ -58,20 +55,11 @@ body{
 }
 
 @keyframes floatBall{
-  0%,100%{
-    transform:translateY(0);
-  }
-
-  50%{
-    transform:translateY(-25px);
-  }
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-25px);}
 }
 
-
-/* =========================
-   HEADER
-========================= */
-
+/* Header */
 header{
   padding:17px 6%;
   background:rgba(4,13,27,.96);
@@ -94,22 +82,14 @@ header{
   margin-top:5px;
 }
 
-
-/* =========================
-   MAIN
-========================= */
-
+/* Main */
 .wrap{
   max-width:1100px;
   margin:auto;
-  padding:25px 16px 50px;
+  padding:25px 16px 0;
 }
 
-
-/* =========================
-   HERO
-========================= */
-
+/* Hero */
 .hero{
   text-align:center;
   padding:10px 0 25px;
@@ -129,19 +109,13 @@ header{
   font-size:16px;
 }
 
-
-/* =========================
-   ORIGINAL CARTOON
-========================= */
-
+/* Cartoon */
 .cartoon-wrap{
   width:190px;
   height:180px;
   margin:0 auto 8px;
   position:relative;
 }
-
-/* Head */
 
 .cartoon-head{
   position:absolute;
@@ -155,8 +129,6 @@ header{
   z-index:3;
 }
 
-/* Hair */
-
 .hair{
   position:absolute;
   width:92px;
@@ -168,8 +140,6 @@ header{
   z-index:4;
   transform:rotate(-4deg);
 }
-
-/* Eyes */
 
 .eye{
   position:absolute;
@@ -189,8 +159,6 @@ header{
   left:111px;
 }
 
-/* Smile */
-
 .smile{
   position:absolute;
   width:32px;
@@ -201,8 +169,6 @@ header{
   top:78px;
   z-index:5;
 }
-
-/* Body */
 
 .cartoon-body{
   position:absolute;
@@ -216,8 +182,6 @@ header{
   z-index:2;
 }
 
-/* Yellow belt */
-
 .belt{
   position:absolute;
   width:110px;
@@ -229,8 +193,6 @@ header{
   border-left:4px solid #172033;
   border-right:4px solid #172033;
 }
-
-/* Left arm */
 
 .arm-left{
   position:absolute;
@@ -247,8 +209,6 @@ header{
   animation:waveLeft 1s infinite ease-in-out;
 }
 
-/* Left hand */
-
 .hand-left{
   position:absolute;
   width:25px;
@@ -261,8 +221,6 @@ header{
   z-index:4;
   animation:handWave 1s infinite ease-in-out;
 }
-
-/* Right arm */
 
 .arm-right{
   position:absolute;
@@ -278,8 +236,6 @@ header{
   z-index:1;
 }
 
-/* Right hand waving */
-
 .hand-right{
   position:absolute;
   width:27px;
@@ -294,42 +250,18 @@ header{
 }
 
 @keyframes handWave{
-
-  0%{
-    transform:rotate(-20deg);
-  }
-
-  50%{
-    transform:rotate(25deg);
-  }
-
-  100%{
-    transform:rotate(-20deg);
-  }
-
+  0%{transform:rotate(-20deg);}
+  50%{transform:rotate(25deg);}
+  100%{transform:rotate(-20deg);}
 }
 
 @keyframes waveLeft{
-
-  0%{
-    transform:rotate(25deg);
-  }
-
-  50%{
-    transform:rotate(5deg);
-  }
-
-  100%{
-    transform:rotate(25deg);
-  }
-
+  0%{transform:rotate(25deg);}
+  50%{transform:rotate(5deg);}
+  100%{transform:rotate(25deg);}
 }
 
-
-/* =========================
-   QUESTION TABS
-========================= */
-
+/* Question Tabs */
 .quick{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -367,11 +299,7 @@ header{
   font-weight:500;
 }
 
-
-/* =========================
-   CHAT
-========================= */
-
+/* Chat */
 .chat{
   background:rgba(8,22,40,.97);
   border:1px solid rgba(255,255,255,.13);
@@ -412,17 +340,14 @@ header{
 }
 
 @keyframes messageIn{
-
   from{
     opacity:0;
     transform:translateY(10px);
   }
-
   to{
     opacity:1;
     transform:translateY(0);
   }
-
 }
 
 .bot{
@@ -445,11 +370,7 @@ header{
   font-weight:900;
 }
 
-
-/* =========================
-   INPUT
-========================= */
-
+/* Input */
 .inputbar{
   display:flex;
   gap:10px;
@@ -487,11 +408,7 @@ input:focus{
   transform:scale(1.05);
 }
 
-
-/* =========================
-   INFO CARDS
-========================= */
-
+/* Info Cards */
 .info{
   margin-top:22px;
   display:grid;
@@ -517,11 +434,7 @@ input:focus{
   color:#ffd166;
 }
 
-
-/* =========================
-   HELP
-========================= */
-
+/* Help */
 .help{
   margin-top:22px;
   padding:20px;
@@ -555,11 +468,22 @@ input:focus{
   line-height:1.6;
 }
 
+/* Footer */
+.footer{
+  margin-top:30px;
+  padding:22px 10px;
+  text-align:center;
+  background:rgba(3,12,24,.98);
+  border-top:1px solid rgba(255,255,255,.1);
+  color:#9eafc2;
+  font-size:13px;
+}
 
-/* =========================
-   MOBILE
-========================= */
+.footer b{
+  color:#ffd166;
+}
 
+/* Mobile */
 @media(max-width:750px){
 
   .hero h1{
@@ -581,7 +505,6 @@ input:focus{
   .msg{
     max-width:94%;
   }
-
 }
 
 @media(max-width:450px){
@@ -606,11 +529,9 @@ input:focus{
   .send{
     padding:0 15px;
   }
-
 }
 </style>
 </head>
-
 
 <body>
 
@@ -618,9 +539,7 @@ input:focus{
 <div class="bg-ball ball2"></div>
 <div class="bg-ball ball3"></div>
 
-
 <header>
-
   <div class="brand">
     🛡️ KAWACH Child Protection Chatbot
   </div>
@@ -628,48 +547,33 @@ input:focus{
   <div class="tagline">
     Safe • Simple • Child Friendly
   </div>
-
 </header>
 
 
 <main class="wrap">
 
-
-<!-- HERO -->
-
 <section class="hero">
-
-
-<!-- Animated Cartoon -->
 
 <div class="cartoon-wrap">
 
   <div class="hair"></div>
 
   <div class="cartoon-head">
-
     <div class="eye left"></div>
-
     <div class="eye right"></div>
-
     <div class="smile"></div>
-
   </div>
 
   <div class="cartoon-body"></div>
-
   <div class="belt"></div>
 
   <div class="arm-left"></div>
-
   <div class="hand-left"></div>
 
   <div class="arm-right"></div>
-
   <div class="hand-right"></div>
 
 </div>
-
 
 <h1>
   Hello <span>Baccho!</span> 👋
@@ -682,96 +586,76 @@ input:focus{
 </section>
 
 
-
-<!-- =========================
-     QUESTION TABS
-========================= -->
+<!-- QUESTION TABS -->
 
 <div class="quick">
-
 
 <button onclick="quickAsk('Mission Vatsalya kya hai?')">
 🏛️ Mission Vatsalya
 <small>मिशन वात्सल्य</small>
 </button>
 
-
 <button onclick="quickAsk('Juvenile Justice kya hai?')">
 ⚖️ Juvenile Justice
 <small>किशोर न्याय</small>
 </button>
-
 
 <button onclick="quickAsk('Child Rights kya hain?')">
 🌈 Child Rights
 <small>बाल अधिकार</small>
 </button>
 
-
 <button onclick="quickAsk('CWC kya hai?')">
 👥 CWC
 <small>बाल कल्याण समिति</small>
 </button>
-
 
 <button onclick="quickAsk('DCPU kya hai?')">
 🏢 DCPU
 <small>जिला बाल संरक्षण इकाई</small>
 </button>
 
-
 <button onclick="quickAsk('JJB kya hai?')">
 ⚖️ JJB
 <small>किशोर न्याय बोर्ड</small>
 </button>
-
 
 <button onclick="quickAsk('Child Marriage')">
 💍 Child Marriage
 <small>बाल विवाह</small>
 </button>
 
-
 <button onclick="quickAsk('Child Labour')">
 🧒 Child Labour
 <small>बाल श्रम</small>
 </button>
-
 
 <button onclick="quickAsk('Child Abuse')">
 🛡️ Child Abuse
 <small>बाल शोषण</small>
 </button>
 
-
 <button onclick="quickAsk('Online Safety')">
 💻 Online Safety
 <small>ऑनलाइन सुरक्षा</small>
 </button>
-
 
 <button onclick="quickAsk('POCSO')">
 ⚖️ POCSO
 <small>पॉक्सो</small>
 </button>
 
-
 <button onclick="quickAsk('Mujhe help chahiye')">
 🚨 Need Help
 <small>मुझे मदद चाहिए</small>
 </button>
 
-
 </div>
 
 
-
-<!-- =========================
-     CHAT
-========================= -->
+<!-- CHAT -->
 
 <section class="chat">
-
 
 <div class="chat-head">
 
@@ -783,9 +667,7 @@ input:focus{
 
 </div>
 
-
 <div id="messages" class="messages">
-
 
 <div class="msg bot">
 
@@ -804,8 +686,8 @@ input:focus{
 
   <br><br>
 
-  Main tumhe simple language mein samjhane ki
-  koshish karunga। 💛
+  Main tumhe simple language mein samjhane
+  ki koshish karunga। 💛
 
   <br><br>
 
@@ -814,7 +696,6 @@ input:focus{
   <b>1098</b> Child Helpline se सहायता ली जा सकती है।
 
 </div>
-
 
 </div>
 
@@ -833,15 +714,12 @@ input:focus{
 
 </div>
 
-
 </section>
-
 
 
 <!-- INFO -->
 
 <div class="info">
-
 
 <div class="card">
 
@@ -878,9 +756,7 @@ child-protection व्यवस्था के बारे में आस�
 
 </div>
 
-
 </div>
-
 
 
 <!-- HELP -->
@@ -897,21 +773,17 @@ child-protection व्यवस्था के बारे में आस�
 
 <br>
 
-
 <a href="tel:1098">
 📞 Child Helpline 1098
 </a>
-
 
 <a href="tel:112">
 🚨 Emergency 112
 </a>
 
-
 <a href="tel:1930">
 💻 Cyber Crime 1930
 </a>
-
 
 </section>
 
@@ -930,17 +802,19 @@ chat में share न करें।
 
 </div>
 
-
 </main>
 
+
+<!-- FINAL FOOTER -->
+
+<footer class="footer">
+  Designed and Developed By <b>Arpit Srivastava</b>
+</footer>
 
 
 <script>
 
-
-/* =====================================================
-   ELEMENTS
-===================================================== */
+/* Elements */
 
 const messages =
 document.getElementById("messages");
@@ -949,10 +823,7 @@ const input =
 document.getElementById("input");
 
 
-
-/* =====================================================
-   ADD MESSAGE
-===================================================== */
+/* Add Message */
 
 function add(text,who){
 
@@ -964,16 +835,12 @@ function add(text,who){
 
   messages.appendChild(d);
 
-  messages.scrollTop=
-  messages.scrollHeight;
+  messages.scrollTop=messages.scrollHeight;
 
 }
 
 
-
-/* =====================================================
-   QUICK QUESTION
-===================================================== */
+/* Quick Question */
 
 function quickAsk(question){
 
@@ -984,9 +851,8 @@ function quickAsk(question){
 }
 
 
-
 /* =====================================================
-   FIXED LOCAL ANSWERS
+   LOCAL ANSWERS
 ===================================================== */
 
 function localAnswer(q){
@@ -994,9 +860,7 @@ function localAnswer(q){
   const x=q.toLowerCase().trim();
 
 
-  /* =================================================
-     MISSION VATSALYA
-  ================================================= */
+  /* Mission Vatsalya */
 
   if(
     x.includes("mission vatsalya") ||
@@ -1035,10 +899,7 @@ function localAnswer(q){
   }
 
 
-
-  /* =================================================
-     JUVENILE JUSTICE
-  ================================================= */
+  /* Juvenile Justice */
 
   if(
     x.includes("juvenile justice") ||
@@ -1080,10 +941,7 @@ function localAnswer(q){
   }
 
 
-
-  /* =================================================
-     CHILD RIGHTS
-  ================================================= */
+  /* Child Rights */
 
   if(
     x.includes("child rights") ||
@@ -1143,10 +1001,7 @@ function localAnswer(q){
   }
 
 
-
-  /* =================================================
-     CWC
-  ================================================= */
+  /* CWC */
 
   if(
     x.includes("cwc") ||
@@ -1180,21 +1035,12 @@ function localAnswer(q){
     उदाहरण के लिए बेसहारा, खोए हुए, परिवार से अलग
     या शोषण/neglect का सामना कर रहे बच्चों के मामले।
 
-    <br><br>
-
-    CWC बच्चे के best interest को ध्यान में रखते हुए
-    care, protection और rehabilitation से जुड़े
-    आवश्यक निर्णय कर सकती है।
-
     `;
 
   }
 
 
-
-  /* =================================================
-     DCPU
-  ================================================= */
+  /* DCPU */
 
   if(
     x.includes("dcpu") ||
@@ -1225,20 +1071,12 @@ function localAnswer(q){
     जुड़ी योजनाओं और सेवाओं के implementation और
     coordination में सहयोग करती है।
 
-    <br><br>
-
-    DCPU, CWC, JJB और अन्य संबंधित child-protection
-    structures के साथ coordination में भी काम करती है।
-
     `;
 
   }
 
 
-
-  /* =================================================
-     JJB
-  ================================================= */
+  /* JJB */
 
   if(
     x.includes("jjb") ||
@@ -1269,23 +1107,14 @@ function localAnswer(q){
     care, protection, rehabilitation तथा social
     reintegration पर ध्यान देना है।
 
-    <br><br>
-
-    💛 आसान भाषा में:<br><br>
-
-    अगर कोई बच्चा कानून से जुड़े मामले में आता है,
-    तो उसके मामले को उसकी उम्र और परिस्थितियों को
-    ध्यान में रखते हुए विशेष व्यवस्था के तहत देखा जाता है।
-
     `;
 
   }
 
 
-
   /* =================================================
      CHILD MARRIAGE
-     EXACT USER ANSWER
+     EXACT ANSWER
   ================================================= */
 
   if(
@@ -1325,10 +1154,7 @@ function localAnswer(q){
   }
 
 
-
-  /* =================================================
-     CHILD LABOUR
-  ================================================= */
+  /* Child Labour */
 
   if(
     x.includes("child labour") ||
@@ -1355,18 +1181,8 @@ function localAnswer(q){
 
     <br><br>
 
-    भारत में बच्चों के employment और काम से जुड़े
-    मामलों पर कानून और नियम लागू होते हैं।
-
-    <br><br>
-
     बच्चों को ऐसे काम से बचाना जरूरी है जो उनके
     स्वास्थ्य, सुरक्षा या शिक्षा के लिए नुकसानदायक हो।
-
-    <br><br>
-
-    अगर कोई बच्चा unsafe work में है तो किसी trusted
-    adult, teacher या संबंधित authority को बताएं।
 
     <br><br>
 
@@ -1378,10 +1194,7 @@ function localAnswer(q){
   }
 
 
-
-  /* =================================================
-     CHILD ABUSE
-  ================================================= */
+  /* Child Abuse */
 
   if(
     x.includes("child abuse") ||
@@ -1426,10 +1239,7 @@ function localAnswer(q){
   }
 
 
-
-  /* =================================================
-     ONLINE SAFETY
-  ================================================= */
+  /* Online Safety */
 
   if(
     x.includes("online safety") ||
@@ -1473,11 +1283,6 @@ function localAnswer(q){
 
     <br><br>
 
-    📸 जरूरत पड़ने पर harmful messages या screenshots
-    का evidence सुरक्षित रखें।
-
-    <br><br>
-
     💻 Cyber crime के लिए
     <b>cybercrime.gov.in</b> पर reporting की जा सकती है।
 
@@ -1486,10 +1291,7 @@ function localAnswer(q){
   }
 
 
-
-  /* =================================================
-     POCSO
-  ================================================= */
+  /* POCSO */
 
   if(
     x.includes("pocso") ||
@@ -1527,11 +1329,6 @@ function localAnswer(q){
 
     <br><br>
 
-    किसी trusted adult, police या appropriate child
-    protection authority से सहायता लें।
-
-    <br><br>
-
     🚨 Immediate danger: <b>112</b><br>
     📞 Child Helpline: <b>1098</b>
 
@@ -1540,10 +1337,7 @@ function localAnswer(q){
   }
 
 
-
-  /* =================================================
-     HELP
-  ================================================= */
+  /* Help */
 
   if(
     x.includes("mujhe help") ||
@@ -1585,10 +1379,7 @@ function localAnswer(q){
   }
 
 
-
-  /* =================================================
-     GREETING
-  ================================================= */
+  /* Greeting */
 
   if(
     x==="hi" ||
@@ -1628,7 +1419,6 @@ function localAnswer(q){
 }
 
 
-
 /* =====================================================
    SEND
 ===================================================== */
@@ -1640,14 +1430,12 @@ async function send(){
   if(!q)return;
 
 
-  /* USER MESSAGE */
-
   add(q,"user");
 
   input.value="";
 
 
-  /* FIXED ANSWER */
+  /* Local answer first */
 
   const local=localAnswer(q);
 
@@ -1664,7 +1452,7 @@ async function send(){
   }
 
 
-  /* AI TYPING */
+  /* AI Typing */
 
   const typing=document.createElement("div");
 
@@ -1689,7 +1477,7 @@ async function send(){
   messages.scrollTop=messages.scrollHeight;
 
 
-  /* BACKEND */
+  /* Backend */
 
   try{
 
