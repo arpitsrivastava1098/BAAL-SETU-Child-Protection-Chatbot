@@ -92,26 +92,19 @@ ${knowledge}
 // MIDDLEWARE
 // ===============================
 
-app.use(express.json({
-  limit: "32kb"
-}));
+app.use(
+  express.json({
+    limit: "32kb"
+  })
+);
 
 // ===============================
 // FRONTEND
 // ===============================
 
-app.use(
-  express.static(
-    path.join(__dirname, "public")
-  )
-);
-
-// IMPORTANT:
-// This fixes "Cannot GET /"
-
 app.get("/", (req, res) => {
   res.sendFile(
-    path.join(__dirname, "public", "index.html")
+    path.join(__dirname, "index.html")
   );
 });
 
@@ -131,9 +124,7 @@ app.get("/health", (req, res) => {
 // ===============================
 
 app.post("/api/chat", async (req, res) => {
-
   try {
-
     const message = String(
       req.body?.message || ""
     ).trim();
@@ -148,20 +139,21 @@ app.post("/api/chat", async (req, res) => {
 
     if (message.length > 4000) {
       return res.status(400).json({
-        error: "Question is too long. Please keep it under 4000 characters."
+        error:
+          "Question is too long. Please keep it under 4000 characters."
       });
     }
 
     // Check API key
 
     if (!process.env.OPENAI_API_KEY) {
-
       console.error(
         "OPENAI_API_KEY is missing."
       );
 
       return res.status(503).json({
-        error: "AI service is not configured yet."
+        error:
+          "AI service is not configured yet."
       });
     }
 
@@ -170,13 +162,9 @@ app.post("/api/chat", async (req, res) => {
     // ===============================
 
     const response = await client.responses.create({
-
       model: "gpt-5.6-luna",
-
       instructions: instructions,
-
       input: message
-
     });
 
     const answer =
@@ -188,21 +176,16 @@ app.post("/api/chat", async (req, res) => {
     });
 
   } catch (error) {
-
     console.error(
       "KAWACH API ERROR:",
       error
     );
 
     return res.status(500).json({
-
       error:
         "KAWACH is temporarily unavailable. Please use 1098 or 112 if you need immediate help."
-
     });
-
   }
-
 });
 
 // ===============================
@@ -210,11 +193,9 @@ app.post("/api/chat", async (req, res) => {
 // ===============================
 
 app.use((req, res) => {
-
   res.status(404).json({
     error: "Page or API endpoint not found."
   });
-
 });
 
 // ===============================
@@ -222,7 +203,6 @@ app.use((req, res) => {
 // ===============================
 
 app.listen(port, "0.0.0.0", () => {
-
   console.log(
     `KAWACH running on port ${port}`
   );
@@ -230,5 +210,4 @@ app.listen(port, "0.0.0.0", () => {
   console.log(
     `Environment: ${process.env.NODE_ENV || "production"}`
   );
-
 });
