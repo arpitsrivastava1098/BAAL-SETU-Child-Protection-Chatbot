@@ -26,7 +26,7 @@ body{
   overflow-x:hidden;
 }
 
-/* ================= FLOATING DECORATIONS ================= */
+/* FLOATING BACKGROUND */
 
 .bg-bubble{
   position:fixed;
@@ -64,18 +64,22 @@ body{
 }
 
 @keyframes float{
-  0%,100%{transform:translateY(0) rotate(0deg)}
-  50%{transform:translateY(-25px) rotate(12deg)}
+  0%,100%{
+    transform:translateY(0) rotate(0deg);
+  }
+  50%{
+    transform:translateY(-25px) rotate(12deg);
+  }
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 
 header{
   position:sticky;
   top:0;
   z-index:100;
   padding:14px 6%;
-  background:rgba(8,14,27,.88);
+  background:rgba(8,14,27,.90);
   backdrop-filter:blur(15px);
   border-bottom:1px solid rgba(255,255,255,.1);
   box-shadow:0 5px 25px rgba(0,0,0,.25);
@@ -110,8 +114,12 @@ header{
 }
 
 @keyframes shieldPulse{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.08)}
+  0%,100%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.08);
+  }
 }
 
 .brand-text{
@@ -148,10 +156,12 @@ header{
 }
 
 @keyframes blink{
-  50%{opacity:.35}
+  50%{
+    opacity:.35;
+  }
 }
 
-/* ================= MAIN ================= */
+/* MAIN */
 
 .wrap{
   position:relative;
@@ -161,7 +171,7 @@ header{
   padding:35px 18px 50px;
 }
 
-/* ================= HERO ================= */
+/* HERO */
 
 .hero{
   text-align:center;
@@ -185,13 +195,13 @@ header{
 
 .hero p{
   color:#b8c5d8;
-  font-size:16px;
+  font-size:17px;
   max-width:650px;
   line-height:1.6;
   margin:auto;
 }
 
-/* ================= CARTOON ================= */
+/* CARTOON */
 
 .cartoon{
   width:150px;
@@ -202,8 +212,12 @@ header{
 }
 
 @keyframes cartoonFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-12px)}
+  0%,100%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-12px);
+  }
 }
 
 .head{
@@ -239,8 +253,13 @@ header{
   z-index:6;
 }
 
-.eye.left{left:51px}
-.eye.right{left:91px}
+.eye.left{
+  left:51px;
+}
+
+.eye.right{
+  left:91px;
+}
 
 .smile{
   position:absolute;
@@ -275,8 +294,12 @@ header{
 }
 
 @keyframes shieldMove{
-  0%,100%{transform:rotate(-5deg)}
-  50%{transform:rotate(5deg)}
+  0%,100%{
+    transform:rotate(-5deg);
+  }
+  50%{
+    transform:rotate(5deg);
+  }
 }
 
 .hand{
@@ -290,10 +313,15 @@ header{
   z-index:5;
 }
 
-.hand.left{left:15px}
-.hand.right{right:15px}
+.hand.left{
+  left:15px;
+}
 
-/* ================= QUICK BUTTONS ================= */
+.hand.right{
+  right:15px;
+}
+
+/* QUICK QUESTIONS */
 
 .section-title{
   text-align:center;
@@ -361,7 +389,7 @@ header{
   margin-top:6px;
 }
 
-/* ================= CHAT ================= */
+/* CHAT */
 
 .chat{
   background:rgba(12,20,35,.92);
@@ -374,7 +402,11 @@ header{
 .chat-head{
   padding:17px 20px;
   border-bottom:1px solid rgba(255,255,255,.1);
-  background:linear-gradient(90deg,rgba(76,201,240,.12),rgba(255,209,102,.08));
+  background:linear-gradient(
+    90deg,
+    rgba(76,201,240,.12),
+    rgba(255,209,102,.08)
+  );
   font-weight:900;
   display:flex;
   align-items:center;
@@ -445,11 +477,11 @@ header{
 
 .hello{
   color:#ffd166;
-  font-size:17px;
+  font-size:18px;
   font-weight:900;
 }
 
-/* ================= TYPING ================= */
+/* TYPING */
 
 .typing{
   display:flex;
@@ -465,15 +497,26 @@ header{
   animation:typing 1.2s infinite;
 }
 
-.typing span:nth-child(2){animation-delay:.15s}
-.typing span:nth-child(3){animation-delay:.3s}
-
-@keyframes typing{
-  0%,60%,100%{transform:translateY(0);opacity:.4}
-  30%{transform:translateY(-7px);opacity:1}
+.typing span:nth-child(2){
+  animation-delay:.15s;
 }
 
-/* ================= INPUT ================= */
+.typing span:nth-child(3){
+  animation-delay:.3s;
+}
+
+@keyframes typing{
+  0%,60%,100%{
+    transform:translateY(0);
+    opacity:.4;
+  }
+  30%{
+    transform:translateY(-7px);
+    opacity:1;
+  }
+}
+
+/* INPUT */
 
 .inputbar{
   display:flex;
@@ -516,34 +559,18 @@ input:focus{
   box-shadow:0 8px 22px rgba(255,209,102,.25);
 }
 
-/* ================= KNOWLEDGE ================= */
-
-.knowledge{
-  margin-top:25px;
-}
-
-.knowledge-inner{
-  padding:20px;
-  color:#d6dfec;
-  line-height:1.65;
-  font-size:14px;
-}
-
-.info-card{
-  background:rgba(24,38,61,.55);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:15px;
-  padding:15px;
-  margin-bottom:12px;
-}
-
-/* ================= HELP ================= */
+/* HELP */
 
 .help{
   margin-top:25px;
   padding:22px;
   border-radius:22px;
-  background:linear-gradient(135deg,rgba(239,71,111,.14),rgba(255,209,102,.08));
+  background:
+    linear-gradient(
+      135deg,
+      rgba(239,71,111,.14),
+      rgba(255,209,102,.08)
+    );
   border:1px solid rgba(255,209,102,.3);
   text-align:center;
 }
@@ -574,7 +601,7 @@ input:focus{
   transform:translateY(-3px);
 }
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 
 .note{
   text-align:center;
@@ -584,12 +611,7 @@ input:focus{
   line-height:1.6;
 }
 
-.note a{
-  color:#ffd166;
-  text-decoration:none;
-}
-
-/* ================= MOBILE ================= */
+/* MOBILE */
 
 @media(max-width:800px){
 
@@ -670,198 +692,409 @@ input:focus{
 
 <body>
 
+<!-- FLOATING ANIMATION -->
+
 <div class="bg-bubble b1"></div>
 <div class="bg-bubble b2"></div>
 <div class="bg-bubble b3"></div>
 
-<header>
-  <div class="header-inner">
 
-    <div class="brand">
-      <div class="logo">🛡️</div>
-      <div>
-        <div class="brand-text">KAWACH Child Protection</div>
-        <div class="tagline">Know Your Rights • Stay Safe • Speak Up</div>
-      </div>
+<!-- HEADER -->
+
+<header>
+
+<div class="header-inner">
+
+  <div class="brand">
+
+    <div class="logo">
+      🛡️
     </div>
 
-    <div class="status">
-      <span class="status-dot"></span>
-      KAWACH Online
+    <div>
+
+      <div class="brand-text">
+        KAWACH Child Protection
+      </div>
+
+      <div class="tagline">
+        Know Your Rights • Stay Safe • Speak Up
+      </div>
+
     </div>
 
   </div>
+
+
+  <div class="status">
+
+    <span class="status-dot"></span>
+
+    KAWACH Online
+
+  </div>
+
+</div>
+
 </header>
 
+
+<!-- MAIN -->
+
 <main class="wrap">
+
 
 <!-- HERO -->
 
 <section class="hero">
 
-  <div class="hero-content">
+<div class="hero-content">
 
-    <div>
-      <h1>Welcome to KAWACH 🌈</h1>
 
-      <p>
-        <b>Child Protection, Child Rights aur Safety</b>
-        ke baare mein bina jhijhak sawal poochhein.
-      </p>
-    </div>
+<div>
 
-    <!-- CSS CARTOON -->
-    <div class="cartoon">
+<h1>
+Welcome to KAWACH 🌈
+</h1>
 
-      <div class="hair"></div>
+<p>
+<b>
+Child Protection, Child Rights aur Safety
+</b>
+ke baare mein <b>bina jhijhak</b> sawal poochhein.
+</p>
 
-      <div class="head">
-        <div class="eye left"></div>
-        <div class="eye right"></div>
-        <div class="smile"></div>
-      </div>
+</div>
 
-      <div class="body"></div>
 
-      <div class="hand left"></div>
-      <div class="hand right"></div>
+<!-- CARTOON -->
 
-      <div class="shield">🛡️</div>
+<div class="cartoon">
 
-    </div>
+<div class="hair"></div>
 
-  </div>
+<div class="head">
+
+<div class="eye left"></div>
+
+<div class="eye right"></div>
+
+<div class="smile"></div>
+
+</div>
+
+<div class="body"></div>
+
+<div class="hand left"></div>
+
+<div class="hand right"></div>
+
+<div class="shield">
+🛡️
+</div>
+
+</div>
+
+
+</div>
 
 </section>
 
-<!-- QUICK QUESTIONS -->
+
+<!-- TOPICS -->
 
 <div class="section-title">
-  💬 <b>Choose a topic / कोई विषय चुनें</b>
+
+💬 <b>
+Kis baare mein jaanna chahte ho?
+</b>
+
 </div>
+
 
 <div class="quick">
 
+
 <button onclick="quickAsk('Child marriage kya hoti hai?')">
-<span>💍 Child Marriage</span>
-<small>बाल विवाह</small>
+
+<span>
+💍 Child Marriage
+</span>
+
+<small>
+बाल विवाह
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('Child labour kya hai?')">
-<span>🧒 Child Labour</span>
-<small>बाल श्रम</small>
+
+<span>
+🧒 Child Labour
+</span>
+
+<small>
+बाल श्रम
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('Child abuse ke baare mein batao')">
-<span>🛡️ Child Abuse</span>
-<small>बाल शोषण</small>
+
+<span>
+🛡️ Child Abuse
+</span>
+
+<small>
+बाल शोषण
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('Child rights kya hain?')">
-<span>⚖️ Child Rights</span>
-<small>बाल अधिकार</small>
+
+<span>
+⚖️ Child Rights
+</span>
+
+<small>
+बाल अधिकार
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('Online safety ke tips batao')">
-<span>📱 Online Safety</span>
-<small>ऑनलाइन सुरक्षा</small>
+
+<span>
+📱 Online Safety
+</span>
+
+<small>
+ऑनलाइन सुरक्षा
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('What is POCSO?')">
-<span>⚖️ POCSO</span>
-<small>पॉक्सो</small>
+
+<span>
+⚖️ POCSO
+</span>
+
+<small>
+पॉक्सो
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('What is Juvenile Justice?')">
-<span>⚖️ Juvenile Justice</span>
-<small>किशोर न्याय</small>
+
+<span>
+⚖️ Juvenile Justice
+</span>
+
+<small>
+किशोर न्याय
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('What is Mission Vatsalya?')">
-<span>🏛️ Mission Vatsalya</span>
-<small>मिशन वात्सल्य</small>
+
+<span>
+🏛️ Mission Vatsalya
+</span>
+
+<small>
+मिशन वात्सल्य
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('How do I report cyber crime against a child?')">
-<span>💻 Cyber Crime</span>
-<small>साइबर अपराध</small>
+
+<span>
+💻 Cyber Crime
+</span>
+
+<small>
+साइबर अपराध
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('Mujhe help chahiye')">
-<span>🚨 I Need Help</span>
-<small>मुझे मदद चाहिए</small>
+
+<span>
+🚨 I Need Help
+</span>
+
+<small>
+मुझे मदद चाहिए
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('Helpline aur reporting number kya hai?')">
-<span>📞 Helpline</span>
-<small>हेल्पलाइन</small>
+
+<span>
+📞 Helpline
+</span>
+
+<small>
+हेल्पलाइन
+</small>
+
 </button>
+
 
 <button onclick="quickAsk('Main ek question poochna chahta hoon')">
-<span>💬 Ask KAWACH</span>
-<small>KAWACH से पूछें</small>
+
+<span>
+💬 Ask KAWACH
+</span>
+
+<small>
+KAWACH से पूछें
+</small>
+
 </button>
 
+
 </div>
+
 
 <!-- CHAT -->
 
 <section class="chat">
 
+
 <div class="chat-head">
 
-  <div class="bot-avatar">🤖</div>
+<div class="bot-avatar">
+🤖
+</div>
 
-  <div>
-    <div>Ask KAWACH</div>
-    <small style="color:#91a0b5;font-weight:500">
-      KAWACH से अपना सवाल पूछें
-    </small>
-  </div>
+<div>
+
+<div>
+Ask KAWACH
+</div>
+
+<small style="color:#91a0b5;font-weight:500">
+KAWACH से अपना सवाल पूछें
+</small>
 
 </div>
+
+</div>
+
 
 <div id="messages" class="messages">
 
+
 <div class="msg bot">
 
-<div class="hello">Hello Baccho 👋</div>
+<div class="hello">
+Hello Baccho 👋
+</div>
 
-Main hoon <b>KAWACH Child Protection Chatbot</b> 🤖🛡️
+<br>
 
-<br><br>
-
-Aap mujhse <b>Child Protection, Child Rights, Safety</b>,
-Child Marriage, Child Labour, POCSO, Online Safety
-aur bahut saare topics ke baare mein pooch sakte ho. 🌈
-
-<br><br>
-
-💡 <b>Yaad rakho:</b> Agar aapko kabhi danger ya unsafe feel ho,
-to kisi trusted adult, teacher ya responsible person ko zaroor batao.
+Main hoon
+<b>
+KAWACH Child Protection Chatbot
+</b>
+🤖🛡️
 
 <br><br>
 
-🚨 Immediate danger mein <b>112</b> par call karein.<br>
-🧒 Child Helpline: <b>1098</b>
-
-<hr style="border:0;border-top:1px solid #34415b;margin:15px 0">
-
-<div class="hello">नमस्ते बच्चों 👋</div>
-
-मैं <b>KAWACH Child Protection Chatbot</b> हूँ। 🤖🛡️
-
-आप बाल संरक्षण, बाल अधिकार और सुरक्षा से जुड़े सवाल
-पूछ सकते हैं।
+Aap mujhse
+<b>
+Child Protection, Child Rights aur Safety
+</b>
+se jude sawaal pooch sakte ho.
 
 <br><br>
 
-🚨 तत्काल खतरे में <b>112</b> पर संपर्क करें।<br>
-🧒 Child Helpline <b>1098</b> पर संपर्क करें।
+💡 <b>Yaad rakho:</b>
+
+Agar aapko kabhi danger ya unsafe feel ho,
+to kisi trusted adult, teacher ya responsible person
+ko zaroor batao.
+
+<br><br>
+
+🚨 Immediate danger mein
+<b>112</b>
+par call karein.
+
+<br>
+
+🧒 Child Helpline:
+<b>1098</b>
+
+<hr style="
+border:0;
+border-top:1px solid #34415b;
+margin:15px 0
+">
+
+
+<div class="hello">
+नमस्ते बच्चों 👋
+</div>
+
+<br>
+
+मैं
+<b>
+KAWACH Child Protection Chatbot
+</b>
+हूँ।
+
+<br><br>
+
+आप
+<b>
+बाल संरक्षण, बाल अधिकार और सुरक्षा
+</b>
+से जुड़े सवाल पूछ सकते हैं।
+
+<br><br>
+
+अगर आपको कोई परेशानी या खतरा महसूस हो,
+तो किसी भरोसेमंद बड़े व्यक्ति से जरूर बात करें।
+
+<br><br>
+
+🚨 तत्काल खतरे में
+<b>112</b>
+पर संपर्क करें।
+
+<br>
+
+🧒 Child Helpline
+<b>1098</b>
+पर संपर्क करें।
 
 </div>
 
+
 </div>
+
+
+<!-- INPUT -->
 
 <div class="inputbar">
 
@@ -871,80 +1104,15 @@ placeholder="Apna sawal likho... 💬"
 onkeydown="if(event.key==='Enter')send()"
 >
 
-<button class="send" onclick="send()">
+<button
+class="send"
+onclick="send()"
+>
 🚀 Send
 </button>
 
 </div>
 
-</section>
-
-
-<!-- KNOWLEDGE BASE -->
-
-<section class="chat knowledge">
-
-<div class="chat-head">
-  📚 Official Legal & Help Knowledge Base
-</div>
-
-<div class="knowledge-inner">
-
-<div class="info-card">
-
-<b>🇮🇳 Child Helpline 1098</b><br>
-
-Mission Vatsalya के तहत Child Helpline बच्चों की सहायता
-और protection से संबंधित सेवाओं से जुड़ी है।
-
-</div>
-
-<div class="info-card">
-
-<b>🚨 Emergency – 112</b><br>
-
-तत्काल emergency या police assistance के लिए 112 पर
-संपर्क किया जा सकता है।
-
-</div>
-
-<div class="info-card">
-
-<b>⚖️ POCSO Act, 2012</b><br>
-
-Protection of Children from Sexual Offences Act बच्चों को
-sexual offences से protection देने वाला प्रमुख कानून है।
-
-</div>
-
-<div class="info-card">
-
-<b>💍 Prohibition of Child Marriage Act, 2006</b><br>
-
-बाल विवाह की रोकथाम और उससे संबंधित offences के लिए
-कानूनी framework प्रदान करता है।
-
-</div>
-
-<div class="info-card">
-
-<b>⚖️ Juvenile Justice Act, 2015</b><br>
-
-Care and protection की जरूरत वाले बच्चों तथा
-children in conflict with law से संबंधित legal framework।
-
-</div>
-
-<div class="info-card">
-
-<b>💻 Cyber Crime</b><br>
-
-Cyber crime की reporting के लिए National Cyber Crime
-Reporting Portal का उपयोग किया जा सकता है।
-Cyber Crime Helpline: <b>1930</b>
-</div>
-
-</div>
 
 </section>
 
@@ -953,227 +1121,286 @@ Cyber Crime Helpline: <b>1930</b>
 
 <section class="help">
 
-<strong>🚨 Need Help Now? / अभी मदद चाहिए?</strong>
+<strong>
+🚨 Need Help Now? / अभी मदद चाहिए?
+</strong>
 
 <p>
+
 अगर आप या कोई बच्चा immediate danger में है,
-तो अकेले सामना न करें। किसी trusted adult या
-appropriate authority से मदद लें।
+तो अकेले सामना न करें।
+
+किसी trusted adult या appropriate authority
+से मदद लें।
+
 </p>
 
-<a href="tel:1098">🧒 Call 1098</a>
 
-<a href="tel:112">🚨 Call 112</a>
+<a href="tel:1098">
+🧒 Call 1098
+</a>
 
-<a href="tel:1930">💻 Cyber 1930</a>
+
+<a href="tel:112">
+🚨 Call 112
+</a>
+
+
+<a href="tel:1930">
+💻 Cyber 1930
+</a>
+
 
 </section>
 
 
+<!-- FOOTER -->
+
 <div class="note">
 
 🛡️ KAWACH awareness and guidance platform है।
-यह police, emergency service, doctor, lawyer या
-government authority का replacement नहीं है।
+
+यह police, emergency service, doctor, lawyer
+या government authority का replacement नहीं है।
 
 <br><br>
 
-Sensitive information जैसे Aadhaar, password,
-OTP या unnecessary private details chat में share न करें।
+Sensitive information जैसे
+<b>Aadhaar, password, OTP</b>
+या unnecessary private details chat में share न करें।
 
 </div>
 
-
-<div class="note">
-
-<b>Official References / आधिकारिक संदर्भ</b>
-
-<br><br>
-
-<a href="https://spniwcd.wcd.gov.in/child-helpline"
-target="_blank" rel="noopener">
-Child Helpline 1098 – Government of India
-</a>
-
-&nbsp; · &nbsp;
-
-<a href="https://www.indiacode.nic.in/"
-target="_blank" rel="noopener">
-India Code
-</a>
-
-&nbsp; · &nbsp;
-
-<a href="https://cybercrime.gov.in/"
-target="_blank" rel="noopener">
-National Cyber Crime Reporting Portal
-</a>
-
-</div>
 
 </main>
 
 
 <script>
 
-const messages = document.getElementById("messages");
-const input = document.getElementById("input");
+const messages =
+document.getElementById("messages");
 
+const input =
+document.getElementById("input");
+
+
+/* ADD MESSAGE */
 
 function add(text,who){
 
-  const d = document.createElement("div");
+const d =
+document.createElement("div");
 
-  d.className = "msg " + who;
+d.className =
+"msg " + who;
 
-  d.innerHTML = text;
+d.innerHTML =
+text;
 
-  messages.appendChild(d);
+messages.appendChild(d);
 
-  messages.scrollTop = messages.scrollHeight;
+messages.scrollTop =
+messages.scrollHeight;
 
 }
 
+
+/* QUICK QUESTION */
 
 function quickAsk(q){
 
-  input.value = q;
+input.value =
+q;
 
-  send();
+send();
 
 }
 
 
-/* ================= SEND ================= */
+/* SEND MESSAGE */
 
 async function send(){
 
-  const q = input.value.trim();
+const q =
+input.value.trim();
 
-  if(!q) return;
-
-  add(q,"user");
-
-  input.value = "";
-
-  /* Animated typing */
-
-  const typing = document.createElement("div");
-
-  typing.className = "msg bot";
-
-  typing.id = "typing";
-
-  typing.innerHTML = `
-    <b>KAWACH 🤖</b><br>
-    <div style="margin-top:8px;color:#91a0b5">
-      Soch raha hoon...
-    </div>
-    <div class="typing" style="margin-top:8px">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  `;
-
-  messages.appendChild(typing);
-
-  messages.scrollTop = messages.scrollHeight;
+if(!q)
+return;
 
 
-  try{
+/* USER MESSAGE */
 
-    const r = await fetch("/api/chat",{
+add(q,"user");
 
-      method:"POST",
-
-      headers:{
-        "Content-Type":"application/json"
-      },
-
-      body:JSON.stringify({
-        message:q
-      })
-
-    });
+input.value =
+"";
 
 
-    const data = await r.json();
+/* TYPING */
 
-    typing.remove();
+const typing =
+document.createElement("div");
 
+typing.className =
+"msg bot";
 
-    if(!r.ok){
-
-      throw new Error(
-        data.error || "Request failed"
-      );
-
-    }
+typing.id =
+"typing";
 
 
-    let answer = String(
-      data.answer || ""
-    );
+typing.innerHTML = `
+
+<b>KAWACH 🤖</b>
+
+<div style="
+margin-top:8px;
+color:#91a0b5
+">
+
+Soch raha hoon...
+
+</div>
+
+<div
+class="typing"
+style="margin-top:8px"
+>
+
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+`;
 
 
-    /*
-      हर AI answer के आगे
-      Hello Baccho automatically
-    */
+messages.appendChild(typing);
 
-    if(!answer.toLowerCase().includes("hello baccho")){
-
-      answer =
-      `<div class="hello">
-        Hello Baccho 👋
-      </div>
-      <div style="margin-top:8px">
-        ${answer}
-      </div>`;
-
-    }
+messages.scrollTop =
+messages.scrollHeight;
 
 
-    add(answer,"bot");
+try{
 
 
-  }catch(e){
+/* API CALL */
 
-    typing.remove();
+const r =
+await fetch(
+"/api/chat",
+{
+method:"POST",
 
-    add(`
+headers:{
+"Content-Type":
+"application/json"
+},
 
-      <div class="hello">
-        Hello Baccho 👋
-      </div>
+body:JSON.stringify({
+message:q
+})
 
-      <br>
+}
+);
 
-      <b>English:</b><br>
 
-      KAWACH is temporarily unavailable.
+const data =
+await r.json();
 
-      <br><br>
 
-      If you need immediate help,
-      please contact <b>1098</b> or <b>112</b>.
+typing.remove();
 
-      <hr style="
-        border:0;
-        border-top:1px solid #34415b;
-        margin:14px 0
-      ">
 
-      <b>Hindi:</b><br>
+if(!r.ok){
 
-      KAWACH अभी उपलब्ध नहीं है।
-      अगर आपको तत्काल मदद चाहिए तो
-      <b>1098</b> या <b>112</b> पर संपर्क करें।
+throw new Error(
+data.error ||
+"Request failed"
+);
 
-    `,"bot");
+}
 
-  }
+
+/* ANSWER */
+
+let answer =
+String(
+data.answer || ""
+);
+
+
+/*
+  Automatically add
+  Hello Baccho
+*/
+
+if(
+!answer
+.toLowerCase()
+.includes("hello baccho")
+){
+
+answer = `
+
+<div class="hello">
+Hello Baccho 👋
+</div>
+
+<div style="margin-top:8px">
+
+${answer}
+
+</div>
+
+`;
+
+}
+
+
+add(
+answer,
+"bot"
+);
+
+
+}catch(e){
+
+
+typing.remove();
+
+
+add(`
+
+<div class="hello">
+Hello Baccho 👋
+</div>
+
+<br>
+
+<b>Oops! 😕</b>
+
+<br><br>
+
+KAWACH अभी जवाब देने में
+temporarily unavailable है।
+
+<br><br>
+
+अगर आपको तत्काल मदद चाहिए,
+तो <b>1098</b> या <b>112</b>
+पर संपर्क करें।
+
+<br><br>
+
+किसी trusted adult,
+teacher या responsible person
+को भी जरूर बताएं।
+
+`,"bot");
+
+
+}
 
 }
 
