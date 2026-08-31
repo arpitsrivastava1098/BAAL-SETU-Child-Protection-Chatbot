@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import pdfParse from "pdf-parse";
 
 dotenv.config();
+
 const app = express();
 const port = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
@@ -28,32 +29,49 @@ let chunks = [];
 let pdfCount = 0;
 
 function normalizeText(text) {
-  return String(text || "").replace(/\r/g, "").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
+  return String(text || "")
+    .replace(/\r/g, "")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
-function makeChunks(text, size = 1800, overlap = 300) {
+function makeChunks(text, size = 1400, overlap = 200) {
   const clean = normalizeText(text);
   const result = [];
   let start = 0;
+
   while (start < clean.length) {
     let end = Math.min(start + size, clean.length);
+
     if (end < clean.length) {
-      const boundary = Math.max(clean.lastIndexOf("\n\n", end), clean.lastIndexOf(". ", end), clean.lastIndexOf(" ", end));
+      const boundary = Math.max(
+        clean.lastIndexOf("\n\n", end),
+        clean.lastIndexOf(". ", end),
+        clean.lastIndexOf(" ", end)
+      );
       if (boundary > start + Math.floor(size * 0.65)) end = boundary + 1;
     }
+
     result.push(clean.slice(start, end).trim());
     if (end >= clean.length) break;
     start = Math.max(end - overlap, start + 1);
   }
+
   return result.filter(Boolean);
 }
 
 async function loadPdfFromUrl(url) {
   const response = await fetch(url, { redirect: "follow" });
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
   const buffer = Buffer.from(await response.arrayBuffer());
   const pdf = await pdfParse(buffer);
-  return { text: normalizeText(pdf.text), pages: pdf.numpages || 0 };
+
+  return {
+    text: normalizeText(pdf.text),
+    pages: pdf.numpages || 0
+  };
 }
 
 async function loadKnowledgeBase() {
@@ -71,15 +89,25 @@ async function loadKnowledgeBase() {
   }
 
   console.log(`Loading ${PDF_URLS.length} PDF resources...`);
+
   for (const url of PDF_URLS) {
     const name = decodeURIComponent(url.split("/").pop());
+
     try {
       const result = await loadPdfFromUrl(url);
+
       if (!result.text) {
         console.warn(`No readable text: ${name}`);
         continue;
       }
-      documents.push({ name, text: result.text, url, pages: result.pages });
+
+      documents.push({
+        name,
+        text: result.text,
+        url,
+        pages: result.pages
+      });
+
       pdfCount++;
       console.log(`PDF loaded: ${name} | pages=${result.pages} | chars=${result.text.length}`);
     } catch (error) {
@@ -88,46 +116,78 @@ async function loadKnowledgeBase() {
   }
 
   for (const doc of documents) {
-    for (const text of makeChunks(doc.text)) chunks.push({ source: doc.name, url: doc.url || null, text });
+    for (const text of makeChunks(doc.text)) {
+      chunks.push({
+        source: doc.name,
+        url: doc.url || null,
+        text
+      });
+    }
   }
+
   console.log(`Knowledge base ready: ${pdfCount} PDFs, ${chunks.length} searchable chunks.`);
 }
 
-const STOP_WORDS = new Set(["the","and","for","are","what","how","why","with","from","this","that","can","does","about","according","please","tell","give","kya","hai","ka","ki","ke","ko","me","mein","se","aur","par","ya"]);
+const STOP_WORDS = new Set([
+  "the", "and", "for", "are", "what", "how", "why", "with", "from",
+  "this", "that", "can", "does", "about", "according", "please", "tell",
+  "give", "kya", "hai", "ka", "ki", "ke", "ko", "me", "mein", "se",
+  "aur", "par", "ya"
+]);
 
 function tokenize(text) {
-  return normalizeText(text).toLowerCase().replace(/[^a-z0-9\u0900-\u097f\s]/gi, " ").split(/\s+/).filter(w => w.length >= 3 && !STOP_WORDS.has(w));
+  return normalizeText(text)
+    .toLowerCase()
+    .replace(/[^a-z0-9\u0900-\u097f\s]/gi, " ")
+    .split(/\s+/)
+    .filter(w => w.length >= 3 && !STOP_WORDS.has(w));
 }
 
 function searchChunks(question) {
   const queryTokens = [...new Set(tokenize(question))];
-  if (!queryTokens.length) return chunks.slice(0, 5);
 
-  return chunks.map(chunk => {
-    const text = chunk.text.toLowerCase();
-    let score = 0;
-    for (const token of queryTokens) {
-      let count = 0;
-      let pos = 0;
-      while ((pos = text.indexOf(token, pos)) !== -1) {
-        count++;
-        pos += token.length;
-        if (count >= 5) break;
+  if (!queryTokens.length) return chunks.slice(0, 3);
+
+  return chunks
+    .map(chunk => {
+      const text = chunk.text.toLowerCase();
+      let score = 0;
+
+      for (const token of queryTokens) {
+        let count = 0;
+        let pos = 0;
+
+        while ((pos = text.indexOf(token, pos)) !== -1) {
+          count++;
+          pos += token.length;
+          if (count >= 4) break;
+        }
+
+        score += Math.min(count, 4);
       }
-      score += Math.min(count, 5);
-    }
-    score += queryTokens.filter(t => text.includes(t)).length * 3;
-    return { ...chunk, score };
-  }).filter(x => x.score > 0).sort((a, b) => b.score - a.score).slice(0, 8);
+
+      score += queryTokens.filter(t => text.includes(t)).length * 3;
+
+      return { ...chunk, score };
+    })
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5);
 }
 
-if (!process.env.GEMINI_API_KEY) console.warn("WARNING: GEMINI_API_KEY is not configured.");
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+if (!process.env.GEMINI_API_KEY) {
+  console.warn("WARNING: GEMINI_API_KEY is not configured.");
+}
+
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY
+});
 
 const baseInstructions = `
 You are KAWACH Child Protection Chatbot for children and adolescents in India.
 
-MANDATORY FORMAT:
+Always answer exactly in this format:
+
 English:
 [Simple, clear English answer]
 
@@ -135,12 +195,11 @@ Hindi:
 [Same answer in simple Hindi]
 
 KNOWLEDGE RULES:
-- The supplied PDF excerpts are the primary factual source.
-- Use them for KAWACH, child protection, CWPC, Meena Manch, child trafficking, child labour, child marriage, schemes, training modules, referral systems and related programme questions.
+- Use the supplied PDF excerpts as the primary factual source.
 - Do not invent facts, laws, sections, penalties, procedures, contacts or government claims.
-- If the excerpts do not support a specific fact, say: "I cannot verify this specific information from the available KAWACH resources."
+- If the supplied excerpts do not support a specific fact, say that you cannot verify it from the available KAWACH resources.
 - Mention the source PDF name when useful.
-- Do not claim a detail came from a PDF unless it is present in the supplied excerpts.
+- Keep answers concise and directly relevant to the question.
 
 SAFETY:
 - Immediate danger: move to a safe place, contact a trusted adult, 112 for emergency help and 1098 Child Helpline.
@@ -154,72 +213,116 @@ SAFETY:
 
 app.use(express.json({ limit: "32kb" }));
 app.use(express.static(__dirname));
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
 
-app.get("/health", (req, res) => res.json({
-  status: "ok",
-  service: "KAWACH Child Protection Chatbot",
-  ai: "Gemini",
-  pdfKnowledgeBase: pdfCount > 0 ? "loaded" : "no PDFs loaded",
-  pdfCount,
-  searchableChunks: chunks.length
-}));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
-app.get("/api/knowledge-status", (req, res) => res.json({
-  status: "ok",
-  pdfCount,
-  searchableChunks: chunks.length,
-  sources: documents.map(d => d.name)
-}));
+app.get("/health", (req, res) => {
+  res.json({
+    status: "ok",
+    service: "KAWACH Child Protection Chatbot",
+    ai: "Gemini",
+    pdfKnowledgeBase: pdfCount > 0 ? "loaded" : "no PDFs loaded",
+    pdfCount,
+    searchableChunks: chunks.length
+  });
+});
+
+app.get("/api/knowledge-status", (req, res) => {
+  res.json({
+    status: "ok",
+    pdfCount,
+    searchableChunks: chunks.length,
+    sources: documents.map(d => d.name)
+  });
+});
 
 async function generateGeminiResponse(message) {
   const relevant = searchChunks(message);
+
   const context = relevant.length
-    ? relevant.map((item, i) => `SOURCE ${i + 1}: ${item.source}\n${item.text}`).join("\n\n---\n\n")
+    ? relevant
+        .map((item, i) => `SOURCE ${i + 1}: ${item.source}\n${item.text}`)
+        .join("\n\n---\n\n")
     : "No relevant PDF excerpt was found.";
 
   const systemInstruction = `${baseInstructions}\n\nRELEVANT RESOURCE EXCERPTS:\n${context}\n\nEND RESOURCE EXCERPTS.`;
-  const models = ["gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash-lite"];
+
+  // Fast model first. Minimal thinking is supported by Gemini 3.5 Flash-Lite.
+  const models = [
+    { name: "gemini-3.5-flash-lite", thinkingLevel: "minimal" },
+    { name: "gemini-3.6-flash", thinkingLevel: "minimal" }
+  ];
+
   let lastError = null;
 
   for (const model of models) {
-    for (let attempt = 1; attempt <= 2; attempt++) {
-      try {
-        console.log(`Trying model: ${model} | Attempt: ${attempt}`);
-        const response = await ai.models.generateContent({
-          model,
-          contents: message,
-          config: { systemInstruction, maxOutputTokens: 1200 }
-        });
-        return response.text || "No response was generated.";
-      } catch (error) {
-        lastError = error;
-        console.error(`Gemini error | ${model} | Attempt ${attempt}:`, error?.message || error);
-        if (attempt < 2) await new Promise(resolve => setTimeout(resolve, 1500));
-      }
+    try {
+      console.log(`Trying fast model: ${model.name}`);
+
+      const response = await ai.models.generateContent({
+        model: model.name,
+        contents: message,
+        config: {
+          systemInstruction,
+          maxOutputTokens: 700,
+          thinkingConfig: {
+            thinkingLevel: model.thinkingLevel
+          }
+        }
+      });
+
+      return response.text || "No response was generated.";
+    } catch (error) {
+      lastError = error;
+      console.error(`Gemini error | ${model.name}:`, error?.message || error);
     }
   }
+
   throw lastError;
 }
 
 app.post("/api/chat", async (req, res) => {
   try {
     const message = String(req.body?.message || "").trim();
-    if (!message) return res.status(400).json({ error: "Please enter a question." });
-    if (message.length > 4000) return res.status(400).json({ error: "Question is too long. Please keep it under 4000 characters." });
-    if (!process.env.GEMINI_API_KEY) return res.status(503).json({ error: "AI service is not configured yet." });
+
+    if (!message) {
+      return res.status(400).json({ error: "Please enter a question." });
+    }
+
+    if (message.length > 4000) {
+      return res.status(400).json({
+        error: "Question is too long. Please keep it under 4000 characters."
+      });
+    }
+
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(503).json({
+        error: "AI service is not configured yet."
+      });
+    }
+
     const answer = await generateGeminiResponse(message);
     return res.json({ answer });
   } catch (error) {
     console.error("KAWACH FINAL ERROR:", error?.message || error);
-    return res.status(503).json({ error: "KAWACH is temporarily busy. Please try again in a few seconds. If you need immediate help, contact 1098 or 112." });
+
+    return res.status(503).json({
+      error: "KAWACH is temporarily busy. Please try again in a few seconds. If you need immediate help, contact 1098 or 112."
+    });
   }
 });
 
-app.use((req, res) => res.status(404).json({ error: "Page or API endpoint not found." }));
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Page or API endpoint not found."
+  });
+});
 
 async function startServer() {
   await loadKnowledgeBase();
+
   app.listen(port, "0.0.0.0", () => {
     console.log(`KAWACH running on port ${port}`);
     console.log(`PDF Knowledge Base: ${pdfCount} PDF(s)`);
