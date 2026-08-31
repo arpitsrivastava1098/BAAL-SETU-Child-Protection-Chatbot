@@ -66,15 +66,16 @@ header{
 }
 
 .hero-sub{
-  font-size:18px;
-  font-weight:700;
+  font-size:20px;
+  font-weight:800;
   color:#343b46;
 }
 
 .hero-small{
   margin-top:8px;
   color:#69717d;
-  font-size:15px;
+  font-size:16px;
+  font-weight:600;
 }
 
 /* CARTOON */
@@ -91,7 +92,7 @@ header{
   height:175px;
 }
 
-/* head */
+/* FACE */
 .face{
   position:absolute;
   width:115px;
@@ -116,7 +117,7 @@ header{
   border-radius:55% 55% 35% 35%;
 }
 
-/* eyes */
+/* EYES */
 .eye{
   position:absolute;
   width:12px;
@@ -126,10 +127,15 @@ header{
   top:45px;
 }
 
-.eye.left{left:30px}
-.eye.right{right:30px}
+.eye.left{
+  left:30px;
+}
 
-/* smile */
+.eye.right{
+  right:30px;
+}
+
+/* SMILE */
 .smile{
   position:absolute;
   width:42px;
@@ -140,7 +146,7 @@ header{
   top:72px;
 }
 
-/* body */
+/* BODY */
 .body{
   position:absolute;
   width:115px;
@@ -161,14 +167,21 @@ header{
   top:12px;
   background:#ffd23f;
   border:3px solid #222;
-  clip-path:polygon(50% 0,90% 15%,82% 68%,50% 100%,18% 68%,10% 15%);
+  clip-path:polygon(
+    50% 0,
+    90% 15%,
+    82% 68%,
+    50% 100%,
+    18% 68%,
+    10% 15%
+  );
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:21px;
 }
 
-/* waving arm */
+/* WAVING ARM */
 .arm{
   position:absolute;
   width:62px;
@@ -192,11 +205,16 @@ header{
 }
 
 @keyframes wave{
-  0%,100%{transform:rotate(-12deg)}
-  50%{transform:rotate(28deg)}
+  0%,100%{
+    transform:rotate(-12deg);
+  }
+
+  50%{
+    transform:rotate(28deg);
+  }
 }
 
-/* speech bubble */
+/* SPEECH */
 .speech{
   position:absolute;
   right:-180px;
@@ -208,14 +226,20 @@ header{
   font-weight:800;
   box-shadow:0 7px 15px rgba(0,0,0,.12);
   animation:bubble 2s infinite;
+  white-space:nowrap;
 }
 
 @keyframes bubble{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-5px)}
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-5px);
+  }
 }
 
-/* QUICK BUTTONS */
+/* QUICK TITLE */
 .quick-title{
   text-align:center;
   font-size:22px;
@@ -224,6 +248,7 @@ header{
   margin:15px 0;
 }
 
+/* BUTTONS */
 .quick{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -253,15 +278,41 @@ header{
   box-shadow:0 3px 0 rgba(0,0,0,.12);
 }
 
-.q1{background:#ffd166}
-.q2{background:#ff9f68}
-.q3{background:#9be7ff}
-.q4{background:#b8f2c8}
-.q5{background:#d6c2ff}
-.q6{background:#ffb7d5}
-.q7{background:#a9d6ff}
-.q8{background:#ffe59a}
-.q9{background:#ffaaa5}
+.q1{
+  background:#ffd166;
+}
+
+.q2{
+  background:#ff9f68;
+}
+
+.q3{
+  background:#9be7ff;
+}
+
+.q4{
+  background:#b8f2c8;
+}
+
+.q5{
+  background:#d6c2ff;
+}
+
+.q6{
+  background:#ffb7d5;
+}
+
+.q7{
+  background:#a9d6ff;
+}
+
+.q8{
+  background:#ffe59a;
+}
+
+.q9{
+  background:#ffaaa5;
+}
 
 .quick small{
   display:block;
@@ -299,7 +350,6 @@ header{
   border-radius:17px;
   margin:10px 0;
   line-height:1.55;
-  white-space:normal;
 }
 
 .bot{
@@ -376,13 +426,19 @@ input:focus{
 .footer{
   text-align:center;
   margin-top:35px;
-  padding:18px 10px;
+  padding:20px 10px;
   color:#66707c;
   font-size:13px;
+  line-height:1.6;
+}
+
+.disclaimer{
+  max-width:850px;
+  margin:auto;
 }
 
 .developer{
-  margin-top:10px;
+  margin-top:12px;
   color:#343a40;
   font-size:15px;
   font-weight:900;
@@ -436,6 +492,10 @@ input:focus{
   .send{
     padding:0 15px;
   }
+
+  .brand{
+    font-size:20px;
+  }
 }
 </style>
 </head>
@@ -443,110 +503,210 @@ input:focus{
 <body>
 
 <header>
-  <div class="header-inner">
-    <div>
-      <div class="brand">🛡️ KAWACH</div>
-      <div class="tagline">Child Protection • Child Rights • Safety</div>
-    </div>
-    <div>🌈 Safe • Friendly • Helpful</div>
-  </div>
+
+<div class="header-inner">
+
+<div>
+
+<div class="brand">
+🛡️ KAWACH – Child Protection Chatbot
+</div>
+
+<div class="tagline">
+Child Protection • Child Rights • Safety
+</div>
+
+</div>
+
+<div>
+🌈 Safe • Friendly • Helpful
+</div>
+
+</div>
+
 </header>
+
 
 <main class="wrap">
 
+
+<!-- HERO -->
+
 <section class="hero">
 
-  <div class="mascot-area">
+<div class="mascot-area">
 
-    <div class="mascot">
+<div class="mascot">
 
-      <div class="speech">
-        👋 Hello Baccho!
-      </div>
+<div class="speech">
+👋 Hello Baccho!
+</div>
 
-      <div class="face">
-        <div class="eye left"></div>
-        <div class="eye right"></div>
-        <div class="smile"></div>
-      </div>
+<div class="face">
 
-      <div class="body">
-        <div class="shield">🛡️</div>
-      </div>
+<div class="eye left"></div>
 
-      <div class="arm">
-        <div class="hand">👋</div>
-      </div>
+<div class="eye right"></div>
 
-    </div>
+<div class="smile"></div>
 
-  </div>
+</div>
 
-  <h1>👋 Hello Baccho!</h1>
 
-  <div class="hero-sub">
-    मैं KAWACH हूँ।
-  </div>
+<div class="body">
 
-  <div class="hero-small">
-    जो पूछना है, बिना झिझक पूछो। 😊
-  </div>
+<div class="shield">
+🛡️
+</div>
+
+</div>
+
+
+<div class="arm">
+
+<div class="hand">
+👋
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<h1>
+👋 Hello Baccho!
+</h1>
+
+
+<div class="hero-sub">
+मैं KAWACH हूँ।
+</div>
+
+
+<div class="hero-small">
+जो पूछना है, बिना झिझक पूछो। 😊
+</div>
 
 </section>
 
+
+
+<!-- QUICK QUESTIONS -->
+
 <div class="quick-title">
-  💬 अपना सवाल चुनें
+💬 अपना सवाल चुनें
 </div>
+
 
 <div class="quick">
 
+
 <button class="q1" onclick="quickAsk('Child Marriage')">
+
 💍 बाल विवाह
-<small>Child Marriage</small>
+
+<small>
+Child Marriage
+</small>
+
 </button>
+
 
 <button class="q2" onclick="quickAsk('Child Labour')">
+
 🧒 बाल श्रम
-<small>Child Labour</small>
+
+<small>
+Child Labour
+</small>
+
 </button>
+
 
 <button class="q3" onclick="quickAsk('Child Safety and Child Abuse')">
+
 🛡️ बाल सुरक्षा
-<small>Child Safety</small>
+
+<small>
+Child Safety
+</small>
+
 </button>
+
 
 <button class="q4" onclick="quickAsk('Child Rights')">
+
 🌈 बाल अधिकार
-<small>Child Rights</small>
+
+<small>
+Child Rights
+</small>
+
 </button>
+
 
 <button class="q5" onclick="quickAsk('POCSO')">
+
 ⚖️ POCSO
-<small>बच्चों की सुरक्षा</small>
+
+<small>
+बच्चों की सुरक्षा
+</small>
+
 </button>
+
 
 <button class="q6" onclick="quickAsk('Mission Vatsalya')">
+
 🏛️ Mission Vatsalya
-<small>मिशन वात्सल्य</small>
+
+<small>
+मिशन वात्सल्य
+</small>
+
 </button>
+
 
 <button class="q7" onclick="quickAsk('Juvenile Justice')">
+
 ⚖️ Juvenile Justice
-<small>किशोर न्याय</small>
+
+<small>
+किशोर न्याय
+</small>
+
 </button>
+
 
 <button class="q8" onclick="quickAsk('Online Safety')">
+
 📱 Online Safety
-<small>ऑनलाइन सुरक्षा</small>
+
+<small>
+ऑनलाइन सुरक्षा
+</small>
+
 </button>
 
+
 <button class="q9" onclick="quickAsk('I Need Help')">
+
 🚨 मुझे मदद चाहिए
-<small>I Need Help</small>
+
+<small>
+I Need Help
+</small>
+
 </button>
+
 
 </div>
 
+
+
+<!-- CHAT -->
 
 <section class="chat">
 
@@ -554,13 +714,20 @@ input:focus{
 🤖 KAWACH से पूछें
 </div>
 
+
 <div id="messages" class="messages">
+
 
 <div class="msg bot">
 
-<b>👋 Hello Baccho!</b><br><br>
+<b>👋 Hello Baccho!</b>
 
-मैं <b>KAWACH</b> हूँ। 😊<br>
+<br><br>
+
+मैं <b>KAWACH</b> हूँ। 😊
+
+<br><br>
+
 जो पूछना है, बिना झिझक पूछो।
 
 <br><br>
@@ -573,14 +740,17 @@ input:focus{
 
 </div>
 
+
 </div>
+
 
 <div class="inputbar">
 
 <input
 id="input"
 placeholder="अपना सवाल लिखें..."
-onkeydown="if(event.key==='Enter')send()">
+onkeydown="if(event.key==='Enter')send()"
+>
 
 <button class="send" onclick="send()">
 पूछें ➤
@@ -591,9 +761,14 @@ onkeydown="if(event.key==='Enter')send()">
 </section>
 
 
+
+<!-- HELP -->
+
 <section class="help">
 
-<strong>🚨 मदद चाहिए?</strong>
+<strong>
+🚨 मदद चाहिए?
+</strong>
 
 <br><br>
 
@@ -601,136 +776,190 @@ onkeydown="if(event.key==='Enter')send()">
 
 <br>
 
-<a href="tel:1098">📞 1098</a>
 
-<a href="tel:112">🚨 112</a>
+<a href="tel:1098">
+📞 1098
+</a>
 
-<a href="tel:1930">💻 1930</a>
+
+<a href="tel:112">
+🚨 112
+</a>
+
+
+<a href="tel:1930">
+💻 1930
+</a>
 
 </section>
 
 
+
+<!-- FOOTER -->
+
 <div class="footer">
 
-KAWACH एक awareness और guidance platform है।
-यह police, emergency service, doctor, lawyer या government authority का replacement नहीं है।
+<div class="disclaimer">
+
+कवच एक जागरूकता और मार्गदर्शन चैटबॉट है। यह पुलिस, आपातकालीन सेवा, डॉक्टर, वकील या सरकारी प्राधिकरण का विकल्प नहीं है।
+
+</div>
+
 
 <div class="developer">
+
 Designed & Developed by Arpit Srivastava
+
 </div>
 
 </div>
+
 
 </main>
 
 
+
 <script>
 
-const messages=document.getElementById("messages");
-const input=document.getElementById("input");
+const messages =
+document.getElementById("messages");
 
+const input =
+document.getElementById("input");
+
+
+/* ADD MESSAGE */
 
 function add(text,who){
 
-  const d=document.createElement("div");
+const d =
+document.createElement("div");
 
-  d.className="msg "+who;
+d.className =
+"msg " + who;
 
-  d.innerHTML=text;
+d.innerHTML =
+text;
 
-  messages.appendChild(d);
+messages.appendChild(d);
 
-  messages.scrollTop=messages.scrollHeight;
+messages.scrollTop =
+messages.scrollHeight;
+
 }
 
+
+/* QUICK BUTTON */
 
 function quickAsk(q){
 
-  input.value=q;
+input.value = q;
 
-  send();
+send();
 
 }
 
 
+/* SEND */
+
 async function send(){
 
-  const q=input.value.trim();
+const q =
+input.value.trim();
 
-  if(!q)return;
-
-  add(q,"user");
-
-  input.value="";
-
-  const typing=document.createElement("div");
-
-  typing.className="msg bot";
-
-  typing.id="typing";
-
-  typing.innerHTML="🤖 KAWACH सोच रहा है... 😊";
-
-  messages.appendChild(typing);
-
-  messages.scrollTop=messages.scrollHeight;
+if(!q) return;
 
 
-  try{
+add(q,"user");
 
-    const r=await fetch("/api/chat",{
-
-      method:"POST",
-
-      headers:{
-        "Content-Type":"application/json"
-      },
-
-      body:JSON.stringify({
-        message:q
-      })
-
-    });
+input.value="";
 
 
-    const data=await r.json();
+const typing =
+document.createElement("div");
 
-    typing.remove();
+typing.className =
+"msg bot";
+
+typing.id =
+"typing";
+
+typing.innerHTML =
+"🤖 KAWACH सोच रहा है... 😊";
+
+messages.appendChild(typing);
+
+messages.scrollTop =
+messages.scrollHeight;
 
 
-    if(!r.ok){
+try{
 
-      throw new Error(data.error || "Request failed");
+const r =
+await fetch("/api/chat",{
 
-    }
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+message:q
+})
+
+});
 
 
-    add(String(data.answer || ""),"bot");
+const data =
+await r.json();
 
 
-  }catch(e){
+typing.remove();
 
-    typing.remove();
 
-    add(`
+if(!r.ok){
 
-    <b>English:</b><br>
+throw new Error(
+data.error ||
+"Request failed"
+);
 
-    KAWACH is temporarily unavailable.
+}
 
-    If you need immediate help, contact <b>1098</b> or <b>112</b>.
 
-    <hr>
+add(
+String(data.answer || ""),
+"bot"
+);
 
-    <b>Hindi:</b><br>
 
-    KAWACH अभी उपलब्ध नहीं है।
+}
 
-    यदि आपको तत्काल मदद चाहिए तो <b>1098</b> या <b>112</b> पर संपर्क करें।
+catch(e){
 
-    `,"bot");
+typing.remove();
 
-  }
+
+add(`
+
+<b>English:</b><br>
+
+KAWACH is temporarily unavailable.
+
+If you need immediate help, contact <b>1098</b> or <b>112</b>.
+
+<hr>
+
+<b>Hindi:</b><br>
+
+KAWACH अभी उपलब्ध नहीं है।
+
+यदि आपको तत्काल मदद चाहिए तो <b>1098</b> या <b>112</b> पर संपर्क करें।
+
+`,"bot");
+
+}
 
 }
 
