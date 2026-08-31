@@ -3,17 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>KAWACH Child Protection Chatbot</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -27,7 +22,7 @@ body{
     linear-gradient(135deg,#07111f,#101a2e 50%,#07111f);
 }
 
-/* BACKGROUND BUBBLES */
+/* Animated background */
 .bg-bubble{
   position:fixed;
   border-radius:50%;
@@ -38,58 +33,46 @@ body{
 }
 
 .b1{
-  width:90px;
-  height:90px;
+  width:90px;height:90px;
   background:#4cc9f0;
-  left:3%;
-  top:25%;
+  left:3%;top:25%;
 }
 
 .b2{
-  width:55px;
-  height:55px;
+  width:55px;height:55px;
   background:#ffd166;
-  right:5%;
-  top:40%;
+  right:5%;top:40%;
   animation-delay:2s;
 }
 
 .b3{
-  width:70px;
-  height:70px;
+  width:70px;height:70px;
   background:#ff70a6;
-  right:12%;
-  bottom:12%;
+  right:12%;bottom:12%;
   animation-delay:4s;
 }
 
 .b4{
-  width:40px;
-  height:40px;
+  width:40px;height:40px;
   background:#8be28b;
-  left:12%;
-  bottom:15%;
+  left:12%;bottom:15%;
   animation-delay:1s;
 }
 
 @keyframes floatBubble{
-  0%,100%{
-    transform:translateY(0) rotate(0deg);
-  }
-  50%{
-    transform:translateY(-25px) rotate(12deg);
-  }
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-25px) rotate(12deg)}
 }
 
-/* HEADER */
+/* Header */
 header{
   position:sticky;
   top:0;
   z-index:100;
   padding:14px 6%;
-  background:rgba(7,14,27,.92);
+  background:rgba(7,14,27,.94);
   backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(255,255,255,.10);
+  border-bottom:1px solid rgba(255,255,255,.1);
   box-shadow:0 5px 25px rgba(0,0,0,.25);
 }
 
@@ -121,8 +104,8 @@ header{
 }
 
 @keyframes logoPulse{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.08);}
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.08)}
 }
 
 .brand-text{
@@ -141,8 +124,8 @@ header{
   display:flex;
   align-items:center;
   gap:7px;
-  background:rgba(53,211,153,.10);
-  border:1px solid rgba(53,211,153,.30);
+  background:rgba(53,211,153,.1);
+  border:1px solid rgba(53,211,153,.3);
   padding:8px 13px;
   border-radius:20px;
   font-size:12px;
@@ -159,10 +142,10 @@ header{
 }
 
 @keyframes blink{
-  50%{opacity:.35;}
+  50%{opacity:.35}
 }
 
-/* MAIN */
+/* Main */
 .wrap{
   position:relative;
   z-index:2;
@@ -171,7 +154,7 @@ header{
   padding:35px 18px 50px;
 }
 
-/* HERO */
+/* Hero */
 .hero{
   text-align:center;
   padding:15px 0 28px;
@@ -205,7 +188,7 @@ header{
   color:#ffd166;
 }
 
-/* CARTOON */
+/* Cartoon */
 .cartoon{
   width:155px;
   height:155px;
@@ -215,8 +198,8 @@ header{
 }
 
 @keyframes cartoonFloat{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-12px);}
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
 }
 
 .head{
@@ -253,21 +236,12 @@ header{
   animation:eyeBlink 4s infinite;
 }
 
-.eye.left{
-  left:52px;
-}
-
-.eye.right{
-  left:92px;
-}
+.eye.left{left:52px}
+.eye.right{left:92px}
 
 @keyframes eyeBlink{
-  0%,92%,100%{
-    transform:scaleY(1);
-  }
-  95%{
-    transform:scaleY(.1);
-  }
+  0%,92%,100%{transform:scaleY(1)}
+  95%{transform:scaleY(.1)}
 }
 
 .smile{
@@ -303,8 +277,8 @@ header{
 }
 
 @keyframes shieldMove{
-  0%,100%{transform:rotate(-5deg);}
-  50%{transform:rotate(5deg);}
+  0%,100%{transform:rotate(-5deg)}
+  50%{transform:rotate(5deg)}
 }
 
 .hand{
@@ -318,22 +292,17 @@ header{
   z-index:5;
 }
 
-.hand.left{
-  left:16px;
-}
+.hand.left{left:16px}
+.hand.right{right:16px}
 
-.hand.right{
-  right:16px;
-}
-
-/* TITLE */
+/* Section title */
 .section-title{
   text-align:center;
   margin:8px 0 16px;
   font-size:19px;
 }
 
-/* QUICK QUESTIONS */
+/* Quick questions */
 .quick{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -342,12 +311,10 @@ header{
 }
 
 .quick button{
-  position:relative;
-  overflow:hidden;
   min-height:90px;
-  background:rgba(18,28,47,.88);
+  background:rgba(18,28,47,.9);
   color:#fff;
-  border:1px solid rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.1);
   border-radius:18px;
   padding:14px 9px;
   cursor:pointer;
@@ -358,9 +325,13 @@ header{
 }
 
 .quick button:hover{
-  transform:translateY(-6px);
+  transform:translateY(-6px) scale(1.02);
   border-color:#ffd166;
-  box-shadow:0 12px 28px rgba(255,209,102,.15);
+  box-shadow:0 12px 28px rgba(255,209,102,.18);
+}
+
+.quick button:active{
+  transform:scale(.96);
 }
 
 .quick button small{
@@ -370,10 +341,10 @@ header{
   margin-top:6px;
 }
 
-/* CHAT */
+/* Chat */
 .chat{
-  background:rgba(12,20,35,.94);
-  border:1px solid rgba(255,255,255,.10);
+  background:rgba(12,20,35,.96);
+  border:1px solid rgba(255,255,255,.1);
   border-radius:25px;
   overflow:hidden;
   box-shadow:0 20px 55px rgba(0,0,0,.35);
@@ -381,7 +352,7 @@ header{
 
 .chat-head{
   padding:17px 20px;
-  border-bottom:1px solid rgba(255,255,255,.10);
+  border-bottom:1px solid rgba(255,255,255,.1);
   background:linear-gradient(
     90deg,
     rgba(76,201,240,.12),
@@ -406,11 +377,11 @@ header{
 }
 
 @keyframes botPulse{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.06);}
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.06)}
 }
 
-/* MESSAGES */
+/* Messages */
 .messages{
   height:430px;
   overflow-y:auto;
@@ -468,7 +439,7 @@ header{
   font-weight:900;
 }
 
-/* TYPING */
+/* Typing */
 .typing{
   display:flex;
   align-items:center;
@@ -488,7 +459,7 @@ header{
 }
 
 .typing span:nth-child(3){
-  animation-delay:.30s;
+  animation-delay:.3s;
 }
 
 @keyframes typing{
@@ -502,12 +473,12 @@ header{
   }
 }
 
-/* INPUT */
+/* Input */
 .inputbar{
   display:flex;
   gap:10px;
   padding:15px;
-  border-top:1px solid rgba(255,255,255,.10);
+  border-top:1px solid rgba(255,255,255,.1);
   background:#0b1424;
 }
 
@@ -529,7 +500,7 @@ input::placeholder{
 
 input:focus{
   border-color:#4cc9f0;
-  box-shadow:0 0 0 3px rgba(76,201,240,.10);
+  box-shadow:0 0 0 3px rgba(76,201,240,.1);
 }
 
 .send{
@@ -548,7 +519,7 @@ input:focus{
   box-shadow:0 8px 22px rgba(255,209,102,.25);
 }
 
-/* HELP */
+/* Help */
 .help{
   margin-top:25px;
   padding:22px;
@@ -558,7 +529,7 @@ input:focus{
     rgba(239,71,111,.14),
     rgba(255,209,102,.08)
   );
-  border:1px solid rgba(255,209,102,.30);
+  border:1px solid rgba(255,209,102,.3);
   text-align:center;
 }
 
@@ -586,10 +557,10 @@ input:focus{
 
 .help a:hover{
   transform:translateY(-3px);
-  box-shadow:0 8px 18px rgba(255,209,102,.20);
+  box-shadow:0 8px 18px rgba(255,209,102,.2);
 }
 
-/* NOTE */
+/* Note */
 .note{
   text-align:center;
   color:#8795aa;
@@ -598,7 +569,7 @@ input:focus{
   line-height:1.6;
 }
 
-/* MOBILE */
+/* Mobile */
 @media(max-width:800px){
 
   .header-inner{
@@ -678,23 +649,21 @@ input:focus{
 
 <body>
 
+<!-- Animated background -->
 <div class="bg-bubble b1"></div>
 <div class="bg-bubble b2"></div>
 <div class="bg-bubble b3"></div>
 <div class="bg-bubble b4"></div>
 
+<!-- HEADER -->
 <header>
-
   <div class="header-inner">
 
     <div class="brand">
 
-      <div class="logo">
-        🛡️
-      </div>
+      <div class="logo">🛡️</div>
 
       <div>
-
         <div class="brand-text">
           KAWACH Child Protection
         </div>
@@ -702,7 +671,6 @@ input:focus{
         <div class="tagline">
           Know Your Rights • Stay Safe • Speak Up
         </div>
-
       </div>
 
     </div>
@@ -713,15 +681,12 @@ input:focus{
     </div>
 
   </div>
-
 </header>
 
 
 <main class="wrap">
 
-
 <!-- HERO -->
-
 <section class="hero">
 
   <div class="hero-content">
@@ -739,9 +704,7 @@ input:focus{
 
     </div>
 
-
     <!-- CARTOON -->
-
     <div class="cartoon">
 
       <div class="hair"></div>
@@ -760,9 +723,7 @@ input:focus{
       <div class="hand left"></div>
       <div class="hand right"></div>
 
-      <div class="shield">
-        🛡️
-      </div>
+      <div class="shield">🛡️</div>
 
     </div>
 
@@ -772,11 +733,9 @@ input:focus{
 
 
 <!-- QUICK QUESTIONS -->
-
 <div class="section-title">
   💬 <b>Kis baare mein jaanna chahte ho?</b>
 </div>
-
 
 <div class="quick">
 
@@ -844,7 +803,6 @@ input:focus{
 
 
 <!-- CHAT -->
-
 <section class="chat">
 
   <div class="chat-head">
@@ -870,6 +828,8 @@ input:focus{
 
   <div id="messages" class="messages">
 
+    <!-- FIRST BOT MESSAGE -->
+
     <div class="msg bot">
 
       <div class="hello">
@@ -884,7 +844,7 @@ input:focus{
 
       <br><br>
 
-      Aap mujhse apna koi bhi sawal pooch sakte ho.
+      Aap apna koi bhi sawal mujhse pooch sakte ho.
 
       <br><br>
 
@@ -938,6 +898,8 @@ input:focus{
 
   </div>
 
+
+  <!-- INPUT -->
 
   <div class="inputbar">
 
@@ -994,6 +956,8 @@ input:focus{
 </section>
 
 
+<!-- FOOTER -->
+
 <div class="note">
 
   🛡️ KAWACH awareness and guidance platform है।
@@ -1011,11 +975,14 @@ input:focus{
 
 </div>
 
-
 </main>
 
 
 <script>
+
+/* =====================================================
+   KAWACH CHATBOT
+===================================================== */
 
 const messages =
   document.getElementById("messages");
@@ -1024,9 +991,9 @@ const input =
   document.getElementById("input");
 
 
-/* ADD MESSAGE */
+/* Add message */
 
-function add(text,who){
+function add(text, who){
 
   const d =
     document.createElement("div");
@@ -1044,7 +1011,7 @@ function add(text,who){
 }
 
 
-/* QUICK QUESTION */
+/* Quick question */
 
 function quickAsk(q){
 
@@ -1055,7 +1022,7 @@ function quickAsk(q){
 }
 
 
-/* SEND */
+/* Send question */
 
 async function send(){
 
@@ -1067,14 +1034,14 @@ async function send(){
   }
 
 
-  /* USER MESSAGE */
+  /* User message */
 
   add(q,"user");
 
   input.value = "";
 
 
-  /* TYPING */
+  /* Typing animation */
 
   const typing =
     document.createElement("div");
@@ -1099,11 +1066,9 @@ async function send(){
       class="typing"
       style="margin-top:8px;"
     >
-
       <span></span>
       <span></span>
       <span></span>
-
     </div>
 
   `;
@@ -1116,6 +1081,8 @@ async function send(){
 
   try{
 
+    /* Existing backend */
+
     const r =
       await fetch(
         "/api/chat",
@@ -1124,7 +1091,7 @@ async function send(){
 
           headers:{
             "Content-Type":
-            "application/json"
+              "application/json"
           },
 
           body:
@@ -1159,8 +1126,8 @@ async function send(){
 
 
     /*
-      HELLO BACCHO
-      HAR AI RESPONSE MEIN
+      HELLO BACCHO automatically
+      added to every answer
     */
 
     if(
