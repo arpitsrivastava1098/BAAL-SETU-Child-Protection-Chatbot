@@ -30,8 +30,7 @@ try {
     error.message
   );
 
-  knowledge =
-    "Knowledge base is currently unavailable.";
+  knowledge = "Knowledge base is currently unavailable.";
 }
 
 // ===============================
@@ -39,9 +38,7 @@ try {
 // ===============================
 
 if (!process.env.GEMINI_API_KEY) {
-  console.warn(
-    "WARNING: GEMINI_API_KEY is not configured."
-  );
+  console.warn("WARNING: GEMINI_API_KEY is not configured.");
 }
 
 const ai = new GoogleGenAI({
@@ -131,11 +128,96 @@ app.get("/health", (req, res) => {
 });
 
 // ===============================
+// GEMINI REQUEST WITH RETRY
+// ===============================
+
+async function generateGeminiResponse(message) {
+
+  const models = [
+    "gemini-2.5-flash-lite",
+    "gemini-2.5-flash"
+  ];
+
+  let lastError = null;
+
+  for (const model of models) {
+
+    for (let attempt = 1; attempt <= 3; attempt++) {
+
+      try {
+
+        console.log(
+          `Trying model: ${model} | Attempt: ${attempt}`
+        );
+
+        const response =
+          await ai.models.generateContent({
+
+            model: model,
+
+            contents: message,
+
+            config: {
+              systemInstruction: instructions,
+              temperature: 0.3,
+              maxOutputTokens: 1200
+            }
+
+          });
+
+        const answer =
+          response.text ||
+          "No response was generated.";
+
+        console.log(
+          `Successful response from model: ${model}`
+        );
+
+        return answer;
+
+      } catch (error) {
+
+        lastError = error;
+
+        const errorMessage =
+          error?.message ||
+          JSON.stringify(error);
+
+        console.error(
+          `Gemini error | Model: ${model} | Attempt: ${attempt}:`,
+          errorMessage
+        );
+
+        // Wait before retrying
+        if (attempt < 3) {
+
+          const delay =
+            attempt * 2000;
+
+          console.log(
+            `Retrying in ${delay}ms...`
+          );
+
+          await new Promise(
+            resolve =>
+              setTimeout(resolve, delay)
+          );
+        }
+      }
+    }
+  }
+
+  throw lastError;
+}
+
+// ===============================
 // CHAT API
 // ===============================
 
 app.post("/api/chat", async (req, res) => {
+
   try {
+
     const message = String(
       req.body?.message || ""
     ).trim();
@@ -143,21 +225,26 @@ app.post("/api/chat", async (req, res) => {
     // Validate message
 
     if (!message) {
+
       return res.status(400).json({
         error: "Please enter a question."
       });
+
     }
 
     if (message.length > 4000) {
+
       return res.status(400).json({
         error:
           "Question is too long. Please keep it under 4000 characters."
       });
+
     }
 
-    // Check Gemini API key
+    // Check API key
 
     if (!process.env.GEMINI_API_KEY) {
+
       console.error(
         "GEMINI_API_KEY is missing."
       );
@@ -166,44 +253,35 @@ app.post("/api/chat", async (req, res) => {
         error:
           "AI service is not configured yet."
       });
+
     }
 
-    // ===============================
-    // GEMINI RESPONSE
-    // ===============================
-
-    const response =
-      await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-
-        contents: message,
-
-        config: {
-          systemInstruction: instructions,
-          temperature: 0.3,
-          maxOutputTokens: 1200
-        }
-      });
+    // Generate Gemini response
 
     const answer =
-      response.text ||
-      "No response was generated.";
+      await generateGeminiResponse(message);
 
     return res.json({
       answer: answer
     });
 
   } catch (error) {
+
     console.error(
-      "KAWACH GEMINI API ERROR:",
-      error.message
+      "KAWACH GEMINI FINAL ERROR:",
+      error?.message ||
+      JSON.stringify(error)
     );
 
-    return res.status(500).json({
+    return res.status(503).json({
+
       error:
-        "KAWACH is temporarily unavailable. Please use 1098 or 112 if you need immediate help."
+        "KAWACH is temporarily busy. Please try again in a few seconds. If you need immediate help, contact 1098 or 112."
+
     });
+
   }
+
 });
 
 // ===============================
@@ -211,10 +289,11 @@ app.post("/api/chat", async (req, res) => {
 // ===============================
 
 app.use((req, res) => {
+
   res.status(404).json({
-    error:
-      "Page or API endpoint not found."
+    error: "Page or API endpoint not found."
   });
+
 });
 
 // ===============================
@@ -225,6 +304,7 @@ app.listen(
   port,
   "0.0.0.0",
   () => {
+
     console.log(
       `KAWACH running on port ${port}`
     );
@@ -238,5 +318,6 @@ app.listen(
     console.log(
       "AI Provider: Gemini"
     );
+
   }
 );
