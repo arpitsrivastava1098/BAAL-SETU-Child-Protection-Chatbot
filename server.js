@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,7 +8,6 @@ import { fileURLToPath } from "node:url";
 dotenv.config();
 
 const app = express();
-
 const port = process.env.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,20 +25,27 @@ try {
   knowledge = fs.readFileSync(knowledgePath, "utf8");
   console.log("Knowledge base loaded successfully.");
 } catch (error) {
-  console.error("knowledge.txt could not be loaded:", error.message);
-  knowledge = "Knowledge base is currently unavailable.";
+  console.error(
+    "knowledge.txt could not be loaded:",
+    error.message
+  );
+
+  knowledge =
+    "Knowledge base is currently unavailable.";
 }
 
 // ===============================
-// OPENAI
+// GEMINI
 // ===============================
 
-if (!process.env.OPENAI_API_KEY) {
-  console.warn("WARNING: OPENAI_API_KEY is not configured.");
+if (!process.env.GEMINI_API_KEY) {
+  console.warn(
+    "WARNING: GEMINI_API_KEY is not configured."
+  );
 }
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY
 });
 
 // ===============================
@@ -57,20 +63,21 @@ a qualified professional.
 
 MANDATORY RESPONSE FORMAT:
 
-- Always answer in English first.
-- Immediately provide the same answer in simple Hindi below it.
-- Use these headings exactly:
-  English:
-  Hindi:
-- Keep urgent safety answers concise.
+Always answer in exactly this format:
+
+English:
+[Answer in clear, simple English]
+
+Hindi:
+[Same answer in simple Hindi]
 
 SAFETY:
 
 - If the user says they are in immediate danger, prioritize getting to safety and
   contacting 112 and Child Helpline 1098.
 - Do not ask for unnecessary identifying information.
-- Never ask for passwords, OTPs, Aadhaar, bank details, exact home address, or similar
-  private information.
+- Never ask for passwords, OTPs, Aadhaar, bank details, exact home address, or other
+  sensitive private information.
 - Never promise secrecy.
 - Do not blame, shame, threaten, or pressure the child.
 - Do not give instructions for concealing abuse, evading authorities, or harming anyone.
@@ -80,8 +87,11 @@ SAFETY:
   adult and emergency support. Do not provide methods.
 - If the question is a specific legal case, explain that the answer is general
   information and recommend the appropriate authority or legal professional.
-- Do not invent sections, penalties, procedures, contacts, or government claims.
-- If the knowledge below does not support a specific fact, say that you cannot verify it.
+- Do not invent laws, sections, penalties, procedures, contacts, or government claims.
+- If the knowledge base does not support a specific fact, clearly say that you cannot
+  verify that fact.
+- Keep urgent safety answers short and practical.
+- Be respectful, calm, child-friendly and non-judgmental.
 
 KAWACH KNOWLEDGE BASE:
 
@@ -115,7 +125,8 @@ app.get("/", (req, res) => {
 app.get("/health", (req, res) => {
   res.json({
     status: "ok",
-    service: "KAWACH Child Protection Chatbot"
+    service: "KAWACH Child Protection Chatbot",
+    ai: "Gemini"
   });
 });
 
@@ -144,11 +155,11 @@ app.post("/api/chat", async (req, res) => {
       });
     }
 
-    // Check API key
+    // Check Gemini API key
 
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.GEMINI_API_KEY) {
       console.error(
-        "OPENAI_API_KEY is missing."
+        "GEMINI_API_KEY is missing."
       );
 
       return res.status(503).json({
@@ -158,17 +169,24 @@ app.post("/api/chat", async (req, res) => {
     }
 
     // ===============================
-    // OPENAI RESPONSE
+    // GEMINI RESPONSE
     // ===============================
 
-    const response = await client.responses.create({
-      model: "gpt-5.6-luna",
-      instructions: instructions,
-      input: message
-    });
+    const response =
+      await ai.models.generateContent({
+        model: "gemini-3.7-flash",
+
+        contents: message,
+
+        config: {
+          systemInstruction: instructions,
+          temperature: 0.3,
+          maxOutputTokens: 1200
+        }
+      });
 
     const answer =
-      response.output_text ||
+      response.text ||
       "No response was generated.";
 
     return res.json({
@@ -177,8 +195,8 @@ app.post("/api/chat", async (req, res) => {
 
   } catch (error) {
     console.error(
-      "KAWACH API ERROR:",
-      error
+      "KAWACH GEMINI API ERROR:",
+      error.message
     );
 
     return res.status(500).json({
@@ -194,7 +212,8 @@ app.post("/api/chat", async (req, res) => {
 
 app.use((req, res) => {
   res.status(404).json({
-    error: "Page or API endpoint not found."
+    error:
+      "Page or API endpoint not found."
   });
 });
 
@@ -202,12 +221,22 @@ app.use((req, res) => {
 // START SERVER
 // ===============================
 
-app.listen(port, "0.0.0.0", () => {
-  console.log(
-    `KAWACH running on port ${port}`
-  );
+app.listen(
+  port,
+  "0.0.0.0",
+  () => {
+    console.log(
+      `KAWACH running on port ${port}`
+    );
 
-  console.log(
-    `Environment: ${process.env.NODE_ENV || "production"}`
-  );
-});
+    console.log(
+      `Environment: ${
+        process.env.NODE_ENV || "production"
+      }`
+    );
+
+    console.log(
+      "AI Provider: Gemini"
+    );
+  }
+);
