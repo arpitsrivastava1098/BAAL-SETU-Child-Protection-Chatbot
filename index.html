@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KAWACH – Child Protection Chatbot</title>
+
+<title>KAWACH Child Protection Chatbot</title>
 
 <style>
+
+/* =====================================================
+   BASIC
+===================================================== */
+
 *{
   box-sizing:border-box;
 }
@@ -16,25 +22,42 @@ html{
 
 body{
   margin:0;
-  font-family:"Trebuchet MS",Arial,sans-serif;
-  background:
-    radial-gradient(circle at 10% 10%,rgba(76,201,240,.15),transparent 25%),
-    radial-gradient(circle at 90% 20%,rgba(255,193,7,.14),transparent 25%),
-    linear-gradient(135deg,#07111f,#10182a 50%,#07111f);
-  color:#fff;
+  font-family:"Trebuchet MS",Arial,Helvetica,sans-serif;
+  color:#ffffff;
   min-height:100vh;
   overflow-x:hidden;
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(76,201,240,.16),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(255,209,102,.15),
+      transparent 25%
+    ),
+    linear-gradient(
+      135deg,
+      #07111f,
+      #101a2e 50%,
+      #07111f
+    );
 }
 
-/* FLOATING BACKGROUND */
+
+/* =====================================================
+   FLOATING BACKGROUND
+===================================================== */
 
 .bg-bubble{
   position:fixed;
   border-radius:50%;
   pointer-events:none;
-  opacity:.35;
+  opacity:.30;
   z-index:0;
-  animation:float 7s ease-in-out infinite;
+  animation:floatBubble 7s ease-in-out infinite;
 }
 
 .b1{
@@ -63,34 +86,57 @@ body{
   animation-delay:4s;
 }
 
-@keyframes float{
+.b4{
+  width:40px;
+  height:40px;
+  background:#8be28b;
+  left:12%;
+  bottom:15%;
+  animation-delay:1s;
+}
+
+@keyframes floatBubble{
+
   0%,100%{
     transform:translateY(0) rotate(0deg);
   }
+
   50%{
     transform:translateY(-25px) rotate(12deg);
   }
+
 }
 
-/* HEADER */
+
+/* =====================================================
+   HEADER
+===================================================== */
 
 header{
   position:sticky;
   top:0;
   z-index:100;
+
   padding:14px 6%;
-  background:rgba(8,14,27,.90);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid rgba(255,255,255,.1);
-  box-shadow:0 5px 25px rgba(0,0,0,.25);
+
+  background:rgba(7,14,27,.90);
+
+  backdrop-filter:blur(16px);
+
+  border-bottom:1px solid rgba(255,255,255,.10);
+
+  box-shadow:
+    0 5px 25px rgba(0,0,0,.25);
 }
 
 .header-inner{
   max-width:1150px;
   margin:auto;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
+
   gap:15px;
 }
 
@@ -101,25 +147,42 @@ header{
 }
 
 .logo{
-  width:48px;
-  height:48px;
-  border-radius:15px;
+  width:50px;
+  height:50px;
+
+  border-radius:16px;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,#ffd166,#f4a261);
-  font-size:28px;
-  box-shadow:0 5px 18px rgba(255,193,7,.25);
-  animation:shieldPulse 2.5s infinite;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd166,
+      #f4a261
+    );
+
+  font-size:29px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(255,193,7,.25);
+
+  animation:
+    logoPulse 2.5s infinite;
 }
 
-@keyframes shieldPulse{
+@keyframes logoPulse{
+
   0%,100%{
     transform:scale(1);
   }
+
   50%{
     transform:scale(1.08);
   }
+
 }
 
 .brand-text{
@@ -138,296 +201,604 @@ header{
   display:flex;
   align-items:center;
   gap:7px;
-  background:rgba(53,211,153,.1);
-  border:1px solid rgba(53,211,153,.3);
-  padding:8px 12px;
+
+  background:
+    rgba(53,211,153,.10);
+
+  border:
+    1px solid rgba(53,211,153,.30);
+
+  padding:8px 13px;
+
   border-radius:20px;
+
   font-size:12px;
+
   color:#74e7b7;
 }
 
 .status-dot{
   width:8px;
   height:8px;
+
   border-radius:50%;
+
   background:#35d399;
-  box-shadow:0 0 10px #35d399;
+
+  box-shadow:
+    0 0 10px #35d399;
+
   animation:blink 1.5s infinite;
 }
 
 @keyframes blink{
+
   50%{
     opacity:.35;
   }
+
 }
 
-/* MAIN */
+
+/* =====================================================
+   MAIN
+===================================================== */
 
 .wrap{
   position:relative;
   z-index:2;
+
   max-width:1100px;
+
   margin:auto;
-  padding:35px 18px 50px;
+
+  padding:
+    35px
+    18px
+    50px;
 }
 
-/* HERO */
+
+/* =====================================================
+   HERO
+===================================================== */
 
 .hero{
   text-align:center;
-  padding:15px 0 30px;
+
+  padding:
+    15px
+    0
+    28px;
 }
 
 .hero-content{
+
   display:flex;
-  justify-content:center;
+
   align-items:center;
+
+  justify-content:center;
+
   gap:35px;
 }
 
 .hero h1{
+
   font-size:44px;
-  margin:8px 0;
-  background:linear-gradient(90deg,#fff,#ffd166,#4cc9f0);
+
+  margin:
+    8px
+    0
+    12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff,
+      #ffd166,
+      #4cc9f0
+    );
+
   -webkit-background-clip:text;
+
   color:transparent;
 }
 
 .hero p{
+
   color:#b8c5d8;
+
   font-size:17px;
-  max-width:650px;
+
   line-height:1.6;
+
+  max-width:650px;
+
   margin:auto;
 }
 
-/* CARTOON */
+.hero p b{
+  color:#ffd166;
+}
+
+
+/* =====================================================
+   CARTOON CHARACTER
+===================================================== */
 
 .cartoon{
-  width:150px;
-  height:150px;
+
+  width:155px;
+  height:155px;
+
   position:relative;
-  animation:cartoonFloat 3s ease-in-out infinite;
+
   flex-shrink:0;
+
+  animation:
+    cartoonFloat
+    3s
+    ease-in-out
+    infinite;
 }
 
 @keyframes cartoonFloat{
+
   0%,100%{
     transform:translateY(0);
   }
+
   50%{
     transform:translateY(-12px);
   }
+
 }
 
+
+/* HEAD */
+
 .head{
+
   position:absolute;
+
   width:95px;
   height:88px;
-  left:28px;
+
+  left:30px;
   top:15px;
+
   background:#ffd6b3;
-  border-radius:48% 48% 45% 45%;
-  border:4px solid #172033;
+
+  border-radius:
+    48%
+    48%
+    45%
+    45%;
+
+  border:
+    4px solid #172033;
+
   z-index:3;
 }
 
+
+/* HAIR */
+
 .hair{
+
   position:absolute;
+
   width:92px;
   height:45px;
-  left:30px;
+
+  left:32px;
   top:10px;
+
   background:#422918;
-  border-radius:55px 55px 25px 25px;
+
+  border-radius:
+    55px
+    55px
+    25px
+    25px;
+
   z-index:4;
 }
 
+
+/* EYES */
+
 .eye{
+
   position:absolute;
+
   width:10px;
   height:13px;
+
   background:#172033;
+
   border-radius:50%;
+
   top:49px;
+
   z-index:6;
+
+  animation:
+    eyeBlink
+    4s
+    infinite;
 }
 
 .eye.left{
-  left:51px;
+  left:52px;
 }
 
 .eye.right{
-  left:91px;
+  left:92px;
 }
 
+@keyframes eyeBlink{
+
+  0%,92%,100%{
+    transform:scaleY(1);
+  }
+
+  95%{
+    transform:scaleY(.1);
+  }
+
+}
+
+
+/* SMILE */
+
 .smile{
+
   position:absolute;
+
   width:28px;
   height:14px;
-  border-bottom:4px solid #d85b64;
+
+  border-bottom:
+    4px solid #d85b64;
+
   border-radius:50%;
-  left:61px;
+
+  left:62px;
   top:72px;
+
   z-index:6;
 }
 
+
+/* BODY */
+
 .body{
+
   position:absolute;
+
   width:92px;
   height:62px;
-  left:30px;
+
+  left:32px;
   top:88px;
+
   background:#4cc9f0;
-  border:4px solid #172033;
-  border-radius:30px 30px 15px 15px;
+
+  border:
+    4px solid #172033;
+
+  border-radius:
+    30px
+    30px
+    15px
+    15px;
+
   z-index:2;
 }
 
+
+/* SHIELD */
+
 .shield{
+
   position:absolute;
-  left:60px;
-  top:100px;
+
+  left:61px;
+  top:99px;
+
   font-size:30px;
+
   z-index:7;
-  animation:shieldMove 2s infinite;
+
+  animation:
+    shieldMove
+    2s
+    infinite;
 }
 
 @keyframes shieldMove{
+
   0%,100%{
     transform:rotate(-5deg);
   }
+
   50%{
     transform:rotate(5deg);
   }
+
 }
 
+
+/* HANDS */
+
 .hand{
+
   position:absolute;
+
   width:28px;
   height:28px;
+
   background:#ffd6b3;
-  border:4px solid #172033;
+
+  border:
+    4px solid #172033;
+
   border-radius:50%;
+
   top:95px;
+
   z-index:5;
 }
 
 .hand.left{
-  left:15px;
+  left:16px;
 }
 
 .hand.right{
-  right:15px;
+  right:16px;
 }
 
-/* QUICK QUESTIONS */
+
+/* =====================================================
+   TOPIC TITLE
+===================================================== */
 
 .section-title{
+
   text-align:center;
-  margin:8px 0 15px;
-  color:#fff;
+
+  margin:
+    8px
+    0
+    16px;
+
   font-size:19px;
+
+  color:#ffffff;
 }
 
+
+/* =====================================================
+   QUICK QUESTIONS
+===================================================== */
+
 .quick{
+
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+
+  grid-template-columns:
+    repeat(4,1fr);
+
   gap:13px;
-  margin:20px 0 28px;
+
+  margin:
+    20px
+    0
+    28px;
 }
 
 .quick button{
+
   position:relative;
+
   overflow:hidden;
+
   min-height:90px;
-  background:rgba(18,28,47,.85);
-  color:#fff;
-  border:1px solid rgba(255,255,255,.1);
+
+  background:
+    rgba(18,28,47,.88);
+
+  color:#ffffff;
+
+  border:
+    1px solid
+    rgba(255,255,255,.10);
+
   border-radius:18px;
+
   padding:14px 9px;
+
   cursor:pointer;
+
   font-weight:800;
+
   font-size:14px;
-  transition:.25s ease;
-  box-shadow:0 7px 20px rgba(0,0,0,.18);
+
+  transition:
+    .25s ease;
+
+  box-shadow:
+    0 7px 20px
+    rgba(0,0,0,.18);
 }
 
 .quick button:before{
+
   content:"";
+
   position:absolute;
+
   width:0;
   height:0;
+
   border-radius:50%;
-  background:rgba(255,209,102,.15);
+
+  background:
+    rgba(255,209,102,.15);
+
   left:50%;
   top:50%;
-  transform:translate(-50%,-50%);
+
+  transform:
+    translate(-50%,-50%);
+
   transition:.4s;
 }
 
 .quick button:hover:before{
-  width:250px;
-  height:250px;
+
+  width:260px;
+  height:260px;
 }
 
 .quick button:hover{
-  transform:translateY(-6px);
+
+  transform:
+    translateY(-6px);
+
   border-color:#ffd166;
-  box-shadow:0 12px 28px rgba(255,209,102,.15);
+
+  box-shadow:
+    0 12px 28px
+    rgba(255,209,102,.15);
 }
 
 .quick button span{
+
   position:relative;
+
   z-index:2;
 }
 
 .quick button small{
+
   display:block;
+
   font-size:11px;
+
   color:#9eabc0;
+
   margin-top:6px;
+
+  position:relative;
+
+  z-index:2;
 }
 
-/* CHAT */
+
+/* =====================================================
+   CHAT
+===================================================== */
 
 .chat{
-  background:rgba(12,20,35,.92);
-  border:1px solid rgba(255,255,255,.1);
+
+  background:
+    rgba(12,20,35,.94);
+
+  border:
+    1px solid
+    rgba(255,255,255,.10);
+
   border-radius:25px;
+
   overflow:hidden;
-  box-shadow:0 20px 55px rgba(0,0,0,.35);
+
+  box-shadow:
+    0 20px 55px
+    rgba(0,0,0,.35);
 }
 
 .chat-head{
-  padding:17px 20px;
-  border-bottom:1px solid rgba(255,255,255,.1);
-  background:linear-gradient(
-    90deg,
-    rgba(76,201,240,.12),
-    rgba(255,209,102,.08)
-  );
+
+  padding:
+    17px
+    20px;
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.10);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(76,201,240,.12),
+      rgba(255,209,102,.08)
+    );
+
   font-weight:900;
+
   display:flex;
+
   align-items:center;
+
   gap:10px;
 }
 
 .bot-avatar{
-  width:38px;
-  height:38px;
+
+  width:40px;
+  height:40px;
+
   border-radius:13px;
-  background:linear-gradient(135deg,#ffd166,#ff9f1c);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd166,
+      #ff9f1c
+    );
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
-  font-size:22px;
+
+  font-size:23px;
+
+  animation:
+    botPulse
+    2.5s
+    infinite;
 }
 
+@keyframes botPulse{
+
+  0%,100%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.06);
+  }
+
+}
+
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
 .messages{
+
   height:430px;
-  overflow:auto;
+
+  overflow-y:auto;
+
   padding:20px;
+
   scroll-behavior:smooth;
 }
 
@@ -436,315 +807,551 @@ header{
 }
 
 .messages::-webkit-scrollbar-thumb{
+
   background:#34415b;
+
   border-radius:20px;
 }
 
 .msg{
+
   max-width:82%;
-  padding:14px 16px;
+
+  padding:
+    14px
+    16px;
+
   border-radius:19px;
-  margin:11px 0;
+
+  margin:
+    11px
+    0;
+
   line-height:1.6;
+
   font-size:14px;
-  animation:messageIn .35s ease;
+
+  animation:
+    messageIn
+    .35s
+    ease;
 }
 
 @keyframes messageIn{
+
   from{
+
     opacity:0;
-    transform:translateY(12px) scale(.97);
+
+    transform:
+      translateY(12px)
+      scale(.97);
+
   }
+
   to{
+
     opacity:1;
-    transform:translateY(0) scale(1);
+
+    transform:
+      translateY(0)
+      scale(1);
+
   }
+
 }
 
+
+/* BOT */
+
 .bot{
-  background:linear-gradient(135deg,#18263d,#141e31);
-  border:1px solid rgba(76,201,240,.16);
+
+  background:
+    linear-gradient(
+      135deg,
+      #18263d,
+      #141e31
+    );
+
+  border:
+    1px solid
+    rgba(76,201,240,.16);
+
   border-bottom-left-radius:6px;
 }
 
+
+/* USER */
+
 .user{
-  background:linear-gradient(135deg,#ffd166,#f4a261);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd166,
+      #f4a261
+    );
+
   color:#101827;
+
   margin-left:auto;
+
   border-bottom-right-radius:6px;
+
   font-weight:700;
 }
 
+
+/* HELLO */
+
 .hello{
+
   color:#ffd166;
+
   font-size:18px;
+
   font-weight:900;
 }
 
-/* TYPING */
+
+/* =====================================================
+   TYPING
+===================================================== */
 
 .typing{
+
   display:flex;
+
   align-items:center;
+
   gap:5px;
 }
 
 .typing span{
+
   width:8px;
   height:8px;
+
   background:#4cc9f0;
+
   border-radius:50%;
-  animation:typing 1.2s infinite;
+
+  animation:
+    typing
+    1.2s
+    infinite;
 }
 
 .typing span:nth-child(2){
-  animation-delay:.15s;
+
+  animation-delay:
+    .15s;
 }
 
 .typing span:nth-child(3){
-  animation-delay:.3s;
+
+  animation-delay:
+    .30s;
 }
 
 @keyframes typing{
+
   0%,60%,100%{
-    transform:translateY(0);
+
+    transform:
+      translateY(0);
+
     opacity:.4;
   }
+
   30%{
-    transform:translateY(-7px);
+
+    transform:
+      translateY(-7px);
+
     opacity:1;
   }
+
 }
 
-/* INPUT */
+
+/* =====================================================
+   INPUT
+===================================================== */
 
 .inputbar{
+
   display:flex;
+
   gap:10px;
+
   padding:15px;
-  border-top:1px solid rgba(255,255,255,.1);
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.10);
+
   background:#0b1424;
 }
 
 input{
+
   flex:1;
+
   background:#080f1d;
-  border:1px solid #34415b;
-  color:#fff;
+
+  border:
+    1px solid
+    #34415b;
+
+  color:#ffffff;
+
   border-radius:15px;
-  padding:14px 16px;
+
+  padding:
+    14px
+    16px;
+
   outline:none;
+
   font-size:14px;
+
   transition:.2s;
 }
 
+input::placeholder{
+
+  color:#7f8da5;
+}
+
 input:focus{
+
   border-color:#4cc9f0;
-  box-shadow:0 0 0 3px rgba(76,201,240,.1);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(76,201,240,.10);
 }
 
 .send{
+
   border:0;
+
   border-radius:15px;
-  padding:0 22px;
-  background:linear-gradient(135deg,#ffd166,#f4a261);
+
+  padding:
+    0
+    22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd166,
+      #f4a261
+    );
+
   color:#172033;
+
   font-weight:900;
+
   cursor:pointer;
+
   transition:.25s;
 }
 
 .send:hover{
-  transform:scale(1.04);
-  box-shadow:0 8px 22px rgba(255,209,102,.25);
+
+  transform:
+    scale(1.04);
+
+  box-shadow:
+    0 8px 22px
+    rgba(255,209,102,.25);
 }
 
-/* HELP */
+
+/* =====================================================
+   HELP
+===================================================== */
 
 .help{
+
   margin-top:25px;
+
   padding:22px;
+
   border-radius:22px;
+
   background:
     linear-gradient(
       135deg,
       rgba(239,71,111,.14),
       rgba(255,209,102,.08)
     );
-  border:1px solid rgba(255,209,102,.3);
+
+  border:
+    1px solid
+    rgba(255,209,102,.30);
+
   text-align:center;
 }
 
 .help strong{
+
   color:#ffd166;
+
   font-size:19px;
 }
 
 .help p{
+
   color:#c1cbd9;
+
   line-height:1.5;
 }
 
 .help a{
+
   display:inline-block;
+
   margin:6px;
-  padding:11px 17px;
+
+  padding:
+    11px
+    17px;
+
   border-radius:13px;
+
   background:#ffd166;
+
   color:#101827;
+
   text-decoration:none;
+
   font-weight:900;
+
   transition:.2s;
 }
 
 .help a:hover{
-  transform:translateY(-3px);
+
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 8px 18px
+    rgba(255,209,102,.20);
 }
 
-/* FOOTER */
+
+/* =====================================================
+   FOOTER NOTE
+===================================================== */
 
 .note{
+
   text-align:center;
+
   color:#8795aa;
+
   font-size:12px;
+
   margin-top:20px;
+
   line-height:1.6;
 }
 
-/* MOBILE */
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media(max-width:800px){
 
   .header-inner{
+
     flex-direction:column;
+
     align-items:flex-start;
   }
 
   .status{
+
     display:none;
   }
 
   .hero-content{
-    flex-direction:column-reverse;
+
+    flex-direction:
+      column-reverse;
+
     gap:5px;
   }
 
   .hero h1{
+
     font-size:32px;
   }
 
   .quick{
-    grid-template-columns:repeat(2,1fr);
+
+    grid-template-columns:
+      repeat(2,1fr);
   }
 
   .messages{
+
     height:400px;
   }
 
   .msg{
+
     max-width:92%;
   }
+
 }
+
 
 @media(max-width:480px){
 
   .wrap{
-    padding:25px 12px 40px;
+
+    padding:
+      25px
+      12px
+      40px;
   }
 
   .brand-text{
+
     font-size:17px;
   }
 
   .hero h1{
+
     font-size:28px;
   }
 
   .hero p{
+
     font-size:14px;
   }
 
+  .cartoon{
+
+    transform:scale(.90);
+  }
+
   .quick{
+
     gap:9px;
   }
 
   .quick button{
+
     min-height:82px;
+
     font-size:12px;
-    padding:10px 5px;
+
+    padding:
+      10px
+      5px;
   }
 
   .messages{
+
     height:420px;
+
     padding:12px;
   }
 
   .inputbar{
+
     padding:10px;
   }
 
   .send{
-    padding:0 15px;
+
+    padding:
+      0
+      15px;
   }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
-<!-- FLOATING ANIMATION -->
+
+<!-- =====================================================
+     BACKGROUND ANIMATION
+===================================================== -->
 
 <div class="bg-bubble b1"></div>
 <div class="bg-bubble b2"></div>
 <div class="bg-bubble b3"></div>
+<div class="bg-bubble b4"></div>
 
 
-<!-- HEADER -->
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
 <header>
 
 <div class="header-inner">
 
-  <div class="brand">
 
-    <div class="logo">
-      🛡️
-    </div>
+<div class="brand">
 
-    <div>
-
-      <div class="brand-text">
-        KAWACH Child Protection
-      </div>
-
-      <div class="tagline">
-        Know Your Rights • Stay Safe • Speak Up
-      </div>
-
-    </div>
-
-  </div>
+<div class="logo">
+🛡️
+</div>
 
 
-  <div class="status">
+<div>
 
-    <span class="status-dot"></span>
+<div class="brand-text">
+KAWACH Child Protection
+</div>
 
-    KAWACH Online
+<div class="tagline">
+Know Your Rights • Stay Safe • Speak Up
+</div>
 
-  </div>
+</div>
+
+</div>
+
+
+<div class="status">
+
+<span class="status-dot"></span>
+
+KAWACH Online
+
+</div>
+
 
 </div>
 
 </header>
 
 
-<!-- MAIN -->
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
 <main class="wrap">
 
 
-<!-- HERO -->
+<!-- =====================================================
+     HERO
+===================================================== -->
 
 <section class="hero">
 
@@ -757,21 +1364,34 @@ input:focus{
 Welcome to KAWACH 🌈
 </h1>
 
+
 <p>
+
 <b>
 Child Protection, Child Rights aur Safety
 </b>
-ke baare mein <b>bina jhijhak</b> sawal poochhein.
+
+ke baare mein
+
+<b>
+bina jhijhak
+</b>
+
+sawal poochhein.
+
 </p>
 
 </div>
+
 
 
 <!-- CARTOON -->
 
 <div class="cartoon">
 
+
 <div class="hair"></div>
+
 
 <div class="head">
 
@@ -783,15 +1403,19 @@ ke baare mein <b>bina jhijhak</b> sawal poochhein.
 
 </div>
 
+
 <div class="body"></div>
+
 
 <div class="hand left"></div>
 
 <div class="hand right"></div>
 
+
 <div class="shield">
 🛡️
 </div>
+
 
 </div>
 
@@ -801,11 +1425,16 @@ ke baare mein <b>bina jhijhak</b> sawal poochhein.
 </section>
 
 
-<!-- TOPICS -->
+
+<!-- =====================================================
+     QUICK QUESTIONS
+===================================================== -->
 
 <div class="section-title">
 
-💬 <b>
+💬
+
+<b>
 Kis baare mein jaanna chahte ho?
 </b>
 
@@ -815,7 +1444,9 @@ Kis baare mein jaanna chahte ho?
 <div class="quick">
 
 
-<button onclick="quickAsk('Child marriage kya hoti hai?')">
+<button
+onclick="quickAsk('Child marriage kya hoti hai?')"
+>
 
 <span>
 💍 Child Marriage
@@ -828,7 +1459,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('Child labour kya hai?')">
+<button
+onclick="quickAsk('Child labour kya hai?')"
+>
 
 <span>
 🧒 Child Labour
@@ -841,7 +1474,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('Child abuse ke baare mein batao')">
+<button
+onclick="quickAsk('Child abuse ke baare mein batao')"
+>
 
 <span>
 🛡️ Child Abuse
@@ -854,7 +1489,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('Child rights kya hain?')">
+<button
+onclick="quickAsk('Child rights kya hain?')"
+>
 
 <span>
 ⚖️ Child Rights
@@ -867,7 +1504,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('Online safety ke tips batao')">
+<button
+onclick="quickAsk('Online safety ke tips batao')"
+>
 
 <span>
 📱 Online Safety
@@ -880,7 +1519,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('What is POCSO?')">
+<button
+onclick="quickAsk('What is POCSO?')"
+>
 
 <span>
 ⚖️ POCSO
@@ -893,7 +1534,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('What is Juvenile Justice?')">
+<button
+onclick="quickAsk('What is Juvenile Justice?')"
+>
 
 <span>
 ⚖️ Juvenile Justice
@@ -906,7 +1549,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('What is Mission Vatsalya?')">
+<button
+onclick="quickAsk('What is Mission Vatsalya?')"
+>
 
 <span>
 🏛️ Mission Vatsalya
@@ -919,7 +1564,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('How do I report cyber crime against a child?')">
+<button
+onclick="quickAsk('How do I report cyber crime against a child?')"
+>
 
 <span>
 💻 Cyber Crime
@@ -932,7 +1579,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('Mujhe help chahiye')">
+<button
+onclick="quickAsk('Mujhe help chahiye')"
+>
 
 <span>
 🚨 I Need Help
@@ -945,7 +1594,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('Helpline aur reporting number kya hai?')">
+<button
+onclick="quickAsk('Helpline aur reporting number kya hai?')"
+>
 
 <span>
 📞 Helpline
@@ -958,7 +1609,9 @@ Kis baare mein jaanna chahte ho?
 </button>
 
 
-<button onclick="quickAsk('Main ek question poochna chahta hoon')">
+<button
+onclick="quickAsk('Main ek question poochna chahta hoon')"
+>
 
 <span>
 💬 Ask KAWACH
@@ -974,16 +1627,21 @@ KAWACH से पूछें
 </div>
 
 
-<!-- CHAT -->
+
+<!-- =====================================================
+     CHAT
+===================================================== -->
 
 <section class="chat">
 
 
 <div class="chat-head">
 
+
 <div class="bot-avatar">
 🤖
 </div>
+
 
 <div>
 
@@ -991,63 +1649,106 @@ KAWACH से पूछें
 Ask KAWACH
 </div>
 
-<small style="color:#91a0b5;font-weight:500">
+
+<small
+style="
+color:#91a0b5;
+font-weight:500;
+"
+>
+
 KAWACH से अपना सवाल पूछें
+
 </small>
 
 </div>
 
+
 </div>
 
 
-<div id="messages" class="messages">
 
+<div
+id="messages"
+class="messages"
+>
+
+
+<!-- FIRST MESSAGE -->
 
 <div class="msg bot">
+
 
 <div class="hello">
 Hello Baccho 👋
 </div>
 
+
 <br>
 
+
 Main hoon
+
 <b>
 KAWACH Child Protection Chatbot
 </b>
+
 🤖🛡️
+
 
 <br><br>
 
+
 Aap mujhse
+
 <b>
 Child Protection, Child Rights aur Safety
 </b>
+
 se jude sawaal pooch sakte ho.
+
 
 <br><br>
 
-💡 <b>Yaad rakho:</b>
+
+💡
+
+<b>
+Yaad rakho:
+</b>
 
 Agar aapko kabhi danger ya unsafe feel ho,
 to kisi trusted adult, teacher ya responsible person
 ko zaroor batao.
 
+
 <br><br>
 
+
 🚨 Immediate danger mein
-<b>112</b>
+
+<b>
+112
+</b>
+
 par call karein.
+
 
 <br>
 
-🧒 Child Helpline:
-<b>1098</b>
 
-<hr style="
+🧒 Child Helpline:
+
+<b>
+1098
+</b>
+
+
+<hr
+style="
 border:0;
 border-top:1px solid #34415b;
-margin:15px 0
+margin:15px 0;
 ">
 
 
@@ -1055,61 +1756,96 @@ margin:15px 0
 नमस्ते बच्चों 👋
 </div>
 
+
 <br>
 
+
 मैं
+
 <b>
 KAWACH Child Protection Chatbot
 </b>
+
 हूँ।
+
 
 <br><br>
 
+
 आप
+
 <b>
 बाल संरक्षण, बाल अधिकार और सुरक्षा
 </b>
+
 से जुड़े सवाल पूछ सकते हैं।
 
+
 <br><br>
+
 
 अगर आपको कोई परेशानी या खतरा महसूस हो,
 तो किसी भरोसेमंद बड़े व्यक्ति से जरूर बात करें।
 
+
 <br><br>
 
+
 🚨 तत्काल खतरे में
-<b>112</b>
+
+<b>
+112
+</b>
+
 पर संपर्क करें।
+
 
 <br>
 
+
 🧒 Child Helpline
-<b>1098</b>
+
+<b>
+1098
+</b>
+
 पर संपर्क करें।
 
+
 </div>
 
 
 </div>
+
 
 
 <!-- INPUT -->
 
 <div class="inputbar">
 
+
 <input
 id="input"
+type="text"
+autocomplete="off"
 placeholder="Apna sawal likho... 💬"
-onkeydown="if(event.key==='Enter')send()"
+onkeydown="
+if(event.key==='Enter'){
+send();
+}
+"
 >
+
 
 <button
 class="send"
 onclick="send()"
 >
+
 🚀 Send
+
 </button>
+
 
 </div>
 
@@ -1117,18 +1853,31 @@ onclick="send()"
 </section>
 
 
-<!-- HELP -->
+
+<!-- =====================================================
+     HELP
+===================================================== -->
 
 <section class="help">
 
+
 <strong>
-🚨 Need Help Now? / अभी मदद चाहिए?
+
+🚨 Need Help Now?
+
+<br>
+
+अभी मदद चाहिए?
+
 </strong>
+
 
 <p>
 
 अगर आप या कोई बच्चा immediate danger में है,
 तो अकेले सामना न करें।
+
+<br>
 
 किसी trusted adult या appropriate authority
 से मदद लें।
@@ -1137,28 +1886,41 @@ onclick="send()"
 
 
 <a href="tel:1098">
+
 🧒 Call 1098
+
 </a>
 
 
 <a href="tel:112">
+
 🚨 Call 112
+
 </a>
 
 
 <a href="tel:1930">
+
 💻 Cyber 1930
+
 </a>
 
 
 </section>
 
 
-<!-- FOOTER -->
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <div class="note">
 
-🛡️ KAWACH awareness and guidance platform है।
+🛡️
+
+KAWACH awareness and guidance platform है।
+
+<br>
 
 यह police, emergency service, doctor, lawyer
 या government authority का replacement नहीं है।
@@ -1166,7 +1928,11 @@ onclick="send()"
 <br><br>
 
 Sensitive information जैसे
-<b>Aadhaar, password, OTP</b>
+
+<b>
+Aadhaar, password, OTP
+</b>
+
 या unnecessary private details chat में share न करें।
 
 </div>
@@ -1175,232 +1941,294 @@ Sensitive information जैसे
 </main>
 
 
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
 <script>
+
 
 const messages =
 document.getElementById("messages");
+
 
 const input =
 document.getElementById("input");
 
 
-/* ADD MESSAGE */
+
+/* =====================================================
+   ADD MESSAGE
+===================================================== */
 
 function add(text,who){
 
-const d =
-document.createElement("div");
+  const d =
+  document.createElement("div");
 
-d.className =
-"msg " + who;
+  d.className =
+  "msg " + who;
 
-d.innerHTML =
-text;
+  d.innerHTML =
+  text;
 
-messages.appendChild(d);
+  messages.appendChild(d);
 
-messages.scrollTop =
-messages.scrollHeight;
+  messages.scrollTop =
+  messages.scrollHeight;
 
 }
 
 
-/* QUICK QUESTION */
+
+/* =====================================================
+   QUICK ASK
+===================================================== */
 
 function quickAsk(q){
 
-input.value =
-q;
+  input.value =
+  q;
 
-send();
+  send();
 
 }
 
 
-/* SEND MESSAGE */
+
+/* =====================================================
+   SEND MESSAGE
+===================================================== */
 
 async function send(){
 
-const q =
-input.value.trim();
 
-if(!q)
-return;
+  const q =
+  input.value.trim();
 
 
-/* USER MESSAGE */
+  if(!q){
+    return;
+  }
 
-add(q,"user");
 
-input.value =
-"";
+  /* USER MESSAGE */
 
+  add(
+    q,
+    "user"
+  );
 
-/* TYPING */
 
-const typing =
-document.createElement("div");
+  input.value =
+  "";
 
-typing.className =
-"msg bot";
 
-typing.id =
-"typing";
+  /* TYPING MESSAGE */
 
+  const typing =
+  document.createElement("div");
 
-typing.innerHTML = `
 
-<b>KAWACH 🤖</b>
+  typing.className =
+  "msg bot";
 
-<div style="
-margin-top:8px;
-color:#91a0b5
-">
 
-Soch raha hoon...
+  typing.id =
+  "typing";
 
-</div>
 
-<div
-class="typing"
-style="margin-top:8px"
->
+  typing.innerHTML = `
 
-<span></span>
-<span></span>
-<span></span>
+    <b>KAWACH 🤖</b>
 
-</div>
+    <div
+      style="
+      margin-top:8px;
+      color:#91a0b5;
+      "
+    >
 
-`;
+      Soch raha hoon...
 
+    </div>
 
-messages.appendChild(typing);
 
-messages.scrollTop =
-messages.scrollHeight;
+    <div
+      class="typing"
+      style="
+      margin-top:8px;
+      "
+    >
 
+      <span></span>
+      <span></span>
+      <span></span>
 
-try{
+    </div>
 
+  `;
 
-/* API CALL */
 
-const r =
-await fetch(
-"/api/chat",
-{
-method:"POST",
+  messages.appendChild(
+    typing
+  );
 
-headers:{
-"Content-Type":
-"application/json"
-},
 
-body:JSON.stringify({
-message:q
-})
+  messages.scrollTop =
+  messages.scrollHeight;
 
-}
-);
 
 
-const data =
-await r.json();
+  try{
 
 
-typing.remove();
+    /* =================================================
+       EXISTING BACKEND
+    ================================================= */
 
+    const r =
+    await fetch(
+      "/api/chat",
+      {
 
-if(!r.ok){
+        method:"POST",
 
-throw new Error(
-data.error ||
-"Request failed"
-);
+        headers:{
+          "Content-Type":
+          "application/json"
+        },
 
-}
+        body:
+        JSON.stringify({
+          message:q
+        })
 
+      }
+    );
 
-/* ANSWER */
 
-let answer =
-String(
-data.answer || ""
-);
+    const data =
+    await r.json();
 
 
-/*
-  Automatically add
-  Hello Baccho
-*/
+    typing.remove();
 
-if(
-!answer
-.toLowerCase()
-.includes("hello baccho")
-){
 
-answer = `
+    if(!r.ok){
 
-<div class="hello">
-Hello Baccho 👋
-</div>
+      throw new Error(
+        data.error ||
+        "Request failed"
+      );
 
-<div style="margin-top:8px">
+    }
 
-${answer}
 
-</div>
+    /* =================================================
+       AI ANSWER
+    ================================================= */
 
-`;
+    let answer =
+    String(
+      data.answer || ""
+    );
 
-}
 
+    /*
+       ALWAYS SHOW
+       HELLO BACCHO
+    */
 
-add(
-answer,
-"bot"
-);
+    if(
+      !answer
+      .toLowerCase()
+      .includes("hello baccho")
+    ){
 
+      answer = `
 
-}catch(e){
+        <div class="hello">
 
+          Hello Baccho 👋
 
-typing.remove();
+        </div>
 
 
-add(`
+        <div
+          style="
+          margin-top:8px;
+          "
+        >
 
-<div class="hello">
-Hello Baccho 👋
-</div>
+          ${answer}
 
-<br>
+        </div>
 
-<b>Oops! 😕</b>
+      `;
 
-<br><br>
+    }
 
-KAWACH अभी जवाब देने में
-temporarily unavailable है।
 
-<br><br>
+    add(
+      answer,
+      "bot"
+    );
 
-अगर आपको तत्काल मदद चाहिए,
-तो <b>1098</b> या <b>112</b>
-पर संपर्क करें।
 
-<br><br>
+  }
 
-किसी trusted adult,
-teacher या responsible person
-को भी जरूर बताएं।
 
-`,"bot");
+  catch(e){
 
 
-}
+    typing.remove();
+
+
+    add(`
+
+      <div class="hello">
+
+        Hello Baccho 👋
+
+      </div>
+
+
+      <br>
+
+
+      <b>
+        Oops! 😕
+      </b>
+
+
+      <br><br>
+
+
+      KAWACH अभी जवाब देने में
+      temporarily unavailable है।
+
+
+      <br><br>
+
+
+      अगर आपको तत्काल मदद चाहिए,
+      तो <b>1098</b> या
+      <b>112</b> पर संपर्क करें।
+
+
+      <br><br>
+
+
+      किसी trusted adult,
+      teacher या responsible person
+      को भी जरूर बताएं।
+
+    `,"bot");
+
+
+  }
 
 }
 
