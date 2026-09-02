@@ -33,6 +33,7 @@ const ai = process.env.GEMINI_API_KEY
   PDFs are NOT downloaded during server startup.
   They are loaded only when required.
 */
+
 const PDF_URLS = [
   "https://arpitsrivastava.co.in/resources/Kawach%20Madule.pdf",
   "https://arpitsrivastava.co.in/resources/Meena%20munch%20module.pdf",
@@ -61,6 +62,16 @@ const pdfFiles = PDF_URLS.map((url) => ({
 let documents = [];
 let chunks = [];
 let knowledgeReady = false;
+
+/* =========================================================
+   FALLBACK RESPONSE
+========================================================= */
+
+const FALLBACK_RESPONSE = `English:
+I’m sorry, I don’t have enough reliable information to answer this question. Please ask a question related to child protection. Contact 1098/112 if you need immediate help.
+
+Hindi:
+क्षमा करें, इस सवाल का विश्वसनीय जवाब मेरे पास उपलब्ध नहीं है। कृपया बाल संरक्षण से संबंधित सवाल पूछें। तत्काल सहायता के लिए 1098 या 112 पर संपर्क करें.`;
 
 /* =========================================================
    TEXT UTILITIES
@@ -641,14 +652,31 @@ or similar source-preface language unless the user specifically asks for the sou
 
 SOURCE ACCURACY:
 
-- Supplied KAWACH resources are the primary source.
+- Supplied KAWACH resources are an important source of information.
 - If a user names a specific module/resource, prioritize that resource.
 - Do not mix unrelated resources when a specific resource is requested.
+- Use the supplied resources when they contain relevant information.
+- If the supplied resources do not contain the answer, you may provide a helpful general answer using reliable general knowledge.
 - Never invent facts.
 - Never guess acronym expansions.
-- Never invent laws, sections, penalties, procedures, government orders or contacts.
-- If the available resources do not verify a specific fact, clearly say:
-"I cannot verify this specific information from the available KAWACH resources."
+- Never invent laws, sections, penalties, procedures, government orders or official contacts.
+- Do not claim that information comes from KAWACH unless it is actually supported by the supplied resources.
+
+UNKNOWN / NO RELIABLE ANSWER:
+
+If you genuinely do not have enough reliable information to answer the user's question, respond EXACTLY in this format and do not add anything else:
+
+English:
+I’m sorry, I don’t have enough reliable information to answer this question. Please ask a question related to child protection. Contact 1098/112 if you need immediate help.
+
+Hindi:
+क्षमा करें, इस सवाल का विश्वसनीय जवाब मेरे पास उपलब्ध नहीं है। कृपया बाल संरक्षण से संबंधित सवाल पूछें। तत्काल सहायता के लिए 1098 या 112 पर संपर्क करें.
+
+IMPORTANT:
+- Never say: "I cannot verify this specific information from the available KAWACH resources."
+- Never mention KAWACH resources, PDFs, documents or knowledge base when using the fallback response.
+- Do not give a made-up answer just to avoid the fallback response.
+- Use the fallback response only when you genuinely lack enough reliable information.
 
 SAFETY:
 
@@ -667,9 +695,12 @@ STYLE:
 - Be concise.
 - Use simple language.
 - Use bullet points when useful.
+- Answer the user's actual question directly.
 - Avoid unnecessary repetition.
 - Do not create unsupported statistics.
 - Be calm, respectful and non-judgmental.
+- If the user asks a general child-protection question, answer it when reliable information is available.
+- If the question is outside child protection and you do not have enough reliable information, use the exact fallback response.
 `;
 
 /* =========================================================
@@ -806,6 +837,7 @@ async function generateResponse(
   /*
     Load ONLY relevant PDFs.
   */
+
   const relevantPdfs =
     await getRelevantPdfs(
       message
@@ -814,6 +846,7 @@ async function generateResponse(
   /*
     Search locally available text.
   */
+
   const matches =
     searchTextChunks(
       message
@@ -841,10 +874,11 @@ ${relevantPdfs
   )
   .join(", ")}
 
-Use these supplied PDF resources as the primary source.
+Use these supplied PDF resources as the primary source when relevant.
 `
       : `
 Use the relevant supplied knowledge text when applicable.
+If it does not contain enough information, use reliable general knowledge.
 `;
 
   const contents = [];
@@ -853,6 +887,7 @@ Use the relevant supplied knowledge text when applicable.
     Attach only the PDFs relevant
     to the current question.
   */
+
   for (const file of relevantPdfs) {
     if (
       file.uploadedFile?.uri &&
@@ -885,6 +920,7 @@ ${textContext}
           Keep the lightweight model
           for faster response.
         */
+
         model:
           "gemini-3.5-flash-lite",
 
@@ -907,10 +943,38 @@ ${textContext}
       }
     );
 
-  return (
-    response.text ||
-    "No response was generated."
-  );
+  const answer =
+    response.text?.trim();
+
+  if (!answer) {
+    return FALLBACK_RESPONSE;
+  }
+
+  /*
+    Extra protection:
+    If Gemini still returns the old
+    KAWACH verification message,
+    replace it with the new fallback.
+  */
+
+  const oldFallbackPatterns = [
+    /I cannot verify this specific information from the available KAWACH resources/i,
+    /I can't verify this specific information from the available KAWACH resources/i,
+    /cannot verify this specific information from the available KAWACH resources/i,
+    /can't verify this specific information from the available KAWACH resources/i
+  ];
+
+  const containsOldFallback =
+    oldFallbackPatterns.some(
+      (pattern) =>
+        pattern.test(answer)
+    );
+
+  if (containsOldFallback) {
+    return FALLBACK_RESPONSE;
+  }
+
+  return answer;
 }
 
 /* =========================================================
@@ -1033,6 +1097,7 @@ const server =
           console.log(
             "Knowledge base ready."
           );
+
         } catch (error) {
           console.error(
             "Knowledge initialization error:",
