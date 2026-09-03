@@ -515,8 +515,8 @@ height:42px;
 
 .right-card{
   position:absolute;
-  width:185px;
-  min-height:92px;
+  width:145px;
+  min-height:72px;
   padding:10px 12px;
   border-radius:20px;
   display:flex;
@@ -640,8 +640,8 @@ height:42px;
 @media(max-width:800px){
   .mascot-area{min-height:245px}
   .right-card{
-    width:145px;
-    min-height:70px;
+    width:118px;
+    min-height:58px;
     padding:7px 6px;
     border-width:2px;
     font-size:12px;
@@ -662,8 +662,8 @@ height:42px;
   .mascot-area{min-height:285px}
   .mascot{transform:scale(.9)}
   .right-card{
-    width:112px;
-    min-height:62px;
+    width:105px;
+    min-height:54px;
     border-radius:15px;
     font-size:10px;
   }
@@ -729,6 +729,153 @@ body::before{
   to{transform:translate3d(0,-12px,0) scale(1.02)}
 }
 
+
+/* ===== MOBILE FIX: 4 RIGHTS FLOAT AROUND CARTOON WITHOUT HIDING TEXT ===== */
+@media(max-width:520px){
+  .hero{
+    overflow:hidden;
+    padding-bottom:8px;
+  }
+
+  /* Keep a dedicated visual area for the floating rights */
+  .rights-orbit{
+    position:relative;
+    inset:auto;
+    width:100%;
+    height:300px;
+    margin:0 auto;
+    pointer-events:none;
+  }
+
+  /* Put the cartoon in the centre of that dedicated area */
+  .mascot-area{
+    position:absolute;
+    z-index:4;
+    left:50%;
+    top:68px;
+    width:170px;
+    min-height:180px;
+    margin:0;
+    transform:translateX(-50%);
+    pointer-events:none;
+  }
+
+  .mascot{
+    transform:scale(.78);
+    transform-origin:center top;
+  }
+
+  /* Four rights stay in the four corners */
+  .right-card{
+    z-index:5;
+    width:108px;
+    min-height:55px;
+    padding:6px 5px;
+    border-radius:14px;
+    font-size:10px;
+    line-height:1.12;
+    box-shadow:0 7px 15px rgba(65,83,120,.16);
+  }
+
+  .right-card .ri{
+    font-size:18px;
+  }
+
+  .right-card small{
+    font-size:7.5px;
+    margin-top:2px;
+  }
+
+  .right-education{
+    left:3px;
+    top:8px;
+  }
+
+  .right-safety{
+    right:3px;
+    top:8px;
+  }
+
+  .right-care{
+    left:3px;
+    bottom:10px;
+  }
+
+  .right-participation{
+    right:3px;
+    bottom:10px;
+  }
+
+  .kids-rights-title{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:6;
+    margin:0;
+    font-size:12px;
+    text-align:center;
+  }
+
+  /* Hide decorative dots on very small screens so they don't cover text */
+  .floating-dot{
+    display:none;
+  }
+
+  /* Hero heading always starts below the animation area */
+  .hero > h1,
+  .hero > p{
+    position:relative;
+    z-index:10;
+    clear:both;
+  }
+
+  .speech{
+    display:none;
+  }
+}
+
+@media(min-width:521px) and (max-width:800px){
+  .hero{
+    overflow:hidden;
+  }
+
+  .rights-orbit{
+    min-height:285px;
+  }
+
+  .right-card{
+    width:125px;
+    min-height:60px;
+    font-size:11px;
+  }
+
+  .right-education{left:2%;top:8px}
+  .right-safety{right:2%;top:8px}
+  .right-care{left:2%;bottom:4px}
+  .right-participation{right:2%;bottom:4px}
+}
+
+
+.emergency-strip{
+  margin:18px auto;
+  max-width:900px;
+  padding:14px 18px;
+  border-radius:18px;
+  text-align:center;
+  font-weight:800;
+  line-height:1.5;
+  background:linear-gradient(135deg,#fff1f1,#ffe0e0);
+  border:2px solid #ffb6b6;
+  box-shadow:0 8px 20px rgba(200,70,70,.12);
+  animation:emergencyPulse 2.5s ease-in-out infinite;
+}
+.emergency-strip strong{font-size:1.08em}
+@keyframes emergencyPulse{
+  0%,100%{transform:translateY(0);box-shadow:0 8px 20px rgba(200,70,70,.12)}
+  50%{transform:translateY(-3px);box-shadow:0 12px 26px rgba(200,70,70,.2)}
+}
+
 </style>
 </head>
 
@@ -774,25 +921,21 @@ Child Protection • Child Rights • Safety
 <div class="kids-rights-title">✨ बच्चों के 4 महत्वपूर्ण अधिकार ✨</div>
 <div class="rights-orbit" aria-label="बच्चों के चार महत्वपूर्ण अधिकार">
   <div class="right-card right-education">
-    <span class="ri">❤️</span>
-    <span>जीवन जीने का अधिकार<small>जन्म, भोजन, साफ पानी और इलाज पाने का हक</small></span>
-  </div>
-
-  <div class="right-card right-safety">
     <span class="ri">📚</span>
-    <span>विकास का अधिकार<small>स्कूल, शिक्षा, खेल और नई चीजें सीखने का हक</small></span>
+    <span>शिक्षा का अधिकार<small>Right to Education</small></span>
   </div>
-
-  <div class="right-card right-care">
+  <div class="right-card right-safety">
     <span class="ri">🛡️</span>
-    <span>संरक्षण का अधिकार<small>बाल श्रम, हिंसा, शोषण और दुर्व्यवहार से सुरक्षित रहने का हक</small></span>
+    <span>सुरक्षा का अधिकार<small>Right to Protection</small></span>
   </div>
-
+  <div class="right-card right-care">
+    <span class="ri">❤️</span>
+    <span>देखभाल का अधिकार<small>Right to Care</small></span>
+  </div>
   <div class="right-card right-participation">
     <span class="ri">🗣️</span>
-    <span>भागीदारी का अधिकार<small>अपने विचार, अपनी बात और फैसलों में शामिल होने का हक</small></span>
+    <span>सहभागिता का अधिकार<small>Right to Participation</small></span>
   </div>
-
   <span class="floating-dot dot1"></span>
   <span class="floating-dot dot2"></span>
   <span class="floating-dot dot3"></span>
@@ -1537,6 +1680,12 @@ BAAL-SETU अभी उपलब्ध नहीं है।
 }
 
 </script>
+
+
+<div class="emergency-strip" role="alert">
+  🚨 अगर कोई बच्चा खतरे में है तो <strong>112</strong> Police helpline पर या
+  <strong>1098</strong> Child Helpline से संपर्क करें।
+</div>
 
 </body>
 </html>
