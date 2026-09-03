@@ -1,0 +1,58 @@
+name: Add Voice Search
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/voice-search.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Add voice search directly to index.html
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          if 'id="voiceBtn"' in s:
+              print('Voice search already present')
+              raise SystemExit(0)
+
+          css = '''\n/* ===== BAAL-SETU VOICE SEARCH ===== */\n.voice{\n  border:0;\n  width:52px;\n  min-width:52px;\n  border-radius:14px;\n  background:#6c63ff;\n  color:#fff;\n  font-size:22px;\n  cursor:pointer;\n  font-weight:900;\n  box-shadow:0 4px 0 rgba(0,0,0,.12);\n  transition:.2s;\n}\n.voice:hover{transform:translateY(-2px)}\n.voice.listening{\n  background:#e84c27;\n  animation:voicePulse 1s infinite;\n}\n@keyframes voicePulse{\n  0%,100%{box-shadow:0 0 0 0 rgba(232,76,39,.35)}\n  50%{box-shadow:0 0 0 10px rgba(232,76,39,0)}\n}\n@media(max-width:500px){\n  .voice{width:46px;min-width:46px;font-size:20px}\n}\n'''
+          s = s.replace('</style>', css + '\n</style>', 1)
+
+          marker = '''<div class="inputbar">\n\n<input'''
+          replacement = '''<div class="inputbar">\n\n<button id="voiceBtn" class="voice" type="button" title="बोलकर सवाल पूछें" aria-label="बोलकर सवाल पूछें">🎤</button>\n\n<input'''
+          if marker not in s:
+              raise SystemExit('Input bar marker not found')
+          s = s.replace(marker, replacement, 1)
+
+          voice_js = '''\n\n/* ===== VOICE SEARCH ===== */\nconst voiceBtn = document.getElementById("voiceBtn");\nconst SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;\n\nif (voiceBtn) {\n  if (!SpeechRecognition) {\n    voiceBtn.addEventListener("click", () => {\n      alert("आपके browser में Voice Search support नहीं है। Chrome या Edge में फिर प्रयास करें।");\n    });\n  } else {\n    const recognition = new SpeechRecognition();\n    recognition.lang = "hi-IN";\n    recognition.interimResults = true;\n    recognition.continuous = false;\n\n    recognition.onstart = () => {\n      voiceBtn.classList.add("listening");\n      voiceBtn.textContent = "🔴";\n      voiceBtn.title = "सुन रहा हूँ... बोलिए";\n      input.placeholder = "🎤 सुन रहा हूँ... अपना सवाल बोलिए";\n    };\n\n    recognition.onresult = (event) => {\n      let transcript = "";\n      for (let i = event.resultIndex; i < event.results.length; i++) {\n        transcript += event.results[i][0].transcript;\n      }\n      input.value = transcript.trim();\n    };\n\n    recognition.onerror = (event) => {\n      if (event.error === "not-allowed" || event.error === "service-not-allowed") {\n        alert("Voice Search के लिए microphone permission allow करें।");\n      }\n    };\n\n    recognition.onend = () => {\n      voiceBtn.classList.remove("listening");\n      voiceBtn.textContent = "🎤";\n      voiceBtn.title = "बोलकर सवाल पूछें";\n      input.placeholder = "अपना सवाल लिखें...";\n      input.focus();\n    };\n\n    voiceBtn.addEventListener("click", () => {\n      if (voiceBtn.classList.contains("listening")) {\n        recognition.stop();\n        return;\n      }\n      try { recognition.start(); } catch (e) {}\n    });\n  }\n}\n'''
+          marker2 = '\n</script>'
+          if marker2 not in s:
+              raise SystemExit('Script end marker not found')
+          s = s.replace(marker2, voice_js + marker2, 1)
+          p.write_text(s, encoding='utf-8')
+          print('Voice search added to index.html')
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Add voice search button to BAAL-SETU"
+            git push
+          fi
