@@ -1,10 +1,10 @@
 {
   "name": "baal-setu-child-protection-chatbot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node security-proxy.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.34.0",
