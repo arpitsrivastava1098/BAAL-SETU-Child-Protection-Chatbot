@@ -18,13 +18,116 @@ function securityHeaders(res) {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "SAMEORIGIN");
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
-  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+  // Voice search needs microphone access in the same page.
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(self), geolocation=()");
 }
 
 function reject(res, status, message) {
   securityHeaders(res);
   res.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
   res.end(JSON.stringify({ error: message }));
+}
+
+const voiceSearch = `
+<style>
+#voiceBtn{
+  border:0;
+  width:52px;
+  min-width:52px;
+  border-radius:14px;
+  background:#6c63ff;
+  color:#fff;
+  font-size:22px;
+  cursor:pointer;
+  font-weight:900;
+  box-shadow:0 4px 0 rgba(0,0,0,.12);
+  transition:.2s;
+}
+#voiceBtn:hover{transform:translateY(-2px)}
+#voiceBtn.listening{
+  background:#e84c27;
+  animation:voicePulse 1s infinite;
+}
+@keyframes voicePulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(232,76,39,.35)}
+  50%{box-shadow:0 0 0 10px rgba(232,76,39,0)}
+}
+@media(max-width:500px){
+  #voiceBtn{width:46px;min-width:46px;font-size:20px}
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  const bar=document.querySelector(".inputbar");
+  const input=document.getElementById("input");
+  if(!bar || !input || document.getElementById("voiceBtn")) return;
+
+  const btn=document.createElement("button");
+  btn.id="voiceBtn";
+  btn.type="button";
+  btn.title="बोलकर सवाल पूछें";
+  btn.setAttribute("aria-label","बोलकर सवाल पूछें");
+  btn.textContent="🎤";
+  bar.insertBefore(btn,input);
+
+  const Recognition=window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!Recognition){
+    btn.title="इस browser में voice search उपलब्ध नहीं है";
+    btn.addEventListener("click",function(){
+      alert("आपके browser में Voice Search support नहीं है। Chrome या Edge में फिर प्रयास करें।");
+    });
+    return;
+  }
+
+  const recognition=new Recognition();
+  recognition.lang="hi-IN";
+  recognition.interimResults=true;
+  recognition.continuous=false;
+
+  recognition.onstart=function(){
+    btn.classList.add("listening");
+    btn.textContent="🔴";
+    btn.title="सुन रहा हूँ... बोलिए";
+    input.placeholder="🎤 सुन रहा हूँ... अपना सवाल बोलिए";
+  };
+
+  recognition.onresult=function(event){
+    let text="";
+    for(let i=event.resultIndex;i<event.results.length;i++){
+      text += event.results[i][0].transcript;
+    }
+    input.value=text.trim();
+  };
+
+  recognition.onerror=function(event){
+    if(event.error==="not-allowed" || event.error==="service-not-allowed"){
+      alert("Voice Search के लिए microphone permission allow करें।");
+    }
+  };
+
+  recognition.onend=function(){
+    btn.classList.remove("listening");
+    btn.textContent="🎤";
+    btn.title="बोलकर सवाल पूछें";
+    input.placeholder="अपना सवाल लिखें...";
+    input.focus();
+  };
+
+  btn.addEventListener("click",function(){
+    if(btn.classList.contains("listening")){
+      recognition.stop();
+      return;
+    }
+    try{ recognition.start(); }
+    catch(e){}
+  });
+});
+</script>
+`;
+
+function injectVoiceSearch(html) {
+  if (!html.includes("BAAL-SETU") || html.includes("id=\"voiceBtn\"")) return html;
+  return html.replace("</head>", voiceSearch + "</head>");
 }
 
 async function start() {
@@ -110,9 +213,30 @@ function forward(req, res, body = null) {
       headers
     },
     (upstreamRes) => {
-      securityHeaders(res);
-      res.writeHead(upstreamRes.statusCode || 502, upstreamRes.headers);
-      upstreamRes.pipe(res);
+      const contentType = String(upstreamRes.headers["content-type"] || "");
+      const shouldInject = req.method === "GET" && contentType.includes("text/html");
+
+      if (!shouldInject) {
+        securityHeaders(res);
+        res.writeHead(upstreamRes.statusCode || 502, upstreamRes.headers);
+        upstreamRes.pipe(res);
+        return;
+      }
+
+      const parts = [];
+      upstreamRes.on("data", (chunk) => parts.push(chunk));
+      upstreamRes.on("end", () => {
+        const html = Buffer.concat(parts).toString("utf8");
+        const modified = injectVoiceSearch(html);
+        const outHeaders = { ...upstreamRes.headers };
+        delete outHeaders["content-length"];
+        delete outHeaders["content-encoding"];
+        outHeaders["content-length"] = Buffer.byteLength(modified, "utf8");
+
+        securityHeaders(res);
+        res.writeHead(upstreamRes.statusCode || 200, outHeaders);
+        res.end(modified);
+      });
     }
   );
 
