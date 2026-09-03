@@ -876,6 +876,34 @@ body::before{
   50%{transform:translateY(-3px);box-shadow:0 12px 26px rgba(200,70,70,.2)}
 }
 
+
+/* ===== BAAL-SETU VOICE SEARCH ===== */
+.voice{
+  border:0;
+  width:52px;
+  min-width:52px;
+  border-radius:14px;
+  background:#6c63ff;
+  color:#fff;
+  font-size:22px;
+  cursor:pointer;
+  font-weight:900;
+  box-shadow:0 4px 0 rgba(0,0,0,.12);
+  transition:.2s;
+}
+.voice:hover{transform:translateY(-2px)}
+.voice.listening{
+  background:#e84c27;
+  animation:voicePulse 1s infinite;
+}
+@keyframes voicePulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(232,76,39,.35)}
+  50%{box-shadow:0 0 0 10px rgba(232,76,39,0)}
+}
+@media(max-width:500px){
+  .voice{width:46px;min-width:46px;font-size:20px}
+}
+
 </style>
 </head>
 
@@ -1095,6 +1123,8 @@ Child Protection • Child Rights • Safety
 
 
 <div class="inputbar">
+
+<button id="voiceBtn" class="voice" type="button" title="बोलकर सवाल पूछें" aria-label="बोलकर सवाल पूछें">🎤</button>
 
 <input
 id="input"
@@ -1677,6 +1707,61 @@ BAAL-SETU अभी उपलब्ध नहीं है।
 
 }
 
+}
+
+
+/* ===== VOICE SEARCH ===== */
+const voiceBtn = document.getElementById("voiceBtn");
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (voiceBtn) {
+  if (!SpeechRecognition) {
+    voiceBtn.addEventListener("click", () => {
+      alert("आपके browser में Voice Search support नहीं है। Chrome या Edge में फिर प्रयास करें।");
+    });
+  } else {
+    const recognition = new SpeechRecognition();
+    recognition.lang = "hi-IN";
+    recognition.interimResults = true;
+    recognition.continuous = false;
+
+    recognition.onstart = () => {
+      voiceBtn.classList.add("listening");
+      voiceBtn.textContent = "🔴";
+      voiceBtn.title = "सुन रहा हूँ... बोलिए";
+      input.placeholder = "🎤 सुन रहा हूँ... अपना सवाल बोलिए";
+    };
+
+    recognition.onresult = (event) => {
+      let transcript = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      input.value = transcript.trim();
+    };
+
+    recognition.onerror = (event) => {
+      if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+        alert("Voice Search के लिए microphone permission allow करें।");
+      }
+    };
+
+    recognition.onend = () => {
+      voiceBtn.classList.remove("listening");
+      voiceBtn.textContent = "🎤";
+      voiceBtn.title = "बोलकर सवाल पूछें";
+      input.placeholder = "अपना सवाल लिखें...";
+      input.focus();
+    };
+
+    voiceBtn.addEventListener("click", () => {
+      if (voiceBtn.classList.contains("listening")) {
+        recognition.stop();
+        return;
+      }
+      try { recognition.start(); } catch (e) {}
+    });
+  }
 }
 
 </script>
