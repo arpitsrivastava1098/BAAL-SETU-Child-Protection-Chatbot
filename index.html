@@ -3,378 +3,881 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>BAAL-SETU – Child Protection Chatbot</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
+*{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(135deg,#fff7ed,#fdf2f8,#eff6ff);
-  color:#222;
-  min-height:100vh;
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:linear-gradient(135deg,#fff7e6,#eaf8ff,#f4edff);
+color:#20242b;
+min-height:100vh;
 }
 
-/* ================= HEADER ================= */
-
 header{
-  background:linear-gradient(135deg,#ff7a18,#ff3d81);
-  color:white;
-  padding:14px 18px;
-  text-align:center;
-  box-shadow:0 4px 15px rgba(0,0,0,.15);
+background:linear-gradient(90deg,#ff7a18,#ffb000,#ff6f91);
+color:#fff;
+padding:16px 6%;
+box-shadow:0 5px 18px rgba(0,0,0,.15);
 }
 
 .header-inner{
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
+max-width:1100px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
 }
 
-.logo{
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  background:white;
-  object-fit:contain;
-  padding:3px;
-  box-shadow:0 3px 10px rgba(0,0,0,.18);
+.brand-group{
+display:flex;
+align-items:center;
+gap:12px;
 }
 
-header h1{
-  margin:0;
-  font-size:28px;
-  font-weight:900;
+.logo-img{
+width:52px;
+height:52px;
+border-radius:50%;
+border:3px solid #fff;
+box-shadow:0 4px 10px rgba(0,0,0,.2);
+background:#fff;
+object-fit:cover;
+flex-shrink:0;
 }
 
-header p{
-  margin:3px 0 0;
-  font-size:14px;
-  font-weight:600;
+.brand{
+font-size:23px;
+font-weight:900;
 }
 
-/* ================= HERO ================= */
+.tagline{
+font-size:12px;
+margin-top:4px;
+}
+
+.wrap{
+max-width:1100px;
+margin:auto;
+padding:25px 18px 50px;
+}
 
 .hero{
-  max-width:1100px;
-  margin:20px auto 10px;
-  padding:0 15px;
+text-align:center;
+padding:15px 0 25px;
 }
 
-.hero-box{
-  background:white;
-  border-radius:25px;
-  padding:22px;
-  box-shadow:0 8px 30px rgba(0,0,0,.08);
-  text-align:center;
+.hero h1{
+margin:8px 0;
+font-size:40px;
+color:#ff6b35;
+font-weight:900;
 }
 
-.hero-box h2{
-  margin:0 0 8px;
-  color:#e84c27;
-  font-size:27px;
+.hero-sub{
+font-size:20px;
+font-weight:800;
 }
 
-.hero-box p{
-  margin:0;
-  line-height:1.6;
-  font-size:16px;
+.hero-small{
+margin-top:8px;
+color:#69717d;
+font-size:16px;
+font-weight:600;
 }
 
-/* ================= CARTOON ================= */
+/* CARTOON */
 
 .mascot-area{
-  display:flex;
-  justify-content:center;
-  margin:12px 0 4px;
+display:flex;
+justify-content:center;
+align-items:center;
+margin:5px 0 18px;
 }
 
 .mascot{
-  position:relative;
-  width:125px;
-  height:125px;
+position:relative;
+width:180px;
+height:175px;
 }
 
-.mascot-head{
-  position:absolute;
-  width:88px;
-  height:88px;
-  background:#ffd6a5;
-  border:4px solid #222;
-  border-radius:50%;
-  left:18px;
-  top:5px;
-  z-index:3;
+.face{
+position:absolute;
+width:115px;
+height:115px;
+left:32px;
+top:30px;
+background:#ffd29b;
+border:5px solid #222;
+border-radius:50%;
+z-index:3;
+box-shadow:0 7px 0 rgba(0,0,0,.08);
 }
 
-.hair{
-  position:absolute;
-  width:72px;
-  height:32px;
-  background:#3b2416;
-  border-radius:50% 50% 20% 20%;
-  left:27px;
-  top:2px;
-  z-index:4;
+.face:before{
+content:"";
+position:absolute;
+width:92px;
+height:35px;
+background:#4d2a1a;
+left:7px;
+top:-14px;
+border-radius:55% 55% 35% 35%;
 }
 
 .eye{
-  position:absolute;
-  width:8px;
-  height:8px;
-  background:#222;
-  border-radius:50%;
-  top:39px;
+position:absolute;
+width:12px;
+height:17px;
+background:#222;
+border-radius:50%;
+top:45px;
 }
 
-.eye.left{
-  left:38px;
-}
+.eye.left{left:30px}
+.eye.right{right:30px}
 
-.eye.right{
-  right:20px;
-}
-
-.mouth{
-  position:absolute;
-  width:28px;
-  height:14px;
-  border-bottom:4px solid #222;
-  border-radius:0 0 30px 30px;
-  left:29px;
-  top:58px;
+.smile{
+position:absolute;
+width:42px;
+height:20px;
+border-bottom:5px solid #222;
+border-radius:50%;
+left:32px;
+top:72px;
 }
 
 .body{
-  position:absolute;
-  width:72px;
-  height:52px;
-  background:#4f46e5;
-  border:4px solid #222;
-  border-radius:25px 25px 10px 10px;
-  left:27px;
-  top:83px;
+position:absolute;
+width:115px;
+height:75px;
+left:32px;
+top:122px;
+background:#39a0ff;
+border:5px solid #222;
+border-radius:30px 30px 18px 18px;
+z-index:2;
+}
+
+.shield{
+position:absolute;
+width:38px;
+height:45px;
+left:34px;
+top:12px;
+background:#ffd23f;
+border:3px solid #222;
+clip-path:polygon(50% 0,90% 15%,82% 68%,50% 100%,18% 68%,10% 15%);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:21px;
 }
 
 .arm{
-  position:absolute;
-  width:48px;
-  height:15px;
-  background:#ffd6a5;
-  border:4px solid #222;
-  border-radius:20px;
-  top:86px;
-  z-index:1;
+position:absolute;
+width:62px;
+height:18px;
+background:#ffd29b;
+border:5px solid #222;
+border-radius:20px;
+right:-8px;
+top:116px;
+transform-origin:left center;
+z-index:4;
+animation:wave 1s infinite ease-in-out;
 }
 
-.arm.left{
-  left:0;
-  transform:rotate(28deg);
-}
-
-.arm.right{
-  right:-5px;
-  top:73px;
-  transform-origin:left center;
-  animation:wave 1s infinite ease-in-out;
+.hand{
+position:absolute;
+right:-19px;
+top:-12px;
+font-size:38px;
+transform:rotate(15deg);
 }
 
 @keyframes wave{
-  0%,100%{
-    transform:rotate(20deg);
-  }
-  50%{
-    transform:rotate(-35deg);
-  }
+0%,100%{transform:rotate(-12deg)}
+50%{transform:rotate(28deg)}
 }
 
-/* ================= RIGHTS CARDS ================= */
-
-.rights{
-  max-width:1100px;
-  margin:12px auto;
-  padding:0 15px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
+.speech{
+position:absolute;
+right:-180px;
+top:12px;
+background:white;
+border:3px solid #222;
+border-radius:18px;
+padding:11px 15px;
+font-weight:800;
+box-shadow:0 7px 15px rgba(0,0,0,.12);
+animation:bubble 2s infinite;
+white-space:nowrap;
 }
 
-.right-card{
-  background:white;
-  border-radius:18px;
-  padding:15px 10px;
-  text-align:center;
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
-  transition:.25s;
-  border:2px solid transparent;
+@keyframes bubble{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-5px)}
 }
 
-.right-card:hover{
-  transform:translateY(-4px);
-  border-color:#ff7a18;
+/* BUTTONS */
+
+.quick-title{
+text-align:center;
+font-size:22px;
+font-weight:900;
+margin:15px 0;
 }
-
-.right-card .icon{
-  font-size:30px;
-}
-
-.right-card h3{
-  margin:7px 0 3px;
-  font-size:16px;
-}
-
-.right-card p{
-  margin:0;
-  font-size:12px;
-  color:#666;
-}
-
-/* ================= MAIN CHAT ================= */
-
-.chat-container{
-  max-width:900px;
-  margin:20px auto;
-  padding:0 15px;
-}
-
-.chat-box{
-  background:white;
-  border-radius:24px;
-  box-shadow:0 10px 35px rgba(0,0,0,.1);
-  overflow:hidden;
-}
-
-.chat-title{
-  background:linear-gradient(135deg,#6366f1,#8b5cf6);
-  color:white;
-  padding:16px;
-  text-align:center;
-}
-
-.chat-title h2{
-  margin:0;
-  font-size:21px;
-}
-
-.chat-title p{
-  margin:5px 0 0;
-  font-size:13px;
-}
-
-/* ================= QUICK BUTTONS ================= */
 
 .quick{
-  padding:14px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  justify-content:center;
-  border-bottom:1px solid #eee;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+margin:15px 0 25px;
 }
 
 .quick button{
-  border:0;
-  padding:9px 13px;
-  border-radius:20px;
-  background:#f3f4f6;
-  color:#333;
-  cursor:pointer;
-  font-weight:700;
-  font-size:13px;
-  transition:.2s;
+border:0;
+border-radius:18px;
+padding:17px 12px;
+cursor:pointer;
+color:#222;
+font-size:16px;
+font-weight:900;
+box-shadow:0 6px 0 rgba(0,0,0,.12);
+transition:.2s;
 }
 
 .quick button:hover{
-  background:#6366f1;
-  color:white;
-  transform:translateY(-2px);
+transform:translateY(-4px);
+box-shadow:0 10px 0 rgba(0,0,0,.12);
 }
 
-/* ================= CHAT MESSAGES ================= */
+.quick button:active{
+transform:translateY(2px);
+}
+
+.q1{background:#ffd166}
+.q2{background:#ff9f68}
+.q3{background:#9be7ff}
+.q4{background:#b8f2c8}
+.q5{background:#d6c2ff}
+.q6{background:#ffb7d5}
+.q7{background:#a9d6ff}
+.q8{background:#ffe59a}
+.q9{background:#ffaaa5}
+
+.quick small{
+display:block;
+margin-top:5px;
+font-weight:600;
+}
+
+/* CHAT */
+
+.chat{
+background:white;
+border:2px solid #e2e6eb;
+border-radius:22px;
+overflow:hidden;
+box-shadow:0 12px 35px rgba(0,0,0,.12);
+}
+
+.chat-head{
+padding:17px;
+background:linear-gradient(90deg,#6c63ff,#8f7cff);
+color:white;
+font-size:18px;
+font-weight:900;
+}
 
 .messages{
-  height:390px;
-  overflow-y:auto;
-  padding:18px;
-  background:#fafafa;
+height:430px;
+overflow:auto;
+padding:18px;
+background:#f8fbff;
 }
 
-.message{
-  max-width:82%;
-  padding:12px 15px;
-  border-radius:17px;
-  margin-bottom:12px;
-  line-height:1.55;
-  font-size:14px;
-  white-space:pre-wrap;
+.msg{
+max-width:85%;
+padding:13px 15px;
+border-radius:17px;
+margin:10px 0;
+line-height:1.6;
 }
 
 .bot{
-  background:#fff;
-  border:1px solid #e5e7eb;
-  margin-right:auto;
-  border-bottom-left-radius:5px;
+background:#fff;
+border:1px solid #dce2ea;
+box-shadow:0 3px 9px rgba(0,0,0,.06);
 }
 
 .user{
-  background:#6366f1;
-  color:white;
-  margin-left:auto;
-  border-bottom-right-radius:5px;
+background:#6c63ff;
+color:white;
+margin-left:auto;
 }
-
-/* ================= INPUT ================= */
 
 .inputbar{
-  display:flex;
-  gap:8px;
-  padding:12px;
-  background:white;
-  border-top:1px solid #eee;
+display:flex;
+gap:10px;
+padding:14px;
+border-top:1px solid #e1e5ea;
+background:white;
 }
 
-#input{
-  flex:1;
-  min-width:0;
-  border:2px solid #ddd;
-  border-radius:14px;
-  padding:13px;
-  font-size:15px;
-  outline:none;
+input{
+flex:1;
+border:2px solid #dce1e7;
+border-radius:14px;
+padding:14px;
+font-size:15px;
+outline:none;
 }
 
-#input:focus{
-  border-color:#6366f1;
+input:focus{
+border-color:#6c63ff;
 }
 
 .send{
-  border:0;
-  padding:0 18px;
-  border-radius:14px;
-  background:#ff5a36;
-  color:white;
+border:0;
+background:#ff8c42;
+color:white;
+border-radius:14px;
+padding:0 22px;
+font-size:16px;
+font-weight:900;
+cursor:pointer;
+}
+
+/* HELP */
+
+.help{
+margin-top:22px;
+padding:20px;
+background:linear-gradient(135deg,#fff0e6,#ffe1e1);
+border:2px solid #ff9b71;
+border-radius:20px;
+text-align:center;
+}
+
+.help strong{
+font-size:20px;
+color:#e84c27;
+}
+
+.help a{
+display:inline-block;
+margin:12px 5px 0;
+padding:11px 16px;
+border-radius:12px;
+color:white;
+text-decoration:none;
+font-weight:900;
+background:#e84c27;
+}
+
+/* FOOTER */
+
+.footer{
+text-align:center;
+margin-top:35px;
+padding:20px 10px;
+color:#66707c;
+font-size:13px;
+line-height:1.7;
+}
+
+.disclaimer{
+max-width:850px;
+margin:auto;
+}
+
+.developer{
+margin-top:12px;
+color:#343a40;
+font-size:15px;
+font-weight:900;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+.header-inner{
+display:block;
+text-align:center;
+}
+
+.brand-group{
+justify-content:center;
+}
+
+.hero h1{
+font-size:30px;
+}
+
+.quick{
+grid-template-columns:repeat(2,1fr);
+}
+
+.speech{
+display:none;
+}
+
+.messages{
+height:390px;
+}
+
+.msg{
+max-width:92%;
+}
+}
+
+@media(max-width:500px){
+
+.quick{
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.quick button{
+font-size:14px;
+padding:14px 7px;
+}
+
+.inputbar{
+padding:10px;
+}
+
+.send{
+padding:0 15px;
+}
+
+.brand{
+font-size:20px;
+}
+
+.logo-img{
+width:42px;
+height:42px;
+}
+}
+
+/* ===== BAAL-SETU KIDS ANIMATION LAYER ===== */
+.hero{
+  position:relative;
+  overflow:visible;
+}
+
+.mascot-area{
+  position:relative;
+  min-height:300px;
+  margin:0 auto 8px;
+  z-index:3;
+}
+
+.mascot{
+  transform:translateY(0);
+  animation:mascotFloat 3.8s ease-in-out infinite;
+  filter:drop-shadow(0 14px 18px rgba(74,93,130,.18));
+}
+
+.face{
+  animation:faceGlow 2.8s ease-in-out infinite;
+}
+
+.eye{
+  animation:blink 5s infinite;
+  transform-origin:center;
+}
+
+.arm{
+  animation:wave 1.4s ease-in-out infinite;
+}
+
+.speech{
+  animation:bubbleFloat 2.6s ease-in-out infinite;
+}
+
+.shield{
+  animation:shieldPulse 1.9s ease-in-out infinite;
+}
+
+.rights-orbit{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+}
+
+.right-card{
+  position:absolute;
+  width:145px;
+  min-height:72px;
+  padding:10px 12px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  text-align:center;
   font-weight:900;
-  cursor:pointer;
-  font-size:14px;
+  line-height:1.15;
+  border:3px solid rgba(255,255,255,.9);
+  box-shadow:0 12px 25px rgba(65,83,120,.18);
+  backdrop-filter:blur(7px);
+  animation:rightFloat 4s ease-in-out infinite;
 }
 
-.send:hover{
-  background:#e84c27;
+.right-card .ri{
+  font-size:28px;
+  flex-shrink:0;
 }
 
-/* ================= VOICE SEARCH ================= */
+.right-card small{
+  display:block;
+  font-size:11px;
+  margin-top:3px;
+  opacity:.78;
+}
 
+.right-education{
+  left:calc(50% - 330px);
+  top:12px;
+  background:linear-gradient(135deg,#fff0a8,#ffd166);
+  animation-delay:-.5s;
+}
+
+.right-safety{
+  right:calc(50% - 330px);
+  top:12px;
+  background:linear-gradient(135deg,#c9ffd9,#7ee8a5);
+  animation-delay:-1.5s;
+}
+
+.right-care{
+  left:calc(50% - 330px);
+  bottom:8px;
+  background:linear-gradient(135deg,#d9f3ff,#91d9ff);
+  animation-delay:-2.5s;
+}
+
+.right-participation{
+  right:calc(50% - 330px);
+  bottom:8px;
+  background:linear-gradient(135deg,#eadcff,#c5a8ff);
+  animation-delay:-3.5s;
+}
+
+.floating-dot{
+  position:absolute;
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 16px rgba(255,255,255,.95);
+  animation:dotFloat 4s ease-in-out infinite;
+  opacity:.9;
+}
+
+.dot1{left:20%;top:15%;animation-delay:-1s}
+.dot2{left:76%;top:25%;animation-delay:-2.2s}
+.dot3{left:27%;bottom:13%;animation-delay:-3s}
+.dot4{right:22%;bottom:18%;animation-delay:-.7s}
+
+.kids-rights-title{
+  margin:0 0 12px;
+  font-size:15px;
+  font-weight:900;
+  color:#56606d;
+  letter-spacing:.2px;
+  animation:titlePop 2.5s ease-in-out infinite;
+}
+
+@keyframes mascotFloat{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-10px) rotate(.7deg)}
+}
+
+@keyframes faceGlow{
+  0%,100%{box-shadow:0 7px 0 rgba(0,0,0,.08),0 0 0 rgba(255,205,74,0)}
+  50%{box-shadow:0 7px 0 rgba(0,0,0,.08),0 0 25px rgba(255,205,74,.45)}
+}
+
+@keyframes blink{
+  0%,45%,48%,100%{transform:scaleY(1)}
+  46%,47%{transform:scaleY(.08)}
+}
+
+@keyframes bubbleFloat{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-8px) rotate(-1deg)}
+}
+
+@keyframes shieldPulse{
+  0%,100%{transform:scale(1) rotate(0)}
+  50%{transform:scale(1.08) rotate(-3deg)}
+}
+
+@keyframes rightFloat{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-11px) rotate(1.2deg)}
+}
+
+@keyframes dotFloat{
+  0%,100%{transform:translate(0,0) scale(.8)}
+  50%{transform:translate(8px,-14px) scale(1.25)}
+}
+
+@keyframes titlePop{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-3px)}
+}
+
+@media(max-width:800px){
+  .mascot-area{min-height:245px}
+  .right-card{
+    width:118px;
+    min-height:58px;
+    padding:7px 6px;
+    border-width:2px;
+    font-size:12px;
+  }
+  .right-card .ri{font-size:21px}
+  .right-card small{font-size:9px}
+  .right-education{left:2%;top:5px}
+  .right-safety{right:2%;top:5px}
+  .right-care{left:2%;bottom:0}
+  .right-participation{right:2%;bottom:0}
+  .speech{
+    right:-155px;
+    font-size:12px;
+  }
+}
+
+@media(max-width:520px){
+  .mascot-area{min-height:285px}
+  .mascot{transform:scale(.9)}
+  .right-card{
+    width:105px;
+    min-height:54px;
+    border-radius:15px;
+    font-size:10px;
+  }
+  .right-card .ri{font-size:18px}
+  .right-card small{font-size:8px}
+  .right-education{left:0;top:2px}
+  .right-safety{right:0;top:2px}
+  .right-care{left:0;bottom:2px}
+  .right-participation{right:0;bottom:2px}
+  .speech{display:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .mascot,.face,.eye,.arm,.speech,.shield,.right-card,.floating-dot,.kids-rights-title{
+    animation:none !important;
+  }
+}
+
+
+.quick button{
+  position:relative;
+  overflow:hidden;
+}
+.quick button::after{
+  content:"";
+  position:absolute;
+  top:-40%;
+  left:-80%;
+  width:45%;
+  height:180%;
+  background:rgba(255,255,255,.38);
+  transform:skewX(-20deg);
+  animation:buttonShine 5s infinite;
+}
+.quick button:hover{
+  animation:buttonBounce .55s ease;
+}
+@keyframes buttonShine{
+  0%,65%{left:-80%}
+  100%{left:150%}
+}
+@keyframes buttonBounce{
+  0%,100%{transform:translateY(-4px) scale(1)}
+  50%{transform:translateY(-7px) scale(1.025)}
+}
+
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  background:
+    radial-gradient(circle at 10% 20%,rgba(255,210,63,.22) 0 10px,transparent 11px),
+    radial-gradient(circle at 85% 16%,rgba(108,99,255,.16) 0 13px,transparent 14px),
+    radial-gradient(circle at 18% 80%,rgba(57,160,255,.15) 0 11px,transparent 12px),
+    radial-gradient(circle at 88% 78%,rgba(255,111,145,.14) 0 15px,transparent 16px);
+  animation:bgDrift 12s ease-in-out infinite alternate;
+}
+@keyframes bgDrift{
+  from{transform:translate3d(0,0,0) scale(1)}
+  to{transform:translate3d(0,-12px,0) scale(1.02)}
+}
+
+
+/* ===== MOBILE FIX: 4 RIGHTS FLOAT AROUND CARTOON WITHOUT HIDING TEXT ===== */
+@media(max-width:520px){
+  .hero{
+    overflow:hidden;
+    padding-bottom:8px;
+  }
+
+  /* Keep a dedicated visual area for the floating rights */
+  .rights-orbit{
+    position:relative;
+    inset:auto;
+    width:100%;
+    height:300px;
+    margin:0 auto;
+    pointer-events:none;
+  }
+
+  /* Put the cartoon in the centre of that dedicated area */
+  .mascot-area{
+    position:absolute;
+    z-index:4;
+    left:50%;
+    top:68px;
+    width:170px;
+    min-height:180px;
+    margin:0;
+    transform:translateX(-50%);
+    pointer-events:none;
+  }
+
+  .mascot{
+    transform:scale(.78);
+    transform-origin:center top;
+  }
+
+  /* Four rights stay in the four corners */
+  .right-card{
+    z-index:5;
+    width:108px;
+    min-height:55px;
+    padding:6px 5px;
+    border-radius:14px;
+    font-size:10px;
+    line-height:1.12;
+    box-shadow:0 7px 15px rgba(65,83,120,.16);
+  }
+
+  .right-card .ri{
+    font-size:18px;
+  }
+
+  .right-card small{
+    font-size:7.5px;
+    margin-top:2px;
+  }
+
+  .right-education{
+    left:3px;
+    top:8px;
+  }
+
+  .right-safety{
+    right:3px;
+    top:8px;
+  }
+
+  .right-care{
+    left:3px;
+    bottom:10px;
+  }
+
+  .right-participation{
+    right:3px;
+    bottom:10px;
+  }
+
+  .kids-rights-title{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:6;
+    margin:0;
+    font-size:12px;
+    text-align:center;
+  }
+
+  /* Hide decorative dots on very small screens so they don't cover text */
+  .floating-dot{
+    display:none;
+  }
+
+  /* Hero heading always starts below the animation area */
+  .hero > h1,
+  .hero > p{
+    position:relative;
+    z-index:10;
+    clear:both;
+  }
+
+  .speech{
+    display:none;
+  }
+}
+
+@media(min-width:521px) and (max-width:800px){
+  .hero{
+    overflow:hidden;
+  }
+
+  .rights-orbit{
+    min-height:285px;
+  }
+
+  .right-card{
+    width:125px;
+    min-height:60px;
+    font-size:11px;
+  }
+
+  .right-education{left:2%;top:8px}
+  .right-safety{right:2%;top:8px}
+  .right-care{left:2%;bottom:4px}
+  .right-participation{right:2%;bottom:4px}
+}
+
+
+.emergency-strip{
+  margin:18px auto;
+  max-width:900px;
+  padding:14px 18px;
+  border-radius:18px;
+  text-align:center;
+  font-weight:800;
+  line-height:1.5;
+  background:linear-gradient(135deg,#fff1f1,#ffe0e0);
+  border:2px solid #ffb6b6;
+  box-shadow:0 8px 20px rgba(200,70,70,.12);
+  animation:emergencyPulse 2.5s ease-in-out infinite;
+}
+.emergency-strip strong{font-size:1.08em}
+@keyframes emergencyPulse{
+  0%,100%{transform:translateY(0);box-shadow:0 8px 20px rgba(200,70,70,.12)}
+  50%{transform:translateY(-3px);box-shadow:0 12px 26px rgba(200,70,70,.2)}
+}
+
+
+/* ===== BAAL-SETU VOICE SEARCH ===== */
 .voice{
   border:0;
   width:52px;
@@ -388,858 +891,886 @@ header p{
   box-shadow:0 4px 0 rgba(0,0,0,.12);
   transition:.2s;
 }
-
-.voice:hover{
-  transform:translateY(-2px);
-}
-
+.voice:hover{transform:translateY(-2px)}
 .voice.listening{
   background:#e84c27;
   animation:voicePulse 1s infinite;
 }
-
 @keyframes voicePulse{
-  0%,100%{
-    box-shadow:0 0 0 0 rgba(232,76,39,.35);
-  }
-  50%{
-    box-shadow:0 0 0 10px rgba(232,76,39,0);
-  }
+  0%,100%{box-shadow:0 0 0 0 rgba(232,76,39,.35)}
+  50%{box-shadow:0 0 0 10px rgba(232,76,39,0)}
 }
-
-/* ================= HELP ================= */
-
-.help{
-  max-width:900px;
-  margin:18px auto;
-  padding:0 15px;
-}
-
-.help-box{
-  background:#fff;
-  border-radius:20px;
-  padding:18px;
-  box-shadow:0 7px 25px rgba(0,0,0,.08);
-  text-align:center;
-}
-
-.help-box h2{
-  margin:0 0 10px;
-  color:#e84c27;
-  font-size:20px;
-}
-
-.help-buttons{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.help-buttons a{
-  text-decoration:none;
-  color:white;
-  font-weight:900;
-  padding:11px 18px;
-  border-radius:14px;
-}
-
-.help1098{
-  background:#16a34a;
-}
-
-.help112{
-  background:#dc2626;
-}
-
-.help1930{
-  background:#7c3aed;
-}
-
-/* ================= EMERGENCY ================= */
-
-.emergency{
-  max-width:1100px;
-  margin:18px auto;
-  padding:0 15px;
-}
-
-.emergency-box{
-  background:#fff1f2;
-  border:2px solid #fecdd3;
-  color:#9f1239;
-  padding:15px;
-  border-radius:18px;
-  text-align:center;
-  font-weight:800;
-  line-height:1.5;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-  margin-top:25px;
-  background:#111827;
-  color:#ddd;
-  text-align:center;
-  padding:20px 15px;
-  font-size:12px;
-  line-height:1.6;
-}
-
-footer strong{
-  color:white;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:750px){
-
-  header h1{
-    font-size:23px;
-  }
-
-  header p{
-    font-size:12px;
-  }
-
-  .logo{
-    width:48px;
-    height:48px;
-  }
-
-  .hero-box h2{
-    font-size:22px;
-  }
-
-  .rights{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .messages{
-    height:360px;
-  }
-
-  .message{
-    max-width:90%;
-  }
-
-}
-
 @media(max-width:500px){
-
-  .inputbar{
-    gap:6px;
-  }
-
-  .voice{
-    width:46px;
-    min-width:46px;
-    font-size:20px;
-  }
-
-  .send{
-    padding:0 12px;
-    font-size:13px;
-  }
-
-  #input{
-    font-size:14px;
-    padding:11px 9px;
-  }
-
-  .rights{
-    gap:8px;
-    padding:0 10px;
-  }
-
-  .right-card{
-    padding:12px 7px;
-  }
-
-  .right-card h3{
-    font-size:14px;
-  }
-
-  .right-card p{
-    font-size:11px;
-  }
-
+  .voice{width:46px;min-width:46px;font-size:20px}
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
-
 <header>
-  <div class="header-inner">
 
-    <!-- अपना BAAL-SETU logo यहाँ रखें -->
-    <div class="logo" style="display:flex;align-items:center;justify-content:center;font-size:27px;">
-      🛡️
-    </div>
+<div class="header-inner">
 
-    <div>
-      <h1>BAAL-SETU</h1>
-      <p>Child Protection Chatbot</p>
-    </div>
+<div class="brand-group">
 
-  </div>
+<img class="logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGIAAABfCAMAAAAkn+JPAAABgFBMVEXMzMwFBQXY2NgpKSna2tqKiopZWVnKysro6Oje3t4xMTGYmJiWlpbQ0NDg4OANDQ0+Pj55eXnT09O4uLgtLS2mpqaIiIglJSXCwsLIyMjAwMC+vr6ysrKOjo6RkZG6urrV1dUdHR1ubm4hISE1NTUICAiurq6GhoaAgICTk5OcnJzm5uZGRkYVFRVqamqenp4REREZGRm1tbV8fHyhoaFsbGyjo6NSUlKCgoJgYGC0tLSwsLB2dnakpKRxcXE6OjqampqEhIR0dHRKSkpycnJmZmasrKyqqqpWVlZeXl5+fn5oaGioqKhAQEBCQkJISEiMjIxERESUlJROTk5kZGRiYmJMTExcXFwBAQE4ODhUVFRQUFD+/v79/f38/Pz7+/vPz8/w8PDu7u719fX39/fv7+/29vb5+fnU1NTx8fHy8vL09PS9vb3l5eXOzs7q6uri4uLGxsbExMTj4+P6+vrr6+vHx8fc3Nzt7e3z8/MKCgoMDAz///8AAAALCwv////aoQpEAAAAgHRSTlP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ADgFS2cAAAAJcEhZcwAACxMAAAsTAQCanBgAAAXMaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA2LjAtYzAwMyA3OS4xNjQ1MjcsIDIwMjAvMTAvMTUtMTc6NDg6MzIgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFQ0JDQ0Q1MzA5OTIxMUVEOTU4NDg0QTEzQzI3QTZERSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpjYjBhYTlhZC0zYjBhLTZhNGYtOWVkZi1iNmM5YTU3NzRiYTAiIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpFQ0JDQ0Q1MzA5OTIxMUVEOTU4NDg0QTEzQzI3QTZERSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IFdpbmRvd3MiIHhtcDpDcmVhdGVEYXRlPSIyMDI0LTAzLTE5VDEyOjAyOjIwKzA1OjMwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyNC0wMy0xOVQxMjowNCswNTozMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyNC0wMy0xOVQxMjowNCswNTozMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjIiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSI1MDc4ODZBRUJBMEM3MzFDMUI2QTMyODMwMDkzN0I5QiIgc3RSZWY6ZG9jdW1lbnRJRD0iNTA3ODg2QUVCQTBDNzMxQzFCNkEzMjgzMDA5MzdCOUIiLz4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0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" alt="BAAL-SETU Logo">
+
+<div>
+
+<div class="brand">
+🛡️ BAAL-SETU – Child Protection Chatbot
+</div>
+
+<div class="tagline">
+Child Protection • Child Rights • Safety
+</div>
+
+</div>
+
+</div>
+
+<div>
+🌈 Safe • Friendly • Helpful
+</div>
+
+</div>
+
 </header>
 
-<!-- ================= HERO ================= -->
+
+<main class="wrap">
+
 
 <section class="hero">
 
-  <div class="hero-box">
 
-    <div class="mascot-area">
-
-      <div class="mascot">
-
-        <div class="hair"></div>
-
-        <div class="mascot-head">
-          <div class="eye left"></div>
-          <div class="eye right"></div>
-          <div class="mouth"></div>
-        </div>
-
-        <div class="body"></div>
-
-        <div class="arm left"></div>
-        <div class="arm right"></div>
-
-      </div>
-
-    </div>
-
-    <h2>नमस्ते! मैं BAAL-SETU हूँ 👋</h2>
-
-    <p>
-      बच्चों की सुरक्षा, अधिकार और सहायता से जुड़े सवाल पूछें।
-      आप अपना सवाल <strong>लिखकर या बोलकर 🎤</strong> पूछ सकते हैं।
-    </p>
-
+<div class="kids-rights-title">✨ बच्चों के 4 महत्वपूर्ण अधिकार ✨</div>
+<div class="rights-orbit" aria-label="बच्चों के चार महत्वपूर्ण अधिकार">
+  <div class="right-card right-education">
+    <span class="ri">📚</span>
+    <span>शिक्षा का अधिकार<small>Right to Education</small></span>
   </div>
+  <div class="right-card right-safety">
+    <span class="ri">🛡️</span>
+    <span>सुरक्षा का अधिकार<small>Right to Protection</small></span>
+  </div>
+  <div class="right-card right-care">
+    <span class="ri">❤️</span>
+    <span>देखभाल का अधिकार<small>Right to Care</small></span>
+  </div>
+  <div class="right-card right-participation">
+    <span class="ri">🗣️</span>
+    <span>सहभागिता का अधिकार<small>Right to Participation</small></span>
+  </div>
+  <span class="floating-dot dot1"></span>
+  <span class="floating-dot dot2"></span>
+  <span class="floating-dot dot3"></span>
+  <span class="floating-dot dot4"></span>
+</div>
+
+<div class="mascot-area">
+
+<div class="mascot">
+
+<div class="speech">
+👋 Hello Baccho!
+</div>
+
+<div class="face">
+
+<div class="eye left"></div>
+<div class="eye right"></div>
+<div class="smile"></div>
+
+</div>
+
+<div class="body">
+
+<div class="shield">
+🛡️
+</div>
+
+</div>
+
+<div class="arm">
+
+<div class="hand">
+👋
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<h1>
+👋 Hello Baccho!
+</h1>
+
+<div class="hero-sub">
+मैं BAAL-SETU हूँ।
+</div>
+
+<div class="hero-small">
+जो पूछना है, बिना झिझक पूछो। 😊
+</div>
 
 </section>
 
-<!-- ================= FOUR RIGHTS ================= -->
 
-<section class="rights">
 
-  <div class="right-card">
-    <div class="icon">📚</div>
-    <h3>शिक्षा का अधिकार</h3>
-    <p>हर बच्चे को शिक्षा पाने का अधिकार है।</p>
-  </div>
+<div class="quick-title">
+💬 अपना सवाल चुनें
+</div>
 
-  <div class="right-card">
-    <div class="icon">🛡️</div>
-    <h3>सुरक्षा का अधिकार</h3>
-    <p>हर बच्चे को हिंसा और शोषण से सुरक्षा मिले।</p>
-  </div>
 
-  <div class="right-card">
-    <div class="icon">❤️</div>
-    <h3>देखभाल का अधिकार</h3>
-    <p>हर बच्चे को प्यार, देखभाल और संरक्षण मिले।</p>
-  </div>
+<div class="quick">
 
-  <div class="right-card">
-    <div class="icon">🗣️</div>
-    <h3>सहभागिता का अधिकार</h3>
-    <p>बच्चों की बात सुनी और सम्मानित की जाए।</p>
-  </div>
 
-</section>
+<button class="q1" onclick="quickAsk('Child Marriage')">
+💍 बाल विवाह
+<small>Child Marriage</small>
+</button>
 
-<!-- ================= CHAT ================= -->
 
-<section class="chat-container">
+<button class="q2" onclick="quickAsk('Child Labour')">
+🧒 बाल श्रम
+<small>Child Labour</small>
+</button>
 
-  <div class="chat-box">
 
-    <div class="chat-title">
-      <h2>💬 BAAL-SETU से पूछें</h2>
-      <p>सवाल लिखें या 🎤 दबाकर बोलें</p>
-    </div>
+<button class="q3" onclick="quickAsk('Child Safety and Child Abuse')">
+🛡️ बाल सुरक्षा
+<small>Child Safety</small>
+</button>
 
-    <!-- QUICK TOPICS -->
 
-    <div class="quick">
+<button class="q4" onclick="quickAsk('Child Rights')">
+🌈 बाल अधिकार
+<small>Child Rights</small>
+</button>
 
-      <button onclick="quickAsk('बाल विवाह क्या है?')">
-        बाल विवाह
-      </button>
 
-      <button onclick="quickAsk('बाल श्रम क्या है?')">
-        बाल श्रम
-      </button>
+<button class="q5" onclick="quickAsk('POCSO')">
+⚖️ POCSO
+<small>बच्चों की सुरक्षा</small>
+</button>
 
-      <button onclick="quickAsk('बच्चों की सुरक्षा कैसे करें?')">
-        बाल सुरक्षा
-      </button>
 
-      <button onclick="quickAsk('बच्चों के अधिकार क्या हैं?')">
-        बाल अधिकार
-      </button>
+<button class="q6" onclick="quickAsk('Mission Vatsalya')">
+🏛️ Mission Vatsalya
+<small>मिशन वात्सल्य</small>
+</button>
 
-      <button onclick="quickAsk('POCSO Act क्या है?')">
-        POCSO
-      </button>
 
-      <button onclick="quickAsk('Mission Vatsalya क्या है?')">
-        Mission Vatsalya
-      </button>
+<button class="q7" onclick="quickAsk('Juvenile Justice')">
+⚖️ Juvenile Justice
+<small>किशोर न्याय</small>
+</button>
 
-      <button onclick="quickAsk('Juvenile Justice Act क्या है?')">
-        Juvenile Justice
-      </button>
 
-      <button onclick="quickAsk('बच्चों की Online Safety कैसे करें?')">
-        Online Safety
-      </button>
+<button class="q8" onclick="quickAsk('Online Safety')">
+📱 Online Safety
+<small>ऑनलाइन सुरक्षा</small>
+</button>
 
-      <button onclick="quickAsk('मुझे मदद चाहिए')">
-        मुझे मदद चाहिए
-      </button>
 
-    </div>
+<button class="q9" onclick="quickAsk('I Need Help')">
+🚨 मुझे मदद चाहिए
+<small>I Need Help</small>
+</button>
 
-    <!-- MESSAGES -->
+</div>
 
-    <div class="messages" id="messages">
 
-      <div class="message bot">
-        नमस्ते 👋 मैं <strong>BAAL-SETU</strong> हूँ।
 
-आप मुझसे बाल अधिकार, बाल विवाह, बाल श्रम, POCSO, ऑनलाइन सुरक्षा और बच्चों की सुरक्षा से जुड़े सवाल पूछ सकते हैं।
+<section class="chat">
 
-🎤 आप नीचे दिए गए Mic button को दबाकर सवाल बोल भी सकते हैं।
-      </div>
+<div class="chat-head">
+🤖 BAAL-SETU से पूछें
+</div>
 
-    </div>
 
-    <!-- INPUT -->
+<div id="messages" class="messages">
 
-    <div class="inputbar">
+<div class="msg bot">
 
-      <button
-        id="voiceBtn"
-        class="voice"
-        type="button"
-        title="बोलकर सवाल पूछें"
-        aria-label="बोलकर सवाल पूछें">
-        🎤
-      </button>
+<b>👋 Hello Baccho!</b>
 
-      <input
-        id="input"
-        type="text"
-        placeholder="अपना सवाल लिखें..."
-        autocomplete="off"
-        onkeydown="if(event.key==='Enter') send()"
-      >
+<br><br>
 
-      <button class="send" onclick="send()">
-        पूछें ➤
-      </button>
+मैं <b>BAAL-SETU</b> हूँ। 😊
 
-    </div>
+<br><br>
 
-  </div>
+जो पूछना है, बिना झिझक पूछो।
+
+<br><br>
+
+आप ऊपर दिए किसी भी topic पर click कर सकते हैं या नीचे अपना सवाल लिख सकते हैं।
+
+<br><br>
+
+अगर आप या कोई बच्चा तत्काल खतरे में है तो <b>112</b> पर emergency help या <b>1098</b> Child Helpline से संपर्क करें।
+
+</div>
+
+</div>
+
+
+<div class="inputbar">
+
+<button id="voiceBtn" class="voice" type="button" title="बोलकर सवाल पूछें" aria-label="बोलकर सवाल पूछें">🎤</button>
+
+<input
+id="input"
+placeholder="अपना सवाल लिखें..."
+onkeydown="if(event.key==='Enter')send()"
+>
+
+<button class="send" onclick="send()">
+पूछें ➤
+</button>
+
+</div>
 
 </section>
 
-<!-- ================= HELP ================= -->
+
 
 <section class="help">
 
-  <div class="help-box">
+<strong>
+🚨 मदद चाहिए?
+</strong>
 
-    <h2>🆘 तुरंत सहायता</h2>
+<br><br>
 
-    <div class="help-buttons">
+अगर आप या कोई बच्चा खतरे में है तो किसी भरोसेमंद बड़े व्यक्ति से मदद लें।
 
-      <a class="help1098" href="tel:1098">
-        📞 1098 Child Helpline
-      </a>
+<br>
 
-      <a class="help112" href="tel:112">
-        🚨 112 Emergency
-      </a>
+<a href="tel:1098">
+📞 1098
+</a>
 
-      <a class="help1930" href="tel:1930">
-        💻 1930 Cyber Crime
-      </a>
+<a href="tel:112">
+🚨 112
+</a>
 
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ================= EMERGENCY ================= -->
-
-<section class="emergency">
-
-  <div class="emergency-box">
-    🚨 अगर कोई बच्चा खतरे में है तो
-    <strong>112 Police Helpline</strong> पर या
-    <strong>1098 Child Helpline</strong> से संपर्क करें।
-  </div>
+<a href="tel:1930">
+💻 1930
+</a>
 
 </section>
 
-<!-- ================= FOOTER ================= -->
 
-<footer>
 
-  <strong>BAAL-SETU – Child Protection Chatbot</strong>
-  <br>
+<div class="footer">
 
-  यह chatbot बच्चों, अभिभावकों, समुदायों और frontline workers के लिए
-  awareness, understanding और timely guidance के उद्देश्य से बनाया गया है।
+<div class="disclaimer">
 
-  <br><br>
+BAAL-SETU एक जागरूकता और मार्गदर्शन चैटबॉट है। यह पुलिस, आपातकालीन सेवा, डॉक्टर, वकील या सरकारी प्राधिकरण का विकल्प नहीं है।
 
-  यह chatbot किसी आपातकालीन सेवा, पुलिस, डॉक्टर, वकील या सरकारी अधिकारी
-  का विकल्प नहीं है।
+</div>
 
-  <br><br>
+<div class="developer">
 
-  <strong>Designed and Developed by Arpit Srivastava</strong>
+Designed & Developed by Arpit Srivastava
 
-</footer>
+</div>
+
+</div>
+
+
+</main>
 
 
 <script>
 
-/* =====================================================
-   BAAL-SETU CHAT
-===================================================== */
+const messages =
+document.getElementById("messages");
 
-const input = document.getElementById("input");
-const messages = document.getElementById("messages");
+const input =
+document.getElementById("input");
 
 
-function addMessage(text, type){
+/* FIXED ANSWERS */
 
-  const div = document.createElement("div");
+const answers = {
 
-  div.className = "message " + type;
+"child labour": `
 
-  div.innerHTML = text;
+<h3>🧒 बाल श्रम क्या है?</h3>
 
-  messages.appendChild(div);
+जब किसी बच्चे से, जिसकी उम्र पढ़ाई-खेलने की होती है, ज़बरदस्ती काम करवाया जाता है — जैसे दुकान, फैक्ट्री, घर या खेतों में — तो इसे <b>"बाल श्रम"</b> कहते हैं।
 
-  messages.scrollTop = messages.scrollHeight;
+<br><br>
 
-  return div;
+भारत में <b>"बाल श्रम (निषेध एवं विनियमन) अधिनियम, 1986"</b> के अनुसार "बच्चा" वह है जिसकी उम्र 14 साल से कम है।
+
+<br><br>
+
+• 🚫 <b>14 साल से कम उम्र</b> के बच्चों को किसी भी काम पर रखना पूरी तरह से प्रतिबंधित (illegal) है।
+
+<br>
+
+• ⚠️ <b>14-18 साल (किशोर)</b> के बच्चों को खतरनाक (hazardous) कामों में लगाना मना है — जैसे फैक्ट्री, खदान (mines) आदि।
+
+<br>
+
+• 📖 भारतीय संविधान के <b>अनुच्छेद 24</b> में भी बच्चों को फैक्ट्री, खदान या किसी खतरनाक काम में लगाने से सुरक्षा दी गई है।
+
+<br><br>
+
+बच्चा सिर्फ़ स्कूल के बाद या छुट्टियों में अपने परिवार के गैर-खतरनाक (non-hazardous) काम में मदद कर सकता है।
+
+<br><br>
+
+<b>हर बच्चे का हक है:</b>
+
+<br><br>
+
+• 📚 स्कूल जाना और पढ़ाई करना<br>
+• 🎨 खेलना और मस्ती करना<br>
+• 🏠 सुरक्षित घर में रहना
+
+<br><br>
+
+अगर तुम या तुम्हारा कोई दोस्त ऐसी परिस्थिति में हो, तो किसी बड़े (माता-पिता, टीचर) को बताओ या <b>चाइल्ड हेल्पलाइन नंबर 1098</b> पर कॉल करो।
+
+`,
+
+"child marriage": `
+
+<h3>💍 बाल विवाह (Child Marriage)</h3>
+
+<b>बाल विवाह</b> यानी 18 साल से कम उम्र की लड़की या 21 साल से कम उम्र के लड़के की शादी करना, जो कानूनन अपराध है।
+
+<br><br>
+
+यह बच्चों की सेहत, पढ़ाई और भविष्य को नुकसान पहुँचा सकता है।
+
+<br><br>
+
+भारत में बाल विवाह रोकने के लिए <b>बाल विवाह निषेध अधिनियम</b> है।
+
+<br><br>
+
+अगर किसी बच्चे की शादी कराई जा रही है या जल्दी होने वाली है, तो किसी भरोसेमंद बड़े, शिक्षक या संबंधित अधिकारी से मदद लें।
+
+<br><br>
+
+🚨 तत्काल खतरे में <b>112</b> या Child Helpline <b>1098</b> पर संपर्क करें।
+
+`,
+
+"child rights": `
+
+<h3>🌈 बाल अधिकार</h3>
+
+हर बच्चे को सम्मान, सुरक्षा और विकास के लिए बुनियादी अधिकार प्राप्त हैं।
+
+<br><br>
+
+<b>1. जीने का अधिकार</b><br>
+• जीवन और स्वास्थ्य<br>
+• पौष्टिक भोजन<br>
+• सुरक्षित वातावरण
+
+<br><br>
+
+<b>2. विकास का अधिकार</b><br>
+• 📚 शिक्षा<br>
+• 🎨 खेल और मनोरंजन<br>
+• परिवार की देखभाल
+
+<br><br>
+
+<b>3. सुरक्षा का अधिकार</b><br>
+• बाल श्रम से सुरक्षा<br>
+• हिंसा और शोषण से सुरक्षा<br>
+• तस्करी और अन्य नुकसान से सुरक्षा
+
+<br><br>
+
+<b>4. सहभागिता का अधिकार</b><br>
+• अपनी बात रखने का अधिकार<br>
+• अपनी बात सुने जाने का अधिकार<br>
+• उम्र के अनुसार सही जानकारी पाने का अधिकार
+
+`,
+
+"mission vatsalya": `
+
+<h3>🏛️ मिशन वात्सल्य</h3>
+
+<b>मिशन वात्सल्य</b> भारत सरकार की एक योजना है, जो बच्चों की सुरक्षा और देखभाल से जुड़ी सेवाओं को मजबूत करने पर केंद्रित है।
+
+<br><br>
+
+इसका उद्देश्य कठिन परिस्थितियों में रहने वाले बच्चों को सुरक्षित माहौल, देखभाल, संरक्षण और आवश्यक सहायता उपलब्ध कराने में मदद करना है।
+
+<br><br>
+
+इससे जुड़े child protection structures में <b>CWC, JJB, DCPU</b> आदि शामिल हैं।
+
+`,
+
+"juvenile justice": `
+
+<h3>⚖️ किशोर न्याय (Juvenile Justice)</h3>
+
+किशोर न्याय कानून और सामाजिक व्यवस्था का वह हिस्सा है जो बच्चों और किशोरों के अधिकारों, उनकी सुरक्षा और उनके मामलों से निपटने से संबंधित है।
+
+<br><br>
+
+इसका मुख्य उद्देश्य बच्चों को केवल सजा देना नहीं, बल्कि उनकी <b>देखभाल, संरक्षण, सुधार और पुनर्वास</b> में मदद करना है।
+
+<br><br>
+
+भारत में <b>Juvenile Justice (Care and Protection of Children) Act, 2015</b> बच्चों से संबंधित महत्वपूर्ण कानूनी framework है।
+
+`,
+
+"pocso": `
+
+<h3>⚖️ POCSO</h3>
+
+<b>POCSO Act, 2012</b> यानी Protection of Children from Sexual Offences Act बच्चों को यौन अपराधों और यौन शोषण से सुरक्षा देने वाला प्रमुख कानून है।
+
+<br><br>
+
+अगर किसी बच्चे के साथ ऐसा कुछ हो रहा है, तो किसी भरोसेमंद बड़े व्यक्ति को बताएं।
+
+<br><br>
+
+🚨 तत्काल खतरे में <b>112</b> या Child Helpline <b>1098</b> से संपर्क करें।
+
+`,
+
+"online safety": `
+
+<h3>📱 ऑनलाइन सुरक्षा</h3>
+
+इंटरनेट इस्तेमाल करते समय:
+
+<br><br>
+
+• अपना password किसी को न दें।<br>
+• निजी जानकारी अनजान व्यक्ति से साझा न करें।<br>
+• संदिग्ध link पर click न करें।<br>
+• परेशान करने वाले messages का record रखें।<br>
+• किसी trusted adult को बताएं।
+
+<br><br>
+
+Cyber crime की reporting के लिए <b>cybercrime.gov.in</b> का उपयोग किया जा सकता है।
+
+<br><br>
+
+Cyber Crime Helpline: <b>1930</b>
+
+`,
+
+"child safety": `
+
+<h3>🛡️ बाल सुरक्षा</h3>
+
+हर बच्चे को हिंसा, शोषण, उपेक्षा, बाल श्रम, बाल विवाह और अन्य खतरों से सुरक्षा मिलनी चाहिए।
+
+<br><br>
+
+अगर कोई आपको परेशान कर रहा है या नुकसान पहुँचा रहा है, तो किसी भरोसेमंद बड़े व्यक्ति, शिक्षक या संबंधित अधिकारी को बताएं।
+
+<br><br>
+
+🚨 तत्काल खतरे में <b>112</b> पर संपर्क करें।<br>
+📞 Child Helpline <b>1098</b>
+
+`,
+
+"i need help": `
+
+<h3>🚨 मुझे मदद चाहिए</h3>
+
+अगर आप या कोई बच्चा मुश्किल या खतरे में है:
+
+<br><br>
+
+📞 <b>Child Helpline – 1098</b><br>
+🚨 <b>Emergency – 112</b><br>
+💻 <b>Cyber Crime – 1930</b>
+
+<br><br>
+
+किसी भरोसेमंद बड़े व्यक्ति, शिक्षक या संबंधित अधिकारी से भी मदद लें।
+
+`
+
+};
+
+
+/* SHOW MESSAGE */
+
+function add(text,who){
+
+const d =
+document.createElement("div");
+
+d.className =
+"msg " + who;
+
+d.innerHTML =
+text;
+
+messages.appendChild(d);
+
+messages.scrollTop =
+messages.scrollHeight;
+
 }
 
 
-/* =====================================================
-   QUICK QUESTIONS
-===================================================== */
+/* QUICK BUTTON */
 
-function quickAsk(question){
+function quickAsk(q){
 
-  input.value = question;
+input.value=q;
 
-  send();
+send();
 
 }
 
 
-/* =====================================================
-   LOCAL CHILD SAFETY KNOWLEDGE
-===================================================== */
+/* NORMALIZE */
 
-function localAnswer(question){
+function normalize(text){
 
-  const q = question.toLowerCase();
-
-
-  if(q.includes("बाल विवाह") || q.includes("child marriage")){
-
-    return `बाल विवाह यानी 18 वर्ष से कम उम्र की लड़की या 21 वर्ष से कम उम्र के लड़के का विवाह।
-
-भारत में बाल विवाह कानूनन प्रतिबंधित है।
-
-अगर आपको किसी बाल विवाह की जानकारी है तो समय रहते परिवार, स्थानीय प्रशासन, Child Helpline 1098 या Emergency 112 से संपर्क करें।`;
-
-  }
-
-
-  if(q.includes("बाल श्रम") || q.includes("child labour")){
-
-    return `बाल श्रम का मतलब ऐसे काम में बच्चे को लगाना जिससे उसकी शिक्षा, स्वास्थ्य, सुरक्षा या विकास प्रभावित हो।
-
-बच्चे का स्थान स्कूल, सुरक्षित वातावरण और सीखने की जगह है।
-
-किसी बच्चे के बाल श्रम में होने की जानकारी मिलने पर Child Helpline 1098 या संबंधित प्रशासन से संपर्क किया जा सकता है।`;
-
-  }
-
-
-  if(q.includes("pocso")){
-
-    return `POCSO Act, 2012 बच्चों को यौन अपराधों से सुरक्षा देने वाला कानून है।
-
-यह कानून 18 वर्ष से कम उम्र के बच्चों की सुरक्षा के लिए बनाया गया है।
-
-यदि किसी बच्चे के साथ यौन दुर्व्यवहार हुआ है या खतरा है तो तुरंत 1098 Child Helpline या 112 Emergency से सहायता लें।`;
-
-  }
-
-
-  if(q.includes("mission vatsalya")){
-
-    return `Mission Vatsalya भारत सरकार की child protection से जुड़ी पहल है।
-
-इसका उद्देश्य बच्चों के संरक्षण, देखभाल और उनके अधिकारों को मजबूत करना तथा जरूरतमंद बच्चों को सहायता उपलब्ध कराना है।`;
-
-  }
-
-
-  if(q.includes("juvenile") ||
-     q.includes("jj act") ||
-     q.includes("juvenile justice")){
-
-    return `Juvenile Justice (Care and Protection of Children) Act बच्चों की देखभाल, संरक्षण, पुनर्वास और न्याय से संबंधित प्रमुख कानून है।
-
-जरूरतमंद बच्चों के लिए Child Welfare Committee और अन्य child protection systems महत्वपूर्ण भूमिका निभाते हैं।`;
-
-  }
-
-
-  if(q.includes("online safety") ||
-     q.includes("ऑनलाइन") ||
-     q.includes("cyber")){
-
-    return `ऑनलाइन सुरक्षित रहने के लिए:
-
-• अपना password किसी के साथ share न करें।
-• अजनबी लोगों से personal information share न करें।
-• किसी suspicious link पर click न करें।
-• परेशान करने वाले messages या accounts को block/report करें।
-• किसी trusted adult को जरूर बताएं।
-
-Cyber crime से संबंधित सहायता के लिए 1930 पर संपर्क किया जा सकता है।`;
-
-  }
-
-
-  if(q.includes("बाल अधिकार") ||
-     q.includes("child rights") ||
-     q.includes("अधिकार")){
-
-    return `हर बच्चे को कई महत्वपूर्ण अधिकार प्राप्त हैं:
-
-📚 शिक्षा का अधिकार
-🛡️ सुरक्षा का अधिकार
-❤️ देखभाल और संरक्षण का अधिकार
-🗣️ अपनी बात रखने और सहभागिता का अधिकार
-
-बच्चों के अधिकारों का सम्मान करना परिवार, समुदाय और समाज की जिम्मेदारी है।`;
-
-  }
-
-
-  if(q.includes("सुरक्षा") ||
-     q.includes("safe") ||
-     q.includes("खतरे")){
-
-    return `अगर कोई बच्चा खतरे में है:
-
-🚨 तुरंत सुरक्षित स्थान पर जाएं।
-📞 Emergency के लिए 112 पर संपर्क करें।
-📞 Child Helpline 1098 पर संपर्क करें।
-👨‍👩‍👧 किसी भरोसेमंद बड़े व्यक्ति को बताएं।
-
-बच्चे को अकेला न छोड़ें और उसकी बात ध्यान से सुनें।`;
-
-  }
-
-
-  if(q.includes("मदद") ||
-     q.includes("help")){
-
-    return `अगर आपको या किसी बच्चे को मदद चाहिए तो:
-
-📞 1098 – Child Helpline
-🚨 112 – Emergency
-💻 1930 – Cyber Crime Helpline
-
-किसी भरोसेमंद अभिभावक, शिक्षक या frontline worker को भी तुरंत बताएं।`;
-
-  }
-
-
-  return null;
+return text
+.toLowerCase()
+.trim()
+.replace(/[?.!,]/g,"");
 
 }
 
 
-/* =====================================================
-   SEND MESSAGE
-===================================================== */
+/* CHECK FIXED ANSWERS */
+
+function getFixedAnswer(q){
+
+const x=normalize(q);
+
+
+/* CHILD LABOUR */
+
+if(
+x.includes("child labour") ||
+x.includes("child labor") ||
+x.includes("बाल श्रम") ||
+x.includes("बाल मजदूरी") ||
+x.includes("bachcho se kam") ||
+x.includes("baccho se kam") ||
+x.includes("bachon se kam") ||
+x.includes("bacchon se kam")
+){
+return answers["child labour"];
+}
+
+
+/* CHILD MARRIAGE */
+
+if(
+x.includes("child marriage") ||
+x.includes("बाल विवाह") ||
+x.includes("bal vivah") ||
+x.includes("bal vivaah") ||
+x.includes("बाल शादी") ||
+x.includes("bacchi ki shadi") ||
+x.includes("bachi ki shadi") ||
+x.includes("shaadi")
+){
+return answers["child marriage"];
+}
+
+
+/* CHILD RIGHTS */
+
+if(
+x.includes("child rights") ||
+x.includes("बाल अधिकार") ||
+x.includes("baal adhikar") ||
+x.includes("bal adhikar") ||
+x.includes("bachchon ke adhikar") ||
+x.includes("bacchon ke adhikar")
+){
+return answers["child rights"];
+}
+
+
+/* MISSION VATSALYA */
+
+if(
+x.includes("mission vatsalya") ||
+x.includes("मिशन वात्सल्य") ||
+x.includes("vatsalya") ||
+x.includes("वात्सल्य")
+){
+return answers["mission vatsalya"];
+}
+
+
+/* JUVENILE JUSTICE */
+
+if(
+x.includes("juvenile justice") ||
+x.includes("juvenile") ||
+x.includes("किशोर न्याय") ||
+x.includes("kishor nyay") ||
+x.includes("jj act")
+){
+return answers["juvenile justice"];
+}
+
+
+/* POCSO */
+
+if(
+x.includes("pocso") ||
+x.includes("पॉक्सो") ||
+x.includes("sexual abuse") ||
+x.includes("sexual offence")
+){
+return answers["pocso"];
+}
+
+
+/* ONLINE SAFETY */
+
+if(
+x.includes("online safety") ||
+x.includes("ऑनलाइन सुरक्षा") ||
+x.includes("internet safety") ||
+x.includes("cyber safety")
+){
+return answers["online safety"];
+}
+
+
+/* CHILD SAFETY */
+
+if(
+x.includes("child safety") ||
+x.includes("बाल सुरक्षा") ||
+x.includes("child abuse") ||
+x.includes("बाल शोषण") ||
+x.includes("violence") ||
+x.includes("हिंसा")
+){
+return answers["child safety"];
+}
+
+
+/* HELP */
+
+if(
+x.includes("i need help") ||
+x.includes("मुझे मदद") ||
+x.includes("help chahiye") ||
+x.includes("helpline") ||
+x.includes("1098") ||
+x.includes("112")
+){
+return answers["i need help"];
+}
+
+
+return null;
+
+}
+
+
+/* SEND */
 
 async function send(){
 
-  const question = input.value.trim();
+const q =
+input.value.trim();
 
-  if(!question) return;
-
-
-  addMessage(question,"user");
-
-  input.value = "";
+if(!q)return;
 
 
-  const local = localAnswer(question);
+/* USER MESSAGE */
 
-  if(local){
+add(q,"user");
 
-    setTimeout(()=>{
-      addMessage(local,"bot");
-    },300);
-
-    return;
-  }
+input.value="";
 
 
-  const typing = addMessage("⏳ मैं जवाब तैयार कर रहा हूँ...","bot");
+/* FIRST CHECK FIXED ANSWERS */
 
+const fixed =
+getFixedAnswer(q);
 
-  try{
+if(fixed){
 
-    const response = await fetch("/api/chat",{
+setTimeout(function(){
 
-      method:"POST",
+add(fixed,"bot");
 
-      headers:{
-        "Content-Type":"application/json"
-      },
+},250);
 
-      body:JSON.stringify({
-        message:question
-      })
-
-    });
-
-
-    if(!response.ok){
-      throw new Error("Server error");
-    }
-
-
-    const data = await response.json();
-
-
-    typing.remove();
-
-
-    const answer =
-      data.reply ||
-      data.message ||
-      "माफ कीजिए, अभी जवाब नहीं मिल पाया। कृपया फिर से प्रयास करें।";
-
-
-    addMessage(answer,"bot");
-
-
-  }catch(error){
-
-    typing.remove();
-
-    addMessage(
-      `माफ कीजिए, अभी chatbot server से connection नहीं हो पाया।
-
-कृपया कुछ समय बाद फिर प्रयास करें।
-
-अगर मामला urgent है तो:
-📞 1098 Child Helpline
-🚨 112 Emergency`,
-      "bot"
-    );
-
-  }
+return;
 
 }
 
 
-/* =====================================================
-   VOICE SEARCH
-===================================================== */
+/* AI THINKING */
 
-const voiceBtn = document.getElementById("voiceBtn");
+const typing =
+document.createElement("div");
 
-const SpeechRecognition =
-  window.SpeechRecognition ||
-  window.webkitSpeechRecognition;
+typing.className="msg bot";
 
+typing.id="typing";
 
-if(voiceBtn){
+typing.innerHTML=
+"🤖 BAAL-SETU सोच रहा है... 😊";
 
-  if(!SpeechRecognition){
+messages.appendChild(typing);
 
-    voiceBtn.addEventListener("click",()=>{
+messages.scrollTop=
+messages.scrollHeight;
 
-      alert(
-        "आपके browser में Voice Search support नहीं है। कृपया Google Chrome या Microsoft Edge का उपयोग करें।"
-      );
 
-    });
+try{
 
-  }else{
+const r =
+await fetch("/api/chat",{
 
-    const recognition = new SpeechRecognition();
+method:"POST",
 
-    recognition.lang = "hi-IN";
+headers:{
+"Content-Type":"application/json"
+},
 
-    recognition.interimResults = false;
-
-    recognition.continuous = false;
-
-    recognition.maxAlternatives = 1;
-
-
-    recognition.onstart = ()=>{
-
-      voiceBtn.classList.add("listening");
-
-      voiceBtn.textContent = "🔴";
-
-      voiceBtn.title = "सुन रहा हूँ... बोलिए";
-
-      voiceBtn.setAttribute(
-        "aria-label",
-        "सुन रहा हूँ... बोलिए"
-      );
-
-      input.placeholder =
-        "🎤 सुन रहा हूँ... अपना सवाल बोलिए";
-
-    };
-
-
-    recognition.onresult = (event)=>{
-
-      const transcript =
-        event.results[0][0].transcript;
-
-      if(transcript){
-
-        input.value = transcript.trim();
-
-        input.focus();
-
-      }
-
-    };
-
-
-    recognition.onerror = (event)=>{
-
-      if(
-        event.error === "not-allowed" ||
-        event.error === "service-not-allowed"
-      ){
-
-        alert(
-          "Voice Search के लिए microphone permission Allow करें।"
-        );
-
-      }
-
-      else if(event.error === "no-speech"){
-
-        input.placeholder =
-          "कोई आवाज़ नहीं मिली। फिर से 🎤 दबाएं।";
-
-      }
-
-      else if(event.error === "audio-capture"){
-
-        alert(
-          "Microphone नहीं मिल रहा है। कृपया microphone check करें।"
-        );
-
-      }
-
-    };
-
-
-    recognition.onend = ()=>{
-
-      voiceBtn.classList.remove("listening");
-
-      voiceBtn.textContent = "🎤";
-
-      voiceBtn.title = "बोलकर सवाल पूछें";
-
-      voiceBtn.setAttribute(
-        "aria-label",
-        "बोलकर सवाल पूछें"
-      );
-
-      input.placeholder =
-        "अपना सवाल लिखें...";
-
-    };
-
-
-    voiceBtn.addEventListener("click",()=>{
-
-      if(
-        voiceBtn.classList.contains("listening")
-      ){
-
-        recognition.stop();
-
-        return;
-
-      }
-
-
-      try{
-
-        recognition.start();
-
-      }catch(error){
-
-        /* Browser may throw if recognition is already running */
-
-      }
-
-    });
-
-  }
-
-}
-
-
-/* =====================================================
-   INITIAL FOCUS
-===================================================== */
-
-window.addEventListener("load",()=>{
-
-  if(input){
-
-    input.focus();
-
-  }
+body:JSON.stringify({
+message:q
+})
 
 });
 
+
+const data =
+await r.json();
+
+typing.remove();
+
+
+if(!r.ok){
+
+throw new Error(
+data.error ||
+"Request failed"
+);
+
+}
+
+
+add(
+String(data.answer || ""),
+"bot"
+);
+
+
+}
+
+catch(e){
+
+typing.remove();
+
+add(`
+
+<b>Hindi:</b><br>
+
+BAAL-SETU अभी उपलब्ध नहीं है।
+
+<br><br>
+
+यदि आपको तत्काल मदद चाहिए तो <b>1098</b> या <b>112</b> पर संपर्क करें।
+
+`,"bot");
+
+}
+
+}
+
+
+/* ===== VOICE SEARCH ===== */
+const voiceBtn = document.getElementById("voiceBtn");
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (voiceBtn) {
+  if (!SpeechRecognition) {
+    voiceBtn.addEventListener("click", () => {
+      alert("आपके browser में Voice Search support नहीं है। Chrome या Edge में फिर प्रयास करें।");
+    });
+  } else {
+    const recognition = new SpeechRecognition();
+    recognition.lang = "hi-IN";
+    recognition.interimResults = true;
+    recognition.continuous = false;
+
+    recognition.onstart = () => {
+      voiceBtn.classList.add("listening");
+      voiceBtn.textContent = "🔴";
+      voiceBtn.title = "सुन रहा हूँ... बोलिए";
+      input.placeholder = "🎤 सुन रहा हूँ... अपना सवाल बोलिए";
+    };
+
+    recognition.onresult = (event) => {
+      let transcript = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      input.value = transcript.trim();
+    };
+
+    recognition.onerror = (event) => {
+      if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+        alert("Voice Search के लिए microphone permission allow करें।");
+      }
+    };
+
+    recognition.onend = () => {
+      voiceBtn.classList.remove("listening");
+      voiceBtn.textContent = "🎤";
+      voiceBtn.title = "बोलकर सवाल पूछें";
+      input.placeholder = "अपना सवाल लिखें...";
+      input.focus();
+    };
+
+    voiceBtn.addEventListener("click", () => {
+      if (voiceBtn.classList.contains("listening")) {
+        recognition.stop();
+        return;
+      }
+      try { recognition.start(); } catch (e) {}
+    });
+  }
+}
+
 </script>
+
+
+<div class="emergency-strip" role="alert">
+  🚨 अगर कोई बच्चा खतरे में है तो <strong>112</strong> Police helpline पर या
+  <strong>1098</strong> Child Helpline से संपर्क करें।
+</div>
 
 </body>
 </html>
