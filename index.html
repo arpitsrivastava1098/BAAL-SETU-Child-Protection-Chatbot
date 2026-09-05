@@ -1493,10 +1493,201 @@ font-size:42px;
 }
 
 /* =========================================================
+   CERTIFICATE
+   ========================================================= */
+
+.quiz-cert-btn{
+display:block;
+margin:14px auto 0;
+border:0;
+background:linear-gradient(90deg,#ffd166,#ffb000);
+color:#3a1f00;
+font-weight:900;
+font-size:15px;
+padding:13px 28px;
+border-radius:30px;
+cursor:pointer;
+box-shadow:0 5px 0 rgba(0,0,0,.18);
+}
+
+.quiz-cert-btn:active{
+transform:translateY(2px);
+box-shadow:0 2px 0 rgba(0,0,0,.18);
+}
+
+.cert-modal-overlay{
+position:fixed;
+inset:0;
+background:rgba(10,10,20,.65);
+z-index:999998;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:16px;
+}
+
+.cert-modal-box{
+background:#fff;
+border-radius:24px;
+padding:22px;
+max-width:540px;
+width:100%;
+max-height:92vh;
+overflow:auto;
+position:relative;
+box-shadow:0 22px 55px rgba(0,0,0,.35);
+}
+
+.cert-close-btn{
+position:absolute;
+top:10px;
+right:14px;
+background:#f1f1f5;
+border:0;
+width:32px;
+height:32px;
+border-radius:50%;
+font-size:16px;
+font-weight:900;
+cursor:pointer;
+color:#555;
+}
+
+.certificate{
+border-radius:16px;
+overflow:hidden;
+}
+
+.cert-border{
+border:6px double #ffb000;
+border-radius:14px;
+padding:8px;
+background:linear-gradient(135deg,#fff7e6,#fffdf7,#eaf8ff);
+}
+
+.cert-inner{
+border:2px solid #ffd166;
+border-radius:10px;
+padding:28px 22px;
+text-align:center;
+background:#fffdf7;
+}
+
+.cert-shield{
+font-size:42px;
+margin-bottom:6px;
+}
+
+.cert-title{
+font-size:27px;
+font-weight:900;
+color:#e84c27;
+letter-spacing:1px;
+margin-bottom:2px;
+}
+
+.cert-subtitle{
+font-size:12px;
+font-weight:800;
+color:#69717d;
+text-transform:uppercase;
+letter-spacing:2px;
+margin-bottom:18px;
+}
+
+.cert-body{
+font-size:14.5px;
+line-height:1.9;
+color:#20242b;
+font-weight:600;
+}
+
+.cert-name{
+font-size:23px;
+font-weight:900;
+color:#6c63ff;
+margin:10px 0;
+border-bottom:2px solid #ffd166;
+display:inline-block;
+padding:2px 22px;
+min-width:180px;
+}
+
+.cert-date{
+margin-top:18px;
+font-size:12px;
+color:#69717d;
+font-weight:700;
+}
+
+.cert-signature{
+margin-top:10px;
+font-size:13px;
+font-weight:900;
+color:#ff8c42;
+}
+
+.cert-controls{
+display:flex;
+gap:10px;
+margin-top:18px;
+}
+
+#certNameInput{
+flex:1;
+border:2px solid #dce1e7;
+border-radius:12px;
+padding:12px 14px;
+font-size:14px;
+outline:none;
+}
+
+#certNameInput:focus{
+border-color:#6c63ff;
+}
+
+.cert-download-btn{
+border:0;
+background:linear-gradient(90deg,#6c63ff,#8f7cff);
+color:#fff;
+font-weight:900;
+border-radius:12px;
+padding:0 20px;
+cursor:pointer;
+font-size:14px;
+white-space:nowrap;
+}
+
+@media(max-width:520px){
+
+.cert-modal-box{
+padding:16px;
+}
+
+.cert-inner{
+padding:20px 14px;
+}
+
+.cert-title{
+font-size:22px;
+}
+
+.cert-name{
+font-size:19px;
+}
+
+.cert-controls{
+flex-direction:column;
+}
+
+}
+
+/* =========================================================
    END CSS
    ========================================================= */
 
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -1804,6 +1995,75 @@ Child Protection • Child Rights • Safety
 
 <button class="quiz-retry-btn" onclick="startQuiz()">
 🔁 फिर से खेलें
+</button>
+
+<button class="quiz-cert-btn quiz-hidden" id="certBtn" onclick="openCertModal()">
+🏅 अपना सर्टिफिकेट पाएं
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CERTIFICATE MODAL -->
+
+<div id="certModal" class="cert-modal-overlay quiz-hidden">
+
+<div class="cert-modal-box">
+
+<button class="cert-close-btn" onclick="closeCertModal()">✕</button>
+
+<div id="certificateArea" class="certificate">
+
+<div class="cert-border">
+
+<div class="cert-inner">
+
+<div class="cert-shield">🛡️</div>
+
+<div class="cert-title">प्रमाण पत्र</div>
+
+<div class="cert-subtitle">Certificate of Achievement</div>
+
+<div class="cert-body">
+
+यह प्रमाणित किया जाता है कि
+
+<br>
+
+<span class="cert-name" id="certNameDisplay">___________</span>
+
+<br>
+
+ने <b>BAAL-SETU</b> बाल अधिकार क्विज़ में सभी 10 सवालों के सही उत्तर देकर
+
+<br>
+
+<b>"Rights Champion 🏆"</b> का खिताब हासिल किया है।
+
+</div>
+
+<div class="cert-date" id="certDate"></div>
+
+<div class="cert-signature">
+🛡️ BAAL-SETU टीम की ओर से
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="cert-controls">
+
+<input id="certNameInput" placeholder="अपना नाम यहाँ लिखें" oninput="updateCertName()">
+
+<button class="cert-download-btn" onclick="downloadCertificate()">
+⬇️ Download
 </button>
 
 </div>
@@ -2887,6 +3147,87 @@ document.getElementById("quizBadgeEmoji").textContent = badge;
 document.getElementById("quizResultTitle").textContent = title;
 
 document.getElementById("quizResultMsg").textContent = msg;
+
+
+const certBtn = document.getElementById("certBtn");
+
+if(quizScore === total){
+
+certBtn.classList.remove("quiz-hidden");
+
+}else{
+
+certBtn.classList.add("quiz-hidden");
+
+}
+
+}
+
+
+/* =========================================================
+   CERTIFICATE
+   ========================================================= */
+
+function openCertModal(){
+
+document.getElementById("certModal").classList.remove("quiz-hidden");
+
+const today = new Date();
+
+document.getElementById("certDate").textContent =
+"दिनांक: " + today.toLocaleDateString("hi-IN");
+
+}
+
+
+function closeCertModal(){
+
+document.getElementById("certModal").classList.add("quiz-hidden");
+
+}
+
+
+function updateCertName(){
+
+const val = document.getElementById("certNameInput").value.trim();
+
+document.getElementById("certNameDisplay").textContent =
+val ? val : "___________";
+
+}
+
+
+function downloadCertificate(){
+
+const nameVal = document.getElementById("certNameInput").value.trim();
+
+if(!nameVal){
+
+alert("कृपया पहले अपना नाम लिखें।");
+
+return;
+
+}
+
+
+const certEl = document.getElementById("certificateArea");
+
+
+html2canvas(certEl,{scale:2,backgroundColor:"#ffffff"}).then(function(canvas){
+
+const link = document.createElement("a");
+
+link.download = "BAAL-SETU-Certificate.png";
+
+link.href = canvas.toDataURL("image/png");
+
+link.click();
+
+}).catch(function(){
+
+alert("Certificate download नहीं हो पाया, दोबारा कोशिश करें।");
+
+});
 
 }
 
