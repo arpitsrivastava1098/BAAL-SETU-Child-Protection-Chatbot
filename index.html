@@ -1683,6 +1683,259 @@ flex-direction:column;
 }
 
 /* =========================================================
+   STORY-BASED LEARNING
+   ========================================================= */
+
+.story-wrap{
+margin:30px 0;
+}
+
+.story-header{
+text-align:center;
+font-size:22px;
+font-weight:900;
+margin:0 0 14px;
+color:#20242b;
+}
+
+.story-sub{
+text-align:center;
+color:#69717d;
+font-weight:600;
+font-size:14px;
+margin:-8px 0 18px;
+}
+
+.story-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+}
+
+.story-card{
+border-radius:22px;
+padding:20px 16px;
+text-align:center;
+box-shadow:0 10px 26px rgba(0,0,0,.10);
+border:3px solid rgba(255,255,255,.8);
+cursor:pointer;
+transition:.2s;
+position:relative;
+}
+
+.story-card:hover{
+transform:translateY(-5px);
+}
+
+.story-cover-emoji{
+font-size:52px;
+margin-bottom:8px;
+animation:mascotFloat 3.8s ease-in-out infinite;
+}
+
+.story-card h4{
+margin:6px 0 4px;
+font-size:16px;
+font-weight:900;
+color:#20242b;
+}
+
+.story-card p{
+margin:0 0 14px;
+font-size:12.5px;
+color:#55606c;
+font-weight:600;
+line-height:1.5;
+}
+
+.story-read-btn{
+border:0;
+background:#fff;
+color:#20242b;
+font-weight:900;
+font-size:13px;
+padding:9px 18px;
+border-radius:30px;
+cursor:pointer;
+box-shadow:0 4px 0 rgba(0,0,0,.12);
+}
+
+.story-read-btn:active{
+transform:translateY(2px);
+box-shadow:0 1px 0 rgba(0,0,0,.12);
+}
+
+.story-c1{background:linear-gradient(150deg,#fff0a8,#ffd166);}
+.story-c2{background:linear-gradient(150deg,#c9ffd9,#7ee8a5);}
+.story-c3{background:linear-gradient(150deg,#eadcff,#c5a8ff);}
+
+.story-modal-overlay{
+position:fixed;
+inset:0;
+background:rgba(10,10,20,.65);
+z-index:999997;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:16px;
+}
+
+.story-modal-box{
+background:#fffdf7;
+border-radius:26px;
+padding:24px;
+max-width:520px;
+width:100%;
+max-height:92vh;
+overflow:auto;
+position:relative;
+box-shadow:0 22px 55px rgba(0,0,0,.35);
+border:3px solid #ffe0a0;
+}
+
+.story-close-btn{
+position:absolute;
+top:12px;
+right:14px;
+background:#f1f1f5;
+border:0;
+width:32px;
+height:32px;
+border-radius:50%;
+font-size:16px;
+font-weight:900;
+cursor:pointer;
+color:#555;
+z-index:2;
+}
+
+.story-modal-title{
+text-align:center;
+font-size:19px;
+font-weight:900;
+color:#e84c27;
+margin:0 30px 14px;
+}
+
+.story-progress-dots{
+display:flex;
+justify-content:center;
+gap:6px;
+margin-bottom:18px;
+}
+
+.story-dot{
+width:9px;
+height:9px;
+border-radius:50%;
+background:#e2e6eb;
+transition:.2s;
+}
+
+.story-dot.active{
+background:#6c63ff;
+width:22px;
+border-radius:6px;
+}
+
+.story-page{
+text-align:center;
+min-height:220px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+}
+
+.story-page-emoji{
+font-size:64px;
+margin-bottom:16px;
+}
+
+.story-page-text{
+font-size:15px;
+line-height:1.8;
+font-weight:600;
+color:#20242b;
+padding:0 6px;
+}
+
+.story-moral-box{
+margin-top:6px;
+padding:16px 18px;
+background:linear-gradient(135deg,#e3ffec,#d9f3ff);
+border:2px solid #b7f0c8;
+border-radius:16px;
+text-align:left;
+font-size:14px;
+font-weight:700;
+line-height:1.7;
+color:#1a5c3c;
+}
+
+.story-moral-box b{
+color:#0f7a3d;
+}
+
+.story-nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:18px;
+gap:10px;
+}
+
+.story-nav-btn{
+border:0;
+background:#6c63ff;
+color:#fff;
+font-weight:900;
+font-size:14px;
+padding:11px 20px;
+border-radius:14px;
+cursor:pointer;
+box-shadow:0 4px 0 rgba(0,0,0,.15);
+}
+
+.story-nav-btn:disabled{
+opacity:.35;
+cursor:default;
+}
+
+.story-nav-btn.finish{
+background:#ff8c42;
+}
+
+.story-nav-btn:active:not(:disabled){
+transform:translateY(2px);
+box-shadow:0 1px 0 rgba(0,0,0,.15);
+}
+
+@media(max-width:700px){
+
+.story-grid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:520px){
+
+.story-grid{
+grid-template-columns:1fr;
+}
+
+.story-page-emoji{
+font-size:52px;
+}
+
+.story-page-text{
+font-size:14px;
+}
+
+}
+
+/* =========================================================
    END CSS
    ========================================================= */
 
@@ -2064,6 +2317,75 @@ Child Protection • Child Rights • Safety
 
 <button class="cert-download-btn" onclick="downloadCertificate()">
 ⬇️ Download
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="story-wrap">
+
+<div class="story-header">
+📖 कहानी से सीखो
+</div>
+
+<div class="story-sub">
+छोटी कहानियों के ज़रिए अपने अधिकार समझो
+</div>
+
+<div class="story-grid">
+
+<div class="story-card story-c1" onclick="openStory(0)">
+<div class="story-cover-emoji">📚👧</div>
+<h4>मीना का सपना</h4>
+<p>एक बच्ची जो पढ़ना चाहती थी</p>
+<button class="story-read-btn">पढ़ें ➤</button>
+</div>
+
+<div class="story-card story-c2" onclick="openStory(1)">
+<div class="story-cover-emoji">📱🧑</div>
+<h4>आरव की सूझबूझ</h4>
+<p>ऑनलाइन सुरक्षा की कहानी</p>
+<button class="story-read-btn">पढ़ें ➤</button>
+</div>
+
+<div class="story-card story-c3" onclick="openStory(2)">
+<div class="story-cover-emoji">👧💐</div>
+<h4>पारो को बचाओ</h4>
+<p>बाल विवाह के खिलाफ हिम्मत</p>
+<button class="story-read-btn">पढ़ें ➤</button>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- STORY MODAL -->
+
+<div id="storyModal" class="story-modal-overlay quiz-hidden">
+
+<div class="story-modal-box">
+
+<button class="story-close-btn" onclick="closeStoryModal()">✕</button>
+
+<div class="story-modal-title" id="storyModalTitle"></div>
+
+<div class="story-progress-dots" id="storyDots"></div>
+
+<div class="story-page" id="storyPageArea"></div>
+
+<div class="story-nav">
+
+<button class="story-nav-btn" id="storyPrevBtn" onclick="storyPrevPage()">
+◀ पीछे
+</button>
+
+<button class="story-nav-btn" id="storyNextBtn" onclick="storyNextPage()">
+आगे ▶
 </button>
 
 </div>
@@ -3228,6 +3550,202 @@ link.click();
 alert("Certificate download नहीं हो पाया, दोबारा कोशिश करें।");
 
 });
+
+}
+
+
+/* =========================================================
+   STORY-BASED LEARNING
+   ========================================================= */
+
+const stories = [
+
+{
+
+title:"📚👧 मीना का सपना",
+
+pages:[
+
+{emoji:"🧒📚",text:"मीना 10 साल की थी। वह पढ़ाई में बहुत तेज़ थी, लेकिन उसके पापा उसे पड़ोस की दुकान पर रोज़ काम करने भेज देते थे।"},
+
+{emoji:"😢🏫",text:"मीना रोज़ स्कूल की खिड़की से बच्चों को पढ़ते देखती और सोचती — \"काश मैं भी स्कूल जा पाती।\""},
+
+{emoji:"👩‍🏫💬",text:"एक दिन उसकी टीचर मीना के घर आईं और माता-पिता को समझाया कि 14 साल से कम उम्र में बच्चों से काम करवाना कानूनन गलत है।"},
+
+{emoji:"🎒✨",text:"मीना के पापा को अपनी गलती समझ आई। अगले दिन से मीना स्कूल जाने लगी और बहुत खुश थी।"}
+
+],
+
+moral:"🌟 <b>सीख:</b> हर बच्चे का हक है पढ़ाई करना। 14 साल से कम उम्र में काम करवाना गैरकानूनी है। ऐसा कुछ हो तो <b>Child Helpline 1098</b> पर बताओ।"
+
+},
+
+{
+
+title:"📱🧑 आरव की सूझबूझ",
+
+pages:[
+
+{emoji:"📱🎮",text:"आरव को ऑनलाइन गेम खेलना बहुत पसंद था। एक दिन एक अनजान व्यक्ति ने उससे दोस्ती की और उसका घर का पता माँगा।"},
+
+{emoji:"🤔❓",text:"आरव को कुछ अजीब लगा। उसने अपनी कोई भी निजी जानकारी उस अनजान व्यक्ति को नहीं दी।"},
+
+{emoji:"👨‍👩‍👦💬",text:"उसने तुरंत अपनी मम्मी को पूरी बात बताई। मम्मी ने उसकी तारीफ की और उस अकाउंट को रिपोर्ट व block करवा दिया।"},
+
+{emoji:"🌟📵",text:"आरव ने सीखा — इंटरनेट पर अनजान लोगों से कभी भी निजी जानकारी शेयर नहीं करनी चाहिए।"}
+
+],
+
+moral:"🌟 <b>सीख:</b> ऑनलाइन कोई भी अजीब बात लगे तो तुरंत किसी trusted adult को बताओ। <b>Cyber Crime Helpline: 1930</b>"
+
+},
+
+{
+
+title:"👧💐 पारो को बचाओ",
+
+pages:[
+
+{emoji:"👧💍",text:"पारो सिर्फ 15 साल की थी, लेकिन उसके घरवाले उसकी शादी करने की तैयारी कर रहे थे।"},
+
+{emoji:"😟💭",text:"पारो डर गई। उसे पता था कि इतनी छोटी उम्र में शादी करना सही नहीं है और उसकी पढ़ाई भी रुक जाएगी।"},
+
+{emoji:"📞👩‍🏫",text:"उसने हिम्मत करके अपनी स्कूल टीचर को पूरी बात बताई। टीचर ने तुरंत Child Helpline 1098 पर कॉल की।"},
+
+{emoji:"🎉📖",text:"अधिकारियों की मदद से पारो की शादी रुक गई और वह फिर से स्कूल जाने लगी।"}
+
+],
+
+moral:"🌟 <b>सीख:</b> बाल विवाह गैरकानूनी है। अगर तुम्हारे या किसी दोस्त के साथ ऐसा हो रहा हो, तो <b>1098</b> या <b>112</b> पर तुरंत बताओ।"
+
+}
+
+];
+
+let storyCurrentIdx = 0;
+
+let storyPageIdx = 0;
+
+
+function openStory(idx){
+
+storyCurrentIdx = idx;
+
+storyPageIdx = 0;
+
+document.getElementById("storyModalTitle").textContent = stories[idx].title;
+
+document.getElementById("storyModal").classList.remove("quiz-hidden");
+
+renderStoryPage();
+
+}
+
+
+function closeStoryModal(){
+
+document.getElementById("storyModal").classList.add("quiz-hidden");
+
+}
+
+
+function renderStoryPage(){
+
+const story = stories[storyCurrentIdx];
+
+const totalPages = story.pages.length + 1;
+
+const isLastPage = storyPageIdx === story.pages.length;
+
+
+const dotsWrap = document.getElementById("storyDots");
+
+dotsWrap.innerHTML = "";
+
+for(let i=0;i<totalPages;i++){
+
+const dot = document.createElement("div");
+
+dot.className = "story-dot" + (i === storyPageIdx ? " active" : "");
+
+dotsWrap.appendChild(dot);
+
+}
+
+
+const pageArea = document.getElementById("storyPageArea");
+
+if(!isLastPage){
+
+const page = story.pages[storyPageIdx];
+
+pageArea.innerHTML =
+'<div class="story-page-emoji">'+page.emoji+'</div>'+
+'<div class="story-page-text">'+page.text+'</div>';
+
+}else{
+
+pageArea.innerHTML =
+'<div class="story-page-emoji">🏆</div>'+
+'<div class="story-moral-box">'+story.moral+'</div>';
+
+}
+
+
+document.getElementById("storyPrevBtn").disabled = (storyPageIdx === 0);
+
+
+const nextBtn = document.getElementById("storyNextBtn");
+
+if(isLastPage){
+
+nextBtn.textContent = "बंद करें ✓";
+
+nextBtn.classList.add("finish");
+
+nextBtn.disabled = false;
+
+}else{
+
+nextBtn.textContent = "आगे ▶";
+
+nextBtn.classList.remove("finish");
+
+nextBtn.disabled = false;
+
+}
+
+}
+
+
+function storyPrevPage(){
+
+if(storyPageIdx > 0){
+
+storyPageIdx--;
+
+renderStoryPage();
+
+}
+
+}
+
+
+function storyNextPage(){
+
+const story = stories[storyCurrentIdx];
+
+if(storyPageIdx < story.pages.length){
+
+storyPageIdx++;
+
+renderStoryPage();
+
+}else{
+
+closeStoryModal();
+
+}
 
 }
 
