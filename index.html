@@ -1096,6 +1096,403 @@ animation:none !important;
 }
 
 /* =========================================================
+   QUIZ SECTION — KBC STYLE
+   ========================================================= */
+
+.quiz-wrap{
+margin:30px 0;
+}
+
+.quiz-header{
+text-align:center;
+font-size:22px;
+font-weight:900;
+margin:0 0 14px;
+color:#20242b;
+}
+
+.quiz-card{
+background:
+radial-gradient(circle at 15% 10%,rgba(255,193,7,.10),transparent 40%),
+radial-gradient(circle at 90% 85%,rgba(255,193,7,.08),transparent 45%),
+linear-gradient(160deg,#050a2e,#0b1148 45%,#150a3d);
+border:3px solid transparent;
+border-radius:24px;
+padding:22px;
+box-shadow:
+0 0 0 2px #ffd76a,
+0 0 28px rgba(255,193,7,.35),
+0 16px 34px rgba(0,0,0,.4);
+position:relative;
+overflow:hidden;
+color:#fff;
+}
+
+.quiz-card::before{
+content:"";
+position:absolute;
+inset:0;
+pointer-events:none;
+background:
+repeating-radial-gradient(circle at 50% 50%,rgba(255,215,110,.05) 0 2px,transparent 2px 40px);
+opacity:.5;
+}
+
+.quiz-intro{
+text-align:center;
+position:relative;
+}
+
+.quiz-intro-emoji{
+font-size:54px;
+animation:mascotFloat 3.8s ease-in-out infinite;
+filter:drop-shadow(0 0 12px rgba(255,215,110,.7));
+}
+
+.quiz-intro h3{
+margin:8px 0 4px;
+font-size:23px;
+font-weight:900;
+letter-spacing:.5px;
+background:linear-gradient(90deg,#ffe9a8,#ffc93c,#ffe9a8);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+text-transform:uppercase;
+}
+
+.quiz-intro p{
+margin:0 0 16px;
+color:#c9d0ff;
+font-weight:600;
+font-size:14px;
+}
+
+.quiz-start-btn{
+border:2px solid #fff3c4;
+background:linear-gradient(180deg,#ffe9a8,#ffb000);
+color:#3a1f00;
+font-weight:900;
+font-size:16px;
+padding:13px 30px;
+border-radius:30px;
+cursor:pointer;
+box-shadow:0 0 0 3px rgba(255,193,7,.25),0 6px 0 rgba(0,0,0,.35);
+transition:.2s;
+text-transform:uppercase;
+letter-spacing:.5px;
+}
+
+.quiz-start-btn:hover{
+transform:translateY(-3px);
+}
+
+.quiz-start-btn:active{
+transform:translateY(2px);
+box-shadow:0 0 0 3px rgba(255,193,7,.25),0 2px 0 rgba(0,0,0,.35);
+}
+
+.quiz-kbc-layout{
+position:relative;
+display:flex;
+gap:18px;
+align-items:flex-start;
+}
+
+.quiz-main{
+flex:1;
+min-width:0;
+}
+
+.quiz-progress-bar{
+height:9px;
+background:rgba(255,255,255,.12);
+border-radius:10px;
+overflow:hidden;
+margin-bottom:16px;
+}
+
+.quiz-progress-fill{
+height:100%;
+background:linear-gradient(90deg,#ffb000,#ffe9a8);
+border-radius:10px;
+transition:width .35s ease;
+}
+
+.quiz-progress-label{
+text-align:center;
+font-size:12px;
+font-weight:800;
+letter-spacing:1px;
+color:#ffd76a;
+margin-bottom:10px;
+text-transform:uppercase;
+}
+
+.quiz-question{
+font-size:17px;
+font-weight:800;
+margin:6px 0 18px;
+text-align:center;
+line-height:1.6;
+background:linear-gradient(180deg,#0e1550,#171b63);
+border:2px solid #ffd76a;
+border-radius:16px;
+padding:16px 18px;
+box-shadow:inset 0 0 18px rgba(255,215,110,.15);
+}
+
+.quiz-options{
+display:grid;
+gap:12px;
+}
+
+.quiz-option{
+display:flex;
+align-items:center;
+gap:12px;
+border:2px solid #3a4590;
+background:linear-gradient(180deg,#12184f,#0a0e35);
+border-radius:30px;
+padding:12px 18px;
+font-size:14px;
+font-weight:700;
+text-align:left;
+cursor:pointer;
+transition:.15s;
+color:#eef0ff;
+}
+
+.quiz-option .opt-letter{
+flex-shrink:0;
+width:30px;
+height:30px;
+border-radius:50%;
+border:2px solid #ffd76a;
+color:#ffd76a;
+font-weight:900;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+background:rgba(255,215,110,.08);
+}
+
+.quiz-option:hover{
+border-color:#ffd76a;
+transform:translateX(4px);
+box-shadow:0 0 14px rgba(255,215,110,.35);
+}
+
+.quiz-option.correct{
+background:linear-gradient(180deg,#0f5c2e,#0a3d1e);
+border-color:#4ee08a;
+color:#c6ffe0;
+}
+
+.quiz-option.correct .opt-letter{
+border-color:#4ee08a;
+color:#4ee08a;
+background:rgba(78,224,138,.15);
+}
+
+.quiz-option.wrong{
+background:linear-gradient(180deg,#5c1414,#3d0a0a);
+border-color:#ff6b6b;
+color:#ffd6d6;
+}
+
+.quiz-option.wrong .opt-letter{
+border-color:#ff6b6b;
+color:#ff6b6b;
+background:rgba(255,107,107,.15);
+}
+
+.quiz-option[disabled]{
+cursor:default;
+}
+
+.quiz-option[disabled]:hover{
+transform:none;
+box-shadow:none;
+}
+
+.quiz-feedback{
+margin-top:16px;
+padding:14px 16px;
+border-radius:15px;
+font-size:14px;
+font-weight:700;
+line-height:1.6;
+}
+
+.quiz-feedback.ok{
+background:rgba(78,224,138,.12);
+color:#c6ffe0;
+border:2px solid #4ee08a;
+}
+
+.quiz-feedback.no{
+background:rgba(255,193,7,.10);
+color:#ffe9a8;
+border:2px solid #ffd76a;
+}
+
+.quiz-next-btn{
+display:block;
+margin:16px auto 0;
+border:2px solid #fff3c4;
+background:linear-gradient(180deg,#ffe9a8,#ffb000);
+color:#3a1f00;
+font-weight:900;
+font-size:14px;
+padding:12px 26px;
+border-radius:30px;
+cursor:pointer;
+box-shadow:0 5px 0 rgba(0,0,0,.35);
+text-transform:uppercase;
+letter-spacing:.5px;
+}
+
+.quiz-next-btn:active{
+transform:translateY(2px);
+box-shadow:0 2px 0 rgba(0,0,0,.35);
+}
+
+.quiz-ladder{
+display:flex;
+flex-direction:column-reverse;
+gap:6px;
+width:128px;
+flex-shrink:0;
+}
+
+.ladder-item{
+padding:8px 6px;
+border-radius:8px;
+border:1px solid #4a5399;
+color:#aab2e8;
+font-weight:800;
+font-size:11px;
+text-align:center;
+background:rgba(255,255,255,.03);
+}
+
+.ladder-item.current{
+background:linear-gradient(90deg,#ffe9a8,#ffb000);
+color:#3a1f00;
+border-color:#fff3c4;
+box-shadow:0 0 12px rgba(255,193,7,.5);
+transform:scale(1.05);
+}
+
+.ladder-item.done{
+color:#4ee08a;
+border-color:#2e7d52;
+}
+
+.quiz-result{
+text-align:center;
+position:relative;
+}
+
+.quiz-badge-emoji{
+font-size:64px;
+animation:shieldPulse 1.9s ease-in-out infinite;
+filter:drop-shadow(0 0 14px rgba(255,215,110,.7));
+}
+
+.quiz-result h3{
+font-size:22px;
+margin:10px 0 4px;
+font-weight:900;
+background:linear-gradient(90deg,#ffe9a8,#ffc93c,#ffe9a8);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+}
+
+.quiz-result .score-line{
+font-size:18px;
+font-weight:900;
+color:#ffd76a;
+margin-bottom:6px;
+}
+
+.quiz-result p{
+color:#c9d0ff;
+font-weight:600;
+font-size:14px;
+margin-bottom:18px;
+}
+
+.quiz-retry-btn{
+border:2px solid #fff3c4;
+background:linear-gradient(180deg,#ffe9a8,#ffb000);
+color:#3a1f00;
+font-weight:900;
+font-size:15px;
+padding:12px 28px;
+border-radius:30px;
+cursor:pointer;
+box-shadow:0 5px 0 rgba(0,0,0,.35);
+text-transform:uppercase;
+letter-spacing:.5px;
+}
+
+.quiz-retry-btn:active{
+transform:translateY(2px);
+box-shadow:0 2px 0 rgba(0,0,0,.35);
+}
+
+.quiz-hidden{
+display:none !important;
+}
+
+@media(max-width:700px){
+
+.quiz-kbc-layout{
+flex-direction:column-reverse;
+}
+
+.quiz-ladder{
+flex-direction:row;
+width:100%;
+overflow-x:auto;
+padding-bottom:4px;
+}
+
+.ladder-item{
+flex:0 0 auto;
+min-width:64px;
+}
+
+}
+
+@media(max-width:520px){
+
+.quiz-card{
+padding:16px;
+border-radius:18px;
+}
+
+.quiz-question{
+font-size:15px;
+padding:14px;
+}
+
+.quiz-option{
+font-size:13px;
+padding:11px 14px;
+}
+
+.quiz-intro-emoji{
+font-size:42px;
+}
+
+}
+
+/* =========================================================
    END CSS
    ========================================================= */
 
@@ -1331,6 +1728,87 @@ Child Protection • Child Rights • Safety
 🚨 मुझे मदद चाहिए
 <small>I Need Help</small>
 </button>
+
+</div>
+
+
+<div class="quiz-wrap">
+
+<div class="quiz-header">
+🎯 Apna Gyan Test Karo!
+</div>
+
+<div class="quiz-card" id="quizCard">
+
+<!-- INTRO SCREEN -->
+
+<div id="quizIntro" class="quiz-intro">
+
+<div class="quiz-intro-emoji">🧠</div>
+
+<h3>बाल अधिकार क्विज़</h3>
+
+<p>10 आसान सवाल — देखो कितना जानते हो अपने अधिकारों के बारे में!</p>
+
+<button class="quiz-start-btn" onclick="startQuiz()">
+▶️ क्विज़ शुरू करें
+</button>
+
+</div>
+
+<!-- QUESTION SCREEN -->
+
+<div id="quizPlay" class="quiz-hidden quiz-kbc-layout">
+
+<div class="quiz-main">
+
+<div class="quiz-progress-label" id="quizProgressLabel">
+सवाल 1 / 10
+</div>
+
+<div class="quiz-progress-bar">
+<div class="quiz-progress-fill" id="quizProgressFill" style="width:10%"></div>
+</div>
+
+<div class="quiz-question" id="quizQuestionText"></div>
+
+<div class="quiz-options" id="quizOptions"></div>
+
+<div id="quizFeedback"></div>
+
+<button class="quiz-next-btn quiz-hidden" id="quizNextBtn" onclick="nextQuestion()">
+अगला सवाल ➤
+</button>
+
+</div>
+
+<div class="quiz-ladder" id="quizLadder"></div>
+
+</div>
+
+<!-- RESULT SCREEN -->
+
+<div id="quizResult" class="quiz-hidden quiz-result">
+
+<div class="quiz-badge-emoji" id="quizBadgeEmoji">🏆</div>
+
+<h3 id="quizResultTitle">शाबाश!</h3>
+
+<div class="score-line" id="quizScoreLine">
+10 / 10 सही
+</div>
+
+<p id="quizResultMsg">
+तुम अपने अधिकारों के बारे में बहुत कुछ जानते हो!
+</p>
+
+<button class="quiz-retry-btn" onclick="startQuiz()">
+🔁 फिर से खेलें
+</button>
+
+</div>
+
+</div>
 
 </div>
 
@@ -2109,6 +2587,306 @@ recognition.start();
 });
 
 }
+
+}
+
+
+/* =========================================================
+   QUIZ
+   ========================================================= */
+
+const quizQuestions = [
+
+{
+q:"बाल श्रम कानून के अनुसार, किस उम्र से कम के बच्चे को किसी भी काम पर रखना पूरी तरह गैर-कानूनी है?",
+options:["12 साल","14 साल","16 साल","18 साल"],
+correct:1,
+explain:"बाल श्रम (निषेध एवं विनियमन) अधिनियम, 1986 के अनुसार 14 साल से कम उम्र के बच्चे को काम पर रखना पूरी तरह प्रतिबंधित है।"
+},
+
+{
+q:"लड़कियों के लिए शादी की कानूनी न्यूनतम उम्र क्या है?",
+options:["15 साल","16 साल","18 साल","21 साल"],
+correct:2,
+explain:"बाल विवाह निषेध अधिनियम के अनुसार लड़कियों की शादी की कानूनी उम्र 18 साल है। इससे पहले शादी बाल विवाह मानी जाती है।"
+},
+
+{
+q:"अगर कोई बच्चा खतरे में है, तो Child Helpline नंबर क्या है?",
+options:["100","108","1098","1930"],
+correct:2,
+explain:"1098 भारत की Child Helpline है, जो 24x7 बच्चों की सुरक्षा के लिए उपलब्ध है।"
+},
+
+{
+q:"बच्चों को यौन शोषण से सुरक्षा देने वाला कानून कौन सा है?",
+options:["JJ Act","POCSO Act","RTE Act","Vatsalya Yojana"],
+correct:1,
+explain:"POCSO Act, 2012 (Protection of Children from Sexual Offences Act) बच्चों को यौन अपराधों से सुरक्षा देता है।"
+},
+
+{
+q:"Cyber Crime की शिकायत के लिए हेल्पलाइन नंबर क्या है?",
+options:["112","1098","1930","100"],
+correct:2,
+explain:"1930 Cyber Crime Helpline है, जिस पर online धोखाधड़ी या साइबर अपराध की शिकायत की जा सकती है।"
+},
+
+{
+q:"लड़कों के लिए शादी की कानूनी न्यूनतम उम्र क्या है?",
+options:["18 साल","19 साल","21 साल","23 साल"],
+correct:2,
+explain:"भारतीय कानून के अनुसार लड़कों की शादी की कानूनी न्यूनतम उम्र 21 साल है।"
+},
+
+{
+q:"भारतीय संविधान का कौन सा अनुच्छेद बच्चों को खतरनाक कामों से सुरक्षा देता है?",
+options:["अनुच्छेद 14","अनुच्छेद 21","अनुच्छेद 24","अनुच्छेद 32"],
+correct:2,
+explain:"भारतीय संविधान के अनुच्छेद 24 के अनुसार 14 साल से कम उम्र के बच्चों को फैक्ट्री, खदान या किसी खतरनाक काम में नहीं लगाया जा सकता।"
+},
+
+{
+q:"बच्चों की देखभाल और सुरक्षा से जुड़ी सरकारी योजना का नाम क्या है?",
+options:["मिशन वात्सल्य","मिशन इंद्रधनुष","बेटी बचाओ बेटी पढ़ाओ","आंगनवाड़ी योजना"],
+correct:0,
+explain:"मिशन वात्सल्य भारत सरकार की योजना है जो मुश्किल परिस्थितियों में रहने वाले बच्चों को देखभाल, सुरक्षा और सहायता देने पर केंद्रित है।"
+},
+
+{
+q:"अगर तुम्हारी या तुम्हारे किसी दोस्त की शादी हो रही है या होने वाली है, तो इसकी शिकायत (report) कहाँ करनी चाहिए?",
+options:["चुप रहो और कुछ मत करो","Child Helpline 1098 या पुलिस 112 पर बताओ","सिर्फ दोस्तों को बताओ","किसी को मत बताओ, बड़े होने का इंतज़ार करो"],
+correct:1,
+explain:"बाल विवाह की शिकायत Child Helpline 1098, Police 112, या किसी trusted adult, टीचर या Child Welfare Committee (CWC) को दी जा सकती है। यह गैर-कानूनी है और इसे रोका जा सकता है।"
+},
+
+{
+q:"ऑनलाइन सुरक्षा के लिए क्या करना सही है?",
+options:["अनजान लोगों से password शेयर करना","संदिग्ध link पर क्लिक करना","किसी trusted adult को बताना","अकेले सब कुछ सह लेना"],
+correct:2,
+explain:"अगर इंटरनेट पर कोई परेशान करे या कुछ गलत लगे, तो हमेशा किसी trusted adult (माता-पिता, टीचर) को बताना चाहिए।"
+}
+
+];
+
+let quizCurrent = 0;
+
+let quizScore = 0;
+
+const kbcLevels = [1,2,3,4,5,6,7,8,9,10];
+
+const optionLetters = ["A","B","C","D"];
+
+
+function startQuiz(){
+
+quizCurrent = 0;
+
+quizScore = 0;
+
+document.getElementById("quizIntro").classList.add("quiz-hidden");
+
+document.getElementById("quizResult").classList.add("quiz-hidden");
+
+document.getElementById("quizPlay").classList.remove("quiz-hidden");
+
+renderQuizQuestion();
+
+}
+
+
+function renderQuizLadder(){
+
+const ladder = document.getElementById("quizLadder");
+
+ladder.innerHTML = "";
+
+kbcLevels.forEach(function(level, idx){
+
+const div = document.createElement("div");
+
+div.className = "ladder-item";
+
+if(idx < quizCurrent){
+
+div.classList.add("done");
+
+}
+
+if(idx === quizCurrent){
+
+div.classList.add("current");
+
+}
+
+div.innerHTML = "⭐ " + level;
+
+ladder.appendChild(div);
+
+});
+
+}
+
+
+function renderQuizQuestion(){
+
+const total = quizQuestions.length;
+
+const item = quizQuestions[quizCurrent];
+
+
+document.getElementById("quizProgressLabel").textContent =
+"सवाल " + (quizCurrent+1) + " / " + total;
+
+document.getElementById("quizProgressFill").style.width =
+Math.round(((quizCurrent+1)/total)*100) + "%";
+
+document.getElementById("quizQuestionText").textContent = item.q;
+
+document.getElementById("quizFeedback").innerHTML = "";
+
+document.getElementById("quizNextBtn").classList.add("quiz-hidden");
+
+renderQuizLadder();
+
+
+const optWrap = document.getElementById("quizOptions");
+
+optWrap.innerHTML = "";
+
+
+item.options.forEach(function(optText, idx){
+
+const btn = document.createElement("button");
+
+btn.className = "quiz-option";
+
+btn.innerHTML =
+'<span class="opt-letter">'+optionLetters[idx]+'</span><span>'+optText+'</span>';
+
+btn.onclick = function(){
+
+selectQuizOption(idx);
+
+};
+
+optWrap.appendChild(btn);
+
+});
+
+}
+
+
+function selectQuizOption(idx){
+
+const item = quizQuestions[quizCurrent];
+
+const buttons = document.querySelectorAll("#quizOptions .quiz-option");
+
+
+buttons.forEach(function(btn, i){
+
+btn.disabled = true;
+
+if(i === item.correct){
+
+btn.classList.add("correct");
+
+}else if(i === idx && idx !== item.correct){
+
+btn.classList.add("wrong");
+
+}
+
+});
+
+
+const feedback = document.getElementById("quizFeedback");
+
+if(idx === item.correct){
+
+quizScore++;
+
+feedback.innerHTML =
+'<div class="quiz-feedback ok">✅ सही जवाब! '+item.explain+'</div>';
+
+}else{
+
+feedback.innerHTML =
+'<div class="quiz-feedback no">❌ थोड़ा सा गलत। '+item.explain+'</div>';
+
+}
+
+
+document.getElementById("quizNextBtn").classList.remove("quiz-hidden");
+
+}
+
+
+function nextQuestion(){
+
+quizCurrent++;
+
+if(quizCurrent < quizQuestions.length){
+
+renderQuizQuestion();
+
+}else{
+
+showQuizResult();
+
+}
+
+}
+
+
+function showQuizResult(){
+
+document.getElementById("quizPlay").classList.add("quiz-hidden");
+
+document.getElementById("quizResult").classList.remove("quiz-hidden");
+
+
+const total = quizQuestions.length;
+
+document.getElementById("quizScoreLine").textContent =
+quizScore + " / " + total + " सही";
+
+
+let badge, title, msg;
+
+if(quizScore === total){
+
+badge = "🏆";
+
+title = "शानदार! तुम Rights Champion हो!";
+
+msg = "तुमने सारे सवाल सही किए। तुम अपने अधिकारों के बारे में बहुत अच्छे से जानते हो।";
+
+}else if(quizScore >= Math.ceil(total*0.6)){
+
+badge = "⭐";
+
+title = "बहुत बढ़िया!";
+
+msg = "तुम्हारी जानकारी अच्छी है। बाकी topics भी explore करो और और सीखो।";
+
+}else{
+
+badge = "🌱";
+
+title = "अच्छी शुरुआत!";
+
+msg = "कोई बात नहीं, ऊपर दिए topics पढ़ो और फिर से क्विज़ खेलो — तुम और बेहतर करोगे।";
+
+}
+
+
+document.getElementById("quizBadgeEmoji").textContent = badge;
+
+document.getElementById("quizResultTitle").textContent = title;
+
+document.getElementById("quizResultMsg").textContent = msg;
 
 }
 
