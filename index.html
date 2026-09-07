@@ -2095,128 +2095,7 @@ font-size:14px;
 }
 
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
-/* =========================================================
-   BAAL-SETU VOICE ENGINE
-   ========================================================= */
-(function(){
-"use strict";
-let enabled=true, welcomed=false;
-
-function clean(t){
- const d=document.createElement("div"); d.innerHTML=String(t||"");
- return (d.innerText||d.textContent||"").replace(/https?:\/\/\S+/g,"").replace(/\s+/g," ").trim();
-}
-function voice(){
- if(!("speechSynthesis" in window)) return null;
- const v=speechSynthesis.getVoices()||[];
- return v.find(x=>/^hi[-_]/i.test(x.lang))||v.find(x=>/hindi/i.test(x.name))||v.find(x=>/^en-IN/i.test(x.lang))||v[0]||null;
-}
-function stopVoice(){
- if("speechSynthesis" in window) speechSynthesis.cancel();
- document.querySelectorAll(".voice-read-btn.speaking").forEach(b=>{
-   b.classList.remove("speaking"); b.textContent="🔊 सुनें";
- });
-}
-function speak(text,opt){
- opt=opt||{}; if(!enabled||!("speechSynthesis" in window)) return;
- const t=clean(text); if(!t)return;
- stopVoice();
- const u=new SpeechSynthesisUtterance(t);
- u.lang="hi-IN"; u.rate=opt.rate||.92; u.pitch=opt.pitch||1; u.volume=1;
- const v=voice(); if(v)u.voice=v;
- if(opt.button){
-   opt.button.classList.add("speaking"); opt.button.textContent="⏹ रोकें";
-   u.onend=u.onerror=function(){opt.button.classList.remove("speaking");opt.button.textContent="🔊 सुनें";};
- }
- speechSynthesis.speak(u);
-}
-function welcome(){
- if(welcomed)return; welcomed=true;
- speak("नमस्ते बच्चों! मेरा नाम BAAL-SETU है। मैं आपका बाल संरक्षण साथी हूँ। आप मुझसे कोई भी सवाल पूछ सकते हैं। सवाल टाइप करके या बोलकर पूछिए। मैं आपको आसान हिंदी में समझाने की कोशिश करूँगा।",{rate:.88});
-}
-window.addEventListener("load",()=>setTimeout(()=>{try{welcome()}catch(e){}},2200));
-["touchstart","pointerdown","keydown"].forEach(ev=>document.addEventListener(ev,()=>{if(!welcomed)setTimeout(welcome,80)},{once:true,passive:true}));
-if("speechSynthesis" in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();}
-
-/* Floating voice controls */
-const c=document.createElement("div");c.className="voice-controls";
-c.innerHTML='<button type="button" class="voice-control-btn" id="baalSpeakToggle">🔊</button><button type="button" class="voice-control-btn stop" id="baalStopVoice">⏹</button>';
-document.body.appendChild(c);
-document.getElementById("baalSpeakToggle").onclick=function(){enabled=!enabled;if(!enabled)stopVoice();this.textContent=enabled?"🔊":"🔇";};
-document.getElementById("baalStopVoice").onclick=stopVoice;
-
-/* Read every bot answer */
-const oldAdd=window.add;
-if(typeof oldAdd==="function"){
- window.add=function(text,who){
-   oldAdd(text,who);
-   if(who==="bot"){
-     const a=document.querySelectorAll("#messages .msg.bot"), last=a[a.length-1];
-     if(last&&!last.querySelector(".voice-read-btn")){
-       const b=document.createElement("button");b.type="button";b.className="voice-read-btn";b.textContent="🔊 सुनें";
-       b.onclick=e=>{e.stopPropagation();b.classList.contains("speaking")?stopVoice():speak(last.innerText,{button:b});};
-       last.appendChild(b);
-       setTimeout(()=>speak(last.innerText),100);
-     }
-   }
- };
-}
-
-/* Voice input: auto-send after recognition fills the input */
-const vb=document.getElementById("voiceBtn"), inp=document.getElementById("input");
-if(vb&&inp&&(window.SpeechRecognition||window.webkitSpeechRecognition)){
- let last="";
- inp.addEventListener("input",()=>{if(vb.classList.contains("listening"))last=inp.value.trim();});
- setInterval(()=>{
-   if(!vb.classList.contains("listening")&&last&&inp.value.trim()===last){
-     last="";setTimeout(()=>{if(inp.value.trim()&&typeof window.send==="function")window.send()},250);
-   }
- },180);
-}
-
-/* Story page narration */
-function storyVoice(){
- const a=document.getElementById("storyPageArea");if(!a)return;
- const old=a.querySelector(".voice-read-btn");if(old)old.remove();
- const b=document.createElement("button");b.type="button";b.className="voice-read-btn";b.textContent="🔊 सुनें";
- b.onclick=e=>{e.stopPropagation();b.classList.contains("speaking")?stopVoice():speak(a.innerText,{button:b,rate:.88});};
- a.appendChild(b);setTimeout(()=>speak(a.innerText,{rate:.88}),180);
-}
-const oldStory=window.renderStoryPage;
-if(typeof oldStory==="function")window.renderStoryPage=function(){oldStory();storyVoice();};
-
-/* Quiz question + options narration */
-function quizVoice(){
- const q=document.getElementById("quizQuestionText"),o=document.getElementById("quizOptions");if(!q||!o||!q.innerText.trim())return;
- const old=q.querySelector(".voice-read-btn");if(old)old.remove();
- const b=document.createElement("button");b.type="button";b.className="voice-read-btn";b.textContent="🔊 सवाल और विकल्प सुनें";
- b.onclick=e=>{
-   e.stopPropagation();
-   if(b.classList.contains("speaking"))stopVoice();
-   else speak(q.innerText+" विकल्प: "+Array.from(o.querySelectorAll(".quiz-option")).map(x=>x.innerText).join(". "),{button:b,rate:.88});
- };
- q.appendChild(b);
- setTimeout(()=>speak(q.innerText+" विकल्प: "+Array.from(o.querySelectorAll(".quiz-option")).map(x=>x.innerText).join(". "),{rate:.88}),180);
-}
-const oldQuiz=window.renderQuizQuestion;
-if(typeof oldQuiz==="function")window.renderQuizQuestion=function(){oldQuiz();quizVoice();};
-
-/* Important clickable items are read aloud */
-document.addEventListener("click",e=>{
- const el=e.target.closest(".dashboard-tool,.quick button,.quiz-start-btn,.quiz-next-btn,.quiz-retry-btn,.quiz-cert-btn,.story-read-btn,.story-nav-btn,.help a");
- if(!el)return; const t=el.innerText.replace(/\s+/g," ").trim();
- if(t&&!el.matches(".quiz-next-btn")&&!el.matches(".story-nav-btn"))setTimeout(()=>speak(t),60);
-},true);
-
-document.addEventListener("click",e=>{
- const el=e.target.closest(".quiz-option");if(el)setTimeout(()=>speak(el.innerText,{rate:.95}),80);
-},true);
-
-window.BAALSETU_VOICE={speak:speak,stop:stopVoice,welcome:welcome};
-})();
-
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -2350,7 +2229,7 @@ Child Protection • Child Rights • Safety
 <div class="mascot">
 
 <div class="speech">
-👋 Hello Baccho!
+👋 हेलो बच्चों!
 </div>
 
 <div class="face">
@@ -2383,11 +2262,11 @@ Child Protection • Child Rights • Safety
 
 
 <h1>
-👋 Hello Baccho!
+👋 हेलो बच्चों!
 </h1>
 
 <div class="hero-sub">
-मैं BAAL-SETU हूँ।
+मैं बाल सेतु हूँ।
 </div>
 
 <div class="hero-small">
@@ -2768,7 +2647,7 @@ Child Protection • Child Rights • Safety
 
 <div class="msg bot">
 
-<b>👋 Hello Baccho!</b>
+<b>👋 हेलो बच्चों!</b>
 
 <br><br>
 
@@ -4257,6 +4136,424 @@ closeStoryModal();
 
 </div>
 
+
+
+<script>
+/* =========================================================
+   BAAL-SETU VOICE ENGINE — FIXED
+   Runs after the complete page is loaded.
+   ========================================================= */
+(function () {
+  "use strict";
+
+  var voiceEnabled = true;
+  var voicesReady = false;
+
+  function hasVoice() {
+    return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+  }
+
+  function cleanText(value) {
+    var box = document.createElement("div");
+    box.innerHTML = String(value || "");
+    return (box.innerText || box.textContent || "")
+      .replace(/https?:\/\/\S+/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function getVoice() {
+    if (!hasVoice()) return null;
+    var list = window.speechSynthesis.getVoices() || [];
+
+    return list.find(function(v) { return /^hi[-_]IN$/i.test(v.lang); }) ||
+           list.find(function(v) { return /^hi[-_]/i.test(v.lang); }) ||
+           list.find(function(v) { return /hindi/i.test(v.name); }) ||
+           list.find(function(v) { return /^en[-_]IN$/i.test(v.lang); }) ||
+           list[0] || null;
+  }
+
+  function stopVoice() {
+    if (hasVoice()) {
+      try {
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.resume();
+      } catch (e) {}
+    }
+
+    document.querySelectorAll(".voice-read-btn.speaking").forEach(function(btn) {
+      btn.classList.remove("speaking");
+      btn.textContent = btn.dataset.defaultText || "🔊 सुनें";
+    });
+  }
+
+  function speak(text, options) {
+    options = options || {};
+    if (!voiceEnabled || !hasVoice()) return false;
+
+    const BAALSETU_EXACT_WELCOME = "हेलो बच्चों! मैं बाल सेतु हूँ। मैं आपका बाल संरक्षण साथी हूँ।";
+    var textToSpeak = cleanText(text);
+    // FINAL BRAND SPEECH RULE:
+    // The written brand stays "BAAL-SETU", but speech must say "बाल सेतु".
+    textToSpeak = textToSpeak
+      .replace(/BAAL\\s*[-–—]?\\s*SETU/gi, "बाल सेतु")
+      .replace(/BAALSETU/gi, "बाल सेतु")
+      .replace(/\\bBAAL\\s+SETU\\b/gi, "बाल सेतु")
+      .replace(/KAWACH/gi, "बाल सेतु");
+    // Brand pronunciation fix: speak BAAL-SETU as Hindi words, not letter-by-letter.
+    textToSpeak = textToSpeak
+      .replace(/BAAL\\s*[-–—]?\\s*SETU/gi, "बाल सेतु")
+      .replace(/BAALSETU/gi, "बाल सेतु")
+      .replace(/BAAL\\s+SETU/gi, "बाल सेतु")
+      .replace(/बाल\\s*[-–—]?\\s*सेतु/gi, "बाल सेतु")
+      .replace(/hand\\s*raising\\s*BAAL\\s*[-–—]?\\s*SETU/gi, "बाल सेतु")
+      .replace(/hand\\s*raising/gi, "हाथ उठाना");
+    if (!textToSpeak) return false;
+
+    stopVoice();
+
+    try {
+      window.speechSynthesis.resume();
+
+      var utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = "hi-IN";
+      utterance.rate = options.rate || 0.90;
+      utterance.pitch = options.pitch || 1;
+      utterance.volume = 1;
+
+      var selectedVoice = getVoice();
+      if (selectedVoice) utterance.voice = selectedVoice;
+
+      if (options.button) {
+        var btn = options.button;
+        btn.dataset.defaultText = btn.dataset.defaultText || btn.textContent;
+        btn.classList.add("speaking");
+        btn.textContent = "⏹ रोकें";
+
+        utterance.onend = function() {
+          btn.classList.remove("speaking");
+          btn.textContent = btn.dataset.defaultText || "🔊 सुनें";
+        };
+        utterance.onerror = function() {
+          btn.classList.remove("speaking");
+          btn.textContent = btn.dataset.defaultText || "🔊 सुनें";
+        };
+      }
+
+      window.speechSynthesis.speak(utterance);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function addReadButton(container, text, label, rate) {
+    if (!container) return;
+
+    var old = container.querySelector(":scope > .voice-read-btn");
+    if (old) old.remove();
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "voice-read-btn";
+    btn.textContent = label || "🔊 सुनें";
+    btn.dataset.defaultText = btn.textContent;
+
+    btn.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (btn.classList.contains("speaking")) {
+        stopVoice();
+      } else {
+        speak(text(), { button: btn, rate: rate || 0.90 });
+      }
+    });
+
+    container.appendChild(btn);
+  }
+
+  function addBotVoice() {
+    var all = document.querySelectorAll("#messages .msg.bot");
+    if (!all.length) return;
+
+    var last = all[all.length - 1];
+    if (!last || last.dataset.voiceAdded === "1") return;
+
+    last.dataset.voiceAdded = "1";
+
+    addReadButton(
+      last,
+      function() { return last.innerText.replace("🔊 सुनें", "").trim(); },
+      "🔊 सुनें",
+      0.90
+    );
+
+    // Speak bot response automatically after a short delay.
+    setTimeout(function() {
+      if (voiceEnabled) {
+        speak(last.innerText.replace("🔊 सुनें", "").trim(), { rate: 0.90 });
+      }
+    }, 250);
+  }
+
+  function addStoryVoice() {
+    var area = document.getElementById("storyPageArea");
+    if (!area || !area.innerText.trim()) return;
+
+    addReadButton(
+      area,
+      function() {
+        return area.innerText.replace("🔊 सुनें", "").trim();
+      },
+      "🔊 सुनें",
+      0.88
+    );
+
+    // Narrate story page only after the user has interacted with the page.
+    if (document.documentElement.dataset.baalVoiceUnlocked === "1") {
+      setTimeout(function() {
+        speak(area.innerText.replace("🔊 सुनें", "").trim(), { rate: 0.88 });
+      }, 180);
+    }
+  }
+
+  function addQuizVoice() {
+    var q = document.getElementById("quizQuestionText");
+    var options = document.getElementById("quizOptions");
+    if (!q || !options || !q.innerText.trim()) return;
+
+    addReadButton(
+      q,
+      function() {
+        var opts = Array.from(options.querySelectorAll(".quiz-option"))
+          .map(function(x) { return x.innerText.trim(); })
+          .join(". ");
+        return q.innerText.replace("🔊 सवाल और विकल्प सुनें", "").trim() +
+          ". विकल्प: " + opts;
+      },
+      "🔊 सवाल और विकल्प सुनें",
+      0.88
+    );
+
+    if (document.documentElement.dataset.baalVoiceUnlocked === "1") {
+      setTimeout(function() {
+        var opts = Array.from(options.querySelectorAll(".quiz-option"))
+          .map(function(x) { return x.innerText.trim(); })
+          .join(". ");
+        speak(
+          q.innerText.replace("🔊 सवाल और विकल्प सुनें", "").trim() +
+          ". विकल्प: " + opts,
+          { rate: 0.88 }
+        );
+      }, 180);
+    }
+  }
+
+  function unlockVoice() {
+    document.documentElement.dataset.baalVoiceUnlocked = "1";
+
+    if (hasVoice()) {
+      try {
+        window.speechSynthesis.resume();
+        // Prime the speech engine after a real user gesture.
+        var u = new SpeechSynthesisUtterance("");
+        u.volume = 0;
+        u.lang = "hi-IN";
+        window.speechSynthesis.speak(u);
+        window.speechSynthesis.cancel();
+      } catch (e) {}
+    }
+  }
+
+  function welcome() {
+    var message =
+      "नमस्ते बच्चों! मेरा नाम बाल सेतु है। " +
+      "मैं आपका बाल संरक्षण साथी हूँ। " +
+      "आप मुझसे कोई भी सवाल पूछ सकते हैं। " +
+      "सवाल टाइप करके या बोलकर पूछिए। " +
+      "मैं आपको आसान हिंदी में समझाने की कोशिश करूँगा।";
+
+    speak(message, { rate: 0.88 });
+  }
+
+  // Voice controls
+  var controls = document.createElement("div");
+  controls.className = "voice-controls";
+  controls.innerHTML =
+    '<button type="button" class="voice-control-btn" id="baalSpeakToggle" title="आवाज़ चालू/बंद">🔊</button>' +
+    '<button type="button" class="voice-control-btn stop" id="baalStopVoice" title="आवाज़ रोकें">⏹</button>';
+
+  document.body.appendChild(controls);
+
+  document.getElementById("baalSpeakToggle").addEventListener("click", function() {
+    unlockVoice();
+    voiceEnabled = !voiceEnabled;
+    if (!voiceEnabled) stopVoice();
+    this.textContent = voiceEnabled ? "🔊" : "🔇";
+  });
+
+  document.getElementById("baalStopVoice").addEventListener("click", function() {
+    unlockVoice();
+    stopVoice();
+  });
+
+  // First real interaction unlocks browser speech.
+  document.addEventListener("pointerdown", function() {
+    unlockVoice();
+  }, { once: true, passive: true });
+
+  document.addEventListener("keydown", function() {
+    unlockVoice();
+  }, { once: true });
+
+  // Do NOT force autoplay before user interaction.
+  // On desktop, if browser allows autoplay, try welcome after load.
+  window.addEventListener("load", function() {
+    setTimeout(function() {
+      if (document.documentElement.dataset.baalVoiceUnlocked === "1") {
+        welcome();
+      }
+    }, 900);
+  });
+
+  // Load voices reliably.
+  if (hasVoice()) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = function() {
+      voicesReady = true;
+      window.speechSynthesis.getVoices();
+    };
+  }
+
+  // Hook the existing chatbot add() after ALL original scripts are loaded.
+  if (typeof window.add === "function") {
+    var originalAdd = window.add;
+    window.add = function(text, who) {
+      originalAdd.apply(this, arguments);
+      if (who === "bot") addBotVoice();
+    };
+  }
+
+  // Hook existing story/quiz render functions.
+  if (typeof window.renderStoryPage === "function") {
+    var originalStory = window.renderStoryPage;
+    window.renderStoryPage = function() {
+      originalStory.apply(this, arguments);
+      setTimeout(addStoryVoice, 50);
+    };
+  }
+
+  if (typeof window.renderQuizQuestion === "function") {
+    var originalQuiz = window.renderQuizQuestion;
+    window.renderQuizQuestion = function() {
+      originalQuiz.apply(this, arguments);
+      setTimeout(addQuizVoice, 50);
+    };
+  }
+
+  // Existing voice search: automatically send recognized question.
+  var voiceBtn = document.getElementById("voiceBtn");
+  var input = document.getElementById("input");
+
+  if (voiceBtn && input && (window.SpeechRecognition || window.webkitSpeechRecognition)) {
+    var Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var recognition = new Recognition();
+    var finalTranscript = "";
+
+    recognition.lang = "hi-IN";
+    recognition.interimResults = false;
+    recognition.continuous = false;
+
+    recognition.onstart = function() {
+      unlockVoice();
+      finalTranscript = "";
+      voiceBtn.classList.add("listening");
+      voiceBtn.textContent = "🔴";
+      voiceBtn.title = "सुन रहा हूँ... बोलिए";
+      input.placeholder = "🎤 सुन रहा हूँ... अपना सवाल बोलिए";
+    };
+
+    recognition.onresult = function(event) {
+      var text = "";
+      for (var i = event.resultIndex; i < event.results.length; i++) {
+        text += event.results[i][0].transcript + " ";
+      }
+      finalTranscript = text.trim();
+      input.value = finalTranscript;
+    };
+
+    recognition.onerror = function(event) {
+      voiceBtn.classList.remove("listening");
+      voiceBtn.textContent = "🎤";
+      voiceBtn.title = "बोलकर सवाल पूछें";
+      input.placeholder = "अपना सवाल लिखें...";
+
+      if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+        alert("Microphone की permission Allow करें, फिर दोबारा 🎤 दबाएँ।");
+      }
+    };
+
+    recognition.onend = function() {
+      voiceBtn.classList.remove("listening");
+      voiceBtn.textContent = "🎤";
+      voiceBtn.title = "बोलकर सवाल पूछें";
+      input.placeholder = "अपना सवाल लिखें...";
+
+      if (finalTranscript && input.value.trim() && typeof window.send === "function") {
+        var q = input.value.trim();
+        finalTranscript = "";
+        setTimeout(function() {
+          window.send();
+        }, 250);
+      }
+    };
+
+    voiceBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      unlockVoice();
+
+      if (voiceBtn.classList.contains("listening")) {
+        try { recognition.stop(); } catch (err) {}
+        return;
+      }
+
+      try {
+        recognition.start();
+      } catch (err) {}
+    });
+  }
+
+  // Read quiz options when clicked.
+  document.addEventListener("click", function(e) {
+    var option = e.target.closest && e.target.closest(".quiz-option");
+    if (option) {
+      unlockVoice();
+      setTimeout(function() {
+        speak(option.innerText, { rate: 0.92 });
+      }, 100);
+    }
+  }, true);
+
+  // Public API for optional use from existing page code.
+  window.BAALSETU_VOICE = {
+    speak: speak,
+    stop: stopVoice,
+    welcome: function() {
+      unlockVoice();
+      welcome();
+    },
+    unlock: unlockVoice
+  };
+
+  // Initial pass in case a bot message/story/quiz already exists.
+  setTimeout(function() {
+    addBotVoice();
+    addStoryVoice();
+    addQuizVoice();
+  }, 100);
+})();
+</script>
 
 </body>
 </html>
