@@ -2956,6 +2956,43 @@ Cyber Crime Helpline: <b>1930</b>
 
 `,
 
+"government system": `
+<h3>🏛️ Child Protection Government System</h3>
+बच्चों की सुरक्षा के लिए कई सरकारी संस्थाएं और विभाग मिलकर काम करते हैं।<br><br>
+<b>मुख्य संस्थाएं:</b><br>
+• 👩‍⚖️ <b>CWC</b> – जरूरतमंद बच्चों की देखभाल और संरक्षण से संबंधित मामलों पर काम करती है।<br>
+• 🏢 <b>DCPU</b> – जिला स्तर पर child protection services के समन्वय में महत्वपूर्ण भूमिका निभाता है।<br>
+• 👮 <b>SJPU</b> – बच्चों से जुड़े मामलों में पुलिस की विशेष इकाई।<br>
+• 🚔 <b>AHTU</b> – मानव तस्करी से संबंधित मामलों में कार्रवाई और समन्वय।<br>
+• 🏘️ <b>CWPC</b> – ग्राम पंचायत स्तर पर बच्चों की सुरक्षा और स्थानीय स्तर पर मुद्दों की पहचान एवं referral में मदद।<br>
+• 🏛️ <b>DCPC</b> – जिला स्तर पर child protection systems की समीक्षा और coordination में भूमिका।<br><br>
+किसी बच्चे की सुरक्षा से जुड़ी समस्या मिलने पर पहले बच्चे की सुरक्षा सुनिश्चित करें और जरूरत के अनुसार संबंधित अधिकारी/संस्था को सूचना दें।
+`,
+
+"cwpc": `
+<h3>🏘️ CWPC क्या है?</h3>
+<b>CWPC</b> ग्राम पंचायत स्तर पर बाल संरक्षण से जुड़े मुद्दों पर स्थानीय स्तर पर काम करने वाली व्यवस्था है। इसका उद्देश्य बच्चों से जुड़े जोखिमों की पहचान, जागरूकता, समन्वय और उचित referral को मजबूत करना है।<br><br>
+<b>प्रमुख कदम:</b><br>
+• पंचायत, आंगनवाड़ी, ASHA, शिक्षक और सरकारी अधिकारियों जैसे stakeholders की पहचान।<br>
+• Gram Panchayat, Block और District स्तर पर meetings और engagement।<br>
+• माता-पिता, बच्चों और किशोर समूहों के साथ awareness meetings।<br>
+• Child rights और child protection पर orientation।<br>
+• Case identification, reporting और follow-up में handholding।<br><br>
+<b>चर्चा के मुद्दे:</b> बाल श्रम, बाल विवाह, school dropout, irregular attendance, substance abuse, parental negligence और अन्य child protection concerns।<br><br>
+CWPC को मजबूत बनाने में <b>local ownership, regular meetings और department convergence</b> महत्वपूर्ण हैं।
+`,
+
+"schemes and services": `
+<h3>📚 बच्चों के लिए योजनाएं और सेवाएं</h3>
+बच्चों और परिवारों को जरूरत के अनुसार सरकारी योजनाओं और protection services से जोड़ा जा सकता है।<br><br>
+• 🏛️ <b>Mission Vatsalya</b> – child protection और care services को मजबूत करने की सरकारी पहल।<br>
+• 📞 <b>Child Helpline – 1098</b> – बच्चों से जुड़ी सहायता और protection concerns के लिए।<br>
+• 🚨 <b>Emergency – 112</b> – तत्काल खतरे या emergency में।<br>
+• 💻 <b>Cyber Crime – 1930</b> – cyber crime से संबंधित शिकायत/सहायता के लिए।<br>
+• ⚖️ <b>CWC / DCPU</b> – जरूरतमंद बच्चों के protection और support system से जुड़े महत्वपूर्ण structures।<br><br>
+किसी योजना या सेवा की पात्रता अलग-अलग हो सकती है। सही जानकारी के लिए संबंधित सरकारी विभाग/अधिकारी से पुष्टि करें।
+`,
+
 "i need help": `
 
 <h3>🚨 मुझे मदद चाहिए</h3>
@@ -3140,6 +3177,21 @@ x.includes("हिंसा")
 return answers["child safety"];
 }
 
+
+/* GOVERNMENT SYSTEM */
+if(
+x.includes("government system") || x.includes("सरकारी व्यवस्था") || x.includes("सरकारी सिस्टम") || x.includes("cwc") || x.includes("d cpu") || x.includes("dcpc") || x.includes("sjpu") || x.includes("ahtu")
+){ return answers["government system"]; }
+
+/* CWPC */
+if(
+x.includes("cwpc") || x.includes("सीडब्ल्यूपीसी") || x.includes("ग्राम पंचायत में बाल संरक्षण") || x.includes("panchayat child protection")
+){ return answers["cwpc"]; }
+
+/* SCHEMES & SERVICES */
+if(
+x.includes("schemes") || x.includes("scheme") || x.includes("योजना") || x.includes("सरकारी योजना") || x.includes("services") || x.includes("सेवाएं")
+){ return answers["schemes and services"]; }
 
 /* HELP */
 
