@@ -1949,6 +1949,129 @@ font-size:14px;
 .story-wrap:before{content:"✨";position:absolute;right:18px;top:10px;font-size:24px;opacity:.45;animation:baalFloat 3s ease-in-out infinite}
 @keyframes baalFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @media(max-width:600px){.story-grid{grid-template-columns:1fr!important}.story-card{min-height:170px}.story-read-btn{min-height:42px}}
+
+/* =========================================================
+   BAAL-SETU MODERN HOME / DASHBOARD UI — ADDITIVE ONLY
+   Existing JS, IDs, API and functionality are untouched.
+   ========================================================= */
+.dashboard-welcome{
+  margin:8px auto 22px;
+  max-width:980px;
+  padding:20px 22px;
+  border-radius:26px;
+  background:linear-gradient(135deg,#fff8df,#eef8ff 52%,#f3efff);
+  border:2px solid rgba(255,215,106,.75);
+  box-shadow:0 14px 34px rgba(43,55,90,.12);
+  position:relative;
+  overflow:hidden;
+}
+.dashboard-welcome:after{
+  content:"✨";
+  position:absolute;
+  right:22px;
+  top:12px;
+  font-size:32px;
+  animation:dashSpark 2.4s ease-in-out infinite;
+}
+.dashboard-welcome h2{
+  margin:0 0 5px;
+  color:#20242b;
+  font-size:24px;
+  font-weight:900;
+}
+.dashboard-welcome p{
+  margin:0;
+  color:#596575;
+  font-size:14px;
+  font-weight:700;
+  line-height:1.6;
+}
+.dashboard-tools{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  max-width:980px;
+  margin:0 auto 25px;
+}
+.dashboard-tool{
+  border:0;
+  min-height:145px;
+  border-radius:22px;
+  padding:18px 14px;
+  cursor:pointer;
+  text-align:center;
+  color:#20242b;
+  box-shadow:0 9px 22px rgba(0,0,0,.10);
+  transition:transform .2s ease,box-shadow .2s ease;
+  position:relative;
+  overflow:hidden;
+}
+.dashboard-tool:before{
+  content:"";
+  position:absolute;
+  width:80px;height:80px;
+  border-radius:50%;
+  background:rgba(255,255,255,.35);
+  right:-25px;top:-25px;
+}
+.dashboard-tool:hover{
+  transform:translateY(-6px);
+  box-shadow:0 15px 28px rgba(0,0,0,.15);
+}
+.dashboard-tool:active{transform:translateY(-2px)}
+.dashboard-tool .tool-icon{
+  display:block;
+  font-size:40px;
+  line-height:1;
+  margin-bottom:10px;
+  position:relative;
+  animation:dashFloat 3s ease-in-out infinite;
+}
+.dashboard-tool strong{
+  display:block;
+  font-size:16px;
+  font-weight:900;
+}
+.dashboard-tool small{
+  display:block;
+  margin-top:4px;
+  font-size:11px;
+  font-weight:700;
+  opacity:.72;
+}
+.tool-chat{background:linear-gradient(135deg,#dff7ff,#eef4ff)}
+.tool-quiz{background:linear-gradient(135deg,#fff0bd,#ffe5d2)}
+.tool-story{background:linear-gradient(135deg,#e7ffe9,#dcf5ff)}
+.tool-help{background:linear-gradient(135deg,#ffe1e1,#fff0c9)}
+.dashboard-mini-note{
+  text-align:center;
+  margin:-10px auto 25px;
+  color:#687383;
+  font-size:12px;
+  font-weight:700;
+}
+@keyframes dashFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-5px)}
+}
+@keyframes dashSpark{
+  0%,100%{transform:rotate(0) scale(1)}
+  50%{transform:rotate(12deg) scale(1.12)}
+}
+@media(max-width:820px){
+  .dashboard-tools{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .dashboard-welcome{padding:17px 16px;border-radius:20px}
+  .dashboard-welcome h2{font-size:20px;padding-right:35px}
+  .dashboard-welcome p{font-size:13px}
+  .dashboard-tools{grid-template-columns:1fr 1fr;gap:10px}
+  .dashboard-tool{min-height:132px;padding:15px 10px;border-radius:19px}
+  .dashboard-tool .tool-icon{font-size:34px}
+  .dashboard-tool strong{font-size:14px}
+  .dashboard-tool small{font-size:10px}
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -2130,6 +2253,46 @@ Child Protection • Child Rights • Safety
 
 </section>
 
+
+
+
+<!-- =======================================================
+     MODERN CHILD-FRIENDLY DASHBOARD
+     ======================================================= -->
+<div class="dashboard-welcome">
+  <h2>🌈 BAAL-SETU Learning Zone</h2>
+  <p>सीखो • खेलो • कहानी पढ़ो • सवाल पूछो • जरूरत पर मदद लो</p>
+</div>
+
+<div class="dashboard-tools" aria-label="BAAL-SETU learning tools">
+  <button class="dashboard-tool tool-chat" onclick="document.querySelector('.chat').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(function(){document.getElementById('input').focus()},500)">
+    <span class="tool-icon">🤖</span>
+    <strong>सवाल पूछो</strong>
+    <small>BAAL-SETU से बात करो</small>
+  </button>
+
+  <button class="dashboard-tool tool-quiz" onclick="document.querySelector('.quiz-wrap').scrollIntoView({behavior:'smooth',block:'start'})">
+    <span class="tool-icon">🎯</span>
+    <strong>Quiz खेलो</strong>
+    <small>अपना ज्ञान Test करो</small>
+  </button>
+
+  <button class="dashboard-tool tool-story" onclick="document.querySelector('.story-wrap').scrollIntoView({behavior:'smooth',block:'start'})">
+    <span class="tool-icon">📖</span>
+    <strong>कहानी से सीखो</strong>
+    <small>मज़ेदार कहानियाँ पढ़ो</small>
+  </button>
+
+  <button class="dashboard-tool tool-help" onclick="document.querySelector('.help').scrollIntoView({behavior:'smooth',block:'start'})">
+    <span class="tool-icon">🚨</span>
+    <strong>तुरंत मदद</strong>
+    <small>1098 • 112 • 1930</small>
+  </button>
+</div>
+
+<div class="dashboard-mini-note">
+  💡 कोई भी सवाल छोटा नहीं होता — सुरक्षित रहो और जरूरत पड़ने पर मदद जरूर लो।
+</div>
 
 <div class="quick-title">
 💬 अपना सवाल चुनें
