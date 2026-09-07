@@ -4190,9 +4190,7 @@ closeStoryModal();
   function speak(text, options) {
     options = options || {};
     if (!voiceEnabled || !hasVoice()) return false;
-
-    const BAALSETU_EXACT_WELCOME = "हेलो बच्चों! मैं बाल सेतु हूँ। मैं आपका बाल संरक्षण साथी हूँ।";
-    var textToSpeak = cleanText(text);
+var textToSpeak = cleanText(text);
     // FINAL BRAND SPEECH RULE:
     // The written brand stays "BAAL-SETU", but speech must say "बाल सेतु".
     textToSpeak = textToSpeak
