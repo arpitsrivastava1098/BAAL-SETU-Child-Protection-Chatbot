@@ -2072,8 +2072,151 @@ font-size:14px;
   .dashboard-tool small{font-size:10px}
 }
 
+
+/* BAAL-SETU VOICE LEARNING */
+.voice-read-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:9px;border:0;border-radius:12px;padding:8px 12px;background:#eef1ff;color:#4d45b5;font-size:12px;font-weight:900;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.10)}
+.voice-read-btn:active{transform:translateY(2px)}
+.voice-read-btn.speaking{background:#ffe1e1;color:#c83232}
+.voice-controls{position:fixed;right:14px;bottom:14px;z-index:999990;display:flex;gap:8px}
+.voice-control-btn{border:0;width:46px;height:46px;border-radius:50%;background:#6c63ff;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.20)}
+.voice-control-btn.stop{background:#e84c27}
+.quiz-question .voice-read-btn{display:flex;margin:10px auto 0}
+@media(max-width:520px){
+ .voice-controls{right:10px;bottom:10px}.voice-control-btn{width:44px;height:44px}
+ .voice-read-btn{min-height:40px;padding:8px 11px}
+ html,body{max-width:100%;overflow-x:hidden}
+ button,a,input{touch-action:manipulation}
+ .wrap{padding-left:10px;padding-right:10px}
+ .inputbar{gap:7px}.inputbar input{min-width:0;font-size:16px}
+ .send{min-width:72px}.voice{flex:0 0 46px}
+ .messages{height:55vh;min-height:320px;max-height:520px}
+ .help a{min-width:82px}.story-modal-box,.cert-modal-box{max-height:88vh}
+ .story-nav-btn{padding:11px 14px}
+}
+
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+/* =========================================================
+   BAAL-SETU VOICE ENGINE
+   ========================================================= */
+(function(){
+"use strict";
+let enabled=true, welcomed=false;
+
+function clean(t){
+ const d=document.createElement("div"); d.innerHTML=String(t||"");
+ return (d.innerText||d.textContent||"").replace(/https?:\/\/\S+/g,"").replace(/\s+/g," ").trim();
+}
+function voice(){
+ if(!("speechSynthesis" in window)) return null;
+ const v=speechSynthesis.getVoices()||[];
+ return v.find(x=>/^hi[-_]/i.test(x.lang))||v.find(x=>/hindi/i.test(x.name))||v.find(x=>/^en-IN/i.test(x.lang))||v[0]||null;
+}
+function stopVoice(){
+ if("speechSynthesis" in window) speechSynthesis.cancel();
+ document.querySelectorAll(".voice-read-btn.speaking").forEach(b=>{
+   b.classList.remove("speaking"); b.textContent="🔊 सुनें";
+ });
+}
+function speak(text,opt){
+ opt=opt||{}; if(!enabled||!("speechSynthesis" in window)) return;
+ const t=clean(text); if(!t)return;
+ stopVoice();
+ const u=new SpeechSynthesisUtterance(t);
+ u.lang="hi-IN"; u.rate=opt.rate||.92; u.pitch=opt.pitch||1; u.volume=1;
+ const v=voice(); if(v)u.voice=v;
+ if(opt.button){
+   opt.button.classList.add("speaking"); opt.button.textContent="⏹ रोकें";
+   u.onend=u.onerror=function(){opt.button.classList.remove("speaking");opt.button.textContent="🔊 सुनें";};
+ }
+ speechSynthesis.speak(u);
+}
+function welcome(){
+ if(welcomed)return; welcomed=true;
+ speak("नमस्ते बच्चों! मेरा नाम BAAL-SETU है। मैं आपका बाल संरक्षण साथी हूँ। आप मुझसे कोई भी सवाल पूछ सकते हैं। सवाल टाइप करके या बोलकर पूछिए। मैं आपको आसान हिंदी में समझाने की कोशिश करूँगा।",{rate:.88});
+}
+window.addEventListener("load",()=>setTimeout(()=>{try{welcome()}catch(e){}},2200));
+["touchstart","pointerdown","keydown"].forEach(ev=>document.addEventListener(ev,()=>{if(!welcomed)setTimeout(welcome,80)},{once:true,passive:true}));
+if("speechSynthesis" in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();}
+
+/* Floating voice controls */
+const c=document.createElement("div");c.className="voice-controls";
+c.innerHTML='<button type="button" class="voice-control-btn" id="baalSpeakToggle">🔊</button><button type="button" class="voice-control-btn stop" id="baalStopVoice">⏹</button>';
+document.body.appendChild(c);
+document.getElementById("baalSpeakToggle").onclick=function(){enabled=!enabled;if(!enabled)stopVoice();this.textContent=enabled?"🔊":"🔇";};
+document.getElementById("baalStopVoice").onclick=stopVoice;
+
+/* Read every bot answer */
+const oldAdd=window.add;
+if(typeof oldAdd==="function"){
+ window.add=function(text,who){
+   oldAdd(text,who);
+   if(who==="bot"){
+     const a=document.querySelectorAll("#messages .msg.bot"), last=a[a.length-1];
+     if(last&&!last.querySelector(".voice-read-btn")){
+       const b=document.createElement("button");b.type="button";b.className="voice-read-btn";b.textContent="🔊 सुनें";
+       b.onclick=e=>{e.stopPropagation();b.classList.contains("speaking")?stopVoice():speak(last.innerText,{button:b});};
+       last.appendChild(b);
+       setTimeout(()=>speak(last.innerText),100);
+     }
+   }
+ };
+}
+
+/* Voice input: auto-send after recognition fills the input */
+const vb=document.getElementById("voiceBtn"), inp=document.getElementById("input");
+if(vb&&inp&&(window.SpeechRecognition||window.webkitSpeechRecognition)){
+ let last="";
+ inp.addEventListener("input",()=>{if(vb.classList.contains("listening"))last=inp.value.trim();});
+ setInterval(()=>{
+   if(!vb.classList.contains("listening")&&last&&inp.value.trim()===last){
+     last="";setTimeout(()=>{if(inp.value.trim()&&typeof window.send==="function")window.send()},250);
+   }
+ },180);
+}
+
+/* Story page narration */
+function storyVoice(){
+ const a=document.getElementById("storyPageArea");if(!a)return;
+ const old=a.querySelector(".voice-read-btn");if(old)old.remove();
+ const b=document.createElement("button");b.type="button";b.className="voice-read-btn";b.textContent="🔊 सुनें";
+ b.onclick=e=>{e.stopPropagation();b.classList.contains("speaking")?stopVoice():speak(a.innerText,{button:b,rate:.88});};
+ a.appendChild(b);setTimeout(()=>speak(a.innerText,{rate:.88}),180);
+}
+const oldStory=window.renderStoryPage;
+if(typeof oldStory==="function")window.renderStoryPage=function(){oldStory();storyVoice();};
+
+/* Quiz question + options narration */
+function quizVoice(){
+ const q=document.getElementById("quizQuestionText"),o=document.getElementById("quizOptions");if(!q||!o||!q.innerText.trim())return;
+ const old=q.querySelector(".voice-read-btn");if(old)old.remove();
+ const b=document.createElement("button");b.type="button";b.className="voice-read-btn";b.textContent="🔊 सवाल और विकल्प सुनें";
+ b.onclick=e=>{
+   e.stopPropagation();
+   if(b.classList.contains("speaking"))stopVoice();
+   else speak(q.innerText+" विकल्प: "+Array.from(o.querySelectorAll(".quiz-option")).map(x=>x.innerText).join(". "),{button:b,rate:.88});
+ };
+ q.appendChild(b);
+ setTimeout(()=>speak(q.innerText+" विकल्प: "+Array.from(o.querySelectorAll(".quiz-option")).map(x=>x.innerText).join(". "),{rate:.88}),180);
+}
+const oldQuiz=window.renderQuizQuestion;
+if(typeof oldQuiz==="function")window.renderQuizQuestion=function(){oldQuiz();quizVoice();};
+
+/* Important clickable items are read aloud */
+document.addEventListener("click",e=>{
+ const el=e.target.closest(".dashboard-tool,.quick button,.quiz-start-btn,.quiz-next-btn,.quiz-retry-btn,.quiz-cert-btn,.story-read-btn,.story-nav-btn,.help a");
+ if(!el)return; const t=el.innerText.replace(/\s+/g," ").trim();
+ if(t&&!el.matches(".quiz-next-btn")&&!el.matches(".story-nav-btn"))setTimeout(()=>speak(t),60);
+},true);
+
+document.addEventListener("click",e=>{
+ const el=e.target.closest(".quiz-option");if(el)setTimeout(()=>speak(el.innerText,{rate:.95}),80);
+},true);
+
+window.BAALSETU_VOICE={speak:speak,stop:stopVoice,welcome:welcome};
+})();
+
+</script>
 </head>
 
 <body>
