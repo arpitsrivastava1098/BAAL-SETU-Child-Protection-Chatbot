@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BAAL-SETU – Child Protection Chatbot</title>
+<title>BAAL-SETU – Learning and Guidance Chatbot</title>
 
 <style>
 *{box-sizing:border-box}
@@ -41,6 +41,80 @@ transition:opacity .7s ease,visibility .7s ease;
 opacity:0;
 visibility:hidden;
 pointer-events:none;
+}
+
+
+/* =========================================================
+   AS PERSONAL LOGO — CIRCULAR + CHILD FRIENDLY
+   ========================================================= */
+.as-floating-logo{
+position:fixed;
+right:22px;
+top:50%;
+transform:translateY(-50%);
+width:72px;
+height:72px;
+border-radius:50%;
+background:linear-gradient(135deg,#ff9d00,#ff6b35 48%,#6c63ff);
+border:4px solid #fff;
+box-shadow:0 10px 25px rgba(0,0,0,.20),0 0 0 4px rgba(108,99,255,.12);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9998;
+font-family:Arial,Helvetica,sans-serif;
+font-size:26px;
+font-weight:900;
+letter-spacing:-2px;
+color:#fff;
+user-select:none;
+animation:asFloat 2.8s ease-in-out infinite;
+}
+.as-floating-logo span{
+width:54px;
+height:54px;
+border:2px solid rgba(255,255,255,.85);
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(255,255,255,.12);
+}
+.as-mascot-logo{
+clip-path:none !important;
+border-radius:50% !important;
+background:linear-gradient(135deg,#ff9d00,#ff6b35 48%,#6c63ff) !important;
+border:3px solid #222 !important;
+width:48px !important;
+height:48px !important;
+left:30px !important;
+top:10px !important;
+font-size:17px !important;
+font-weight:900;
+color:#fff;
+letter-spacing:-1px;
+}
+.as-mascot-logo span{
+width:35px;
+height:35px;
+border:2px solid rgba(255,255,255,.9);
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+@keyframes asFloat{
+0%,100%{transform:translateY(-50%) scale(1)}
+50%{transform:translateY(calc(-50% - 7px)) scale(1.04)}
+}
+@media(max-width:600px){
+.as-floating-logo{
+right:12px;
+width:58px;
+height:58px;
+font-size:21px;
+}
+.as-floating-logo span{width:43px;height:43px}
 }
 
 .splash-shield{
@@ -2093,7 +2167,7 @@ BAAL-SETU
 </div>
 
 <div class="splash-subtitle">
-Child Protection Chatbot
+Learning and Guidance Chatbot
 </div>
 
 <div class="splash-line">
@@ -2114,6 +2188,13 @@ BAAL-SETU तैयार हो रहा है...
 
 
 <!-- =======================================================
+     ARPIT SRIVASTAVA FLOATING LOGO
+     ======================================================= -->
+<div class="as-floating-logo" aria-label="Arpit Srivastava logo" title="AS Logo">
+  <span>AS</span>
+</div>
+
+<!-- =======================================================
      HEADER
      ======================================================= -->
 
@@ -2128,7 +2209,7 @@ BAAL-SETU तैयार हो रहा है...
 <div>
 
 <div class="brand">
-🛡️ BAAL-SETU – Child Protection Chatbot
+BAAL-SETU – Learning and Guidance Chatbot
 </div>
 
 <div class="tagline">
@@ -2220,8 +2301,8 @@ Child Protection • Child Rights • Safety
 
 <div class="body">
 
-<div class="shield">
-🛡️
+<div class="shield as-mascot-logo" aria-label="Arpit Srivastava logo">
+<span>AS</span>
 </div>
 
 </div>
