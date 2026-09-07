@@ -1939,6 +1939,16 @@ font-size:14px;
    END CSS
    ========================================================= */
 
+
+/* BAAL-SETU ADVANCED UI - SAFE ADD-ON */
+.story-card{transition:transform .25s ease,box-shadow .25s ease;cursor:pointer}
+.story-card:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 14px 32px rgba(0,0,0,.22)}
+.story-read-btn{transition:transform .2s ease,filter .2s ease}
+.story-card:hover .story-read-btn{transform:translateY(-1px);filter:brightness(1.08)}
+.story-wrap{position:relative;overflow:hidden}
+.story-wrap:before{content:"✨";position:absolute;right:18px;top:10px;font-size:24px;opacity:.45;animation:baalFloat 3s ease-in-out infinite}
+@keyframes baalFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@media(max-width:600px){.story-grid{grid-template-columns:1fr!important}.story-card{min-height:170px}.story-read-btn{min-height:42px}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
