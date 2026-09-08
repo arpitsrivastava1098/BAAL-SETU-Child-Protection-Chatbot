@@ -2077,6 +2077,89 @@ font-size:14px;
   .dashboard-tool small{font-size:10px}
 }
 
+
+/* =========================================================
+   BAAL-SETU QUICK ANSWER POPUP
+   ========================================================= */
+.quick-answer-overlay{
+  position:fixed;
+  inset:0;
+  z-index:999996;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(20,25,40,.62);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+}
+.quick-answer-overlay.quiz-hidden{display:none!important}
+.quick-answer-box{
+  width:min(680px,100%);
+  max-height:88vh;
+  overflow:auto;
+  position:relative;
+  background:#fffdf7;
+  border:3px solid #ffd166;
+  border-radius:26px;
+  padding:24px 22px 22px;
+  box-shadow:0 24px 65px rgba(0,0,0,.35);
+  animation:quickAnswerIn .22s ease-out;
+}
+.quick-answer-close{
+  position:absolute;
+  top:10px;
+  right:12px;
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:50%;
+  background:#f0f1f5;
+  color:#444;
+  font-size:19px;
+  font-weight:900;
+  cursor:pointer;
+  z-index:2;
+}
+.quick-answer-close:hover{background:#ffe0a0;transform:scale(1.05)}
+.quick-answer-content{
+  padding:8px 8px 4px;
+  color:#20242b;
+  font-size:15px;
+  line-height:1.75;
+}
+.quick-answer-content h3{
+  margin:0 42px 16px 0;
+  padding-bottom:10px;
+  border-bottom:2px solid #ffe1a8;
+  color:#e84c27;
+  font-size:22px;
+  font-weight:900;
+  line-height:1.35;
+}
+.quick-answer-content b{font-weight:900}
+.quick-answer-footer{
+  margin-top:18px;
+  padding-top:12px;
+  border-top:1px solid #ece7dc;
+  text-align:center;
+  color:#69717d;
+  font-size:12px;
+  font-weight:700;
+}
+@keyframes quickAnswerIn{
+  from{opacity:0;transform:translateY(12px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@media(max-width:520px){
+  .quick-answer-overlay{padding:10px}
+  .quick-answer-box{max-height:90vh;border-radius:20px;padding:20px 14px 16px}
+  .quick-answer-content{font-size:14px;line-height:1.7;padding:6px 4px}
+  .quick-answer-content h3{font-size:19px;margin-right:38px}
+  .quick-answer-close{width:34px;height:34px;font-size:17px}
+}
+body.quick-answer-open{overflow:hidden}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -3042,11 +3125,48 @@ messages.scrollTop=messages.scrollHeight;
 
 function quickAsk(q){
 
-input.value=q;
+  const answer = getFixedAnswer(q);
+  const modal = document.getElementById("quickAnswerModal");
+  const content = document.getElementById("quickAnswerContent");
 
-send();
+  if(!modal || !content){
+    input.value=q;
+    send();
+    return;
+  }
 
+  content.innerHTML = answer || `
+    <h3>🤖 BAAL-SETU</h3>
+    इस विषय की जानकारी अभी उपलब्ध नहीं है। अपना सवाल नीचे चैट में पूछें।
+  `;
+
+  modal.classList.remove("quiz-hidden");
+  document.body.classList.add("quick-answer-open");
+
+  setTimeout(function(){
+    document.querySelector(".quick-answer-close")?.focus();
+  },50);
 }
+
+function closeQuickAnswer(){
+  const modal=document.getElementById("quickAnswerModal");
+  if(modal) modal.classList.add("quiz-hidden");
+  document.body.classList.remove("quick-answer-open");
+}
+
+/* Popup बाहर click करने पर बंद होगा */
+document.addEventListener("click",function(e){
+  if(e.target && e.target.id === "quickAnswerModal"){
+    closeQuickAnswer();
+  }
+});
+
+/* ESC से popup बंद */
+document.addEventListener("keydown",function(e){
+  if(e.key === "Escape"){
+    closeQuickAnswer();
+  }
+});
 
 
 /* =========================================================
@@ -4117,6 +4237,18 @@ closeStoryModal();
 
 </div>
 
+
+
+<!-- =======================================================
+     BAAL-SETU QUICK ANSWER POPUP
+     ======================================================= -->
+<div id="quickAnswerModal" class="quick-answer-overlay quiz-hidden" role="dialog" aria-modal="true" aria-labelledby="quickAnswerTitle">
+  <div class="quick-answer-box" onclick="event.stopPropagation()">
+    <button class="quick-answer-close" type="button" onclick="closeQuickAnswer()" aria-label="बंद करें">✕</button>
+    <div id="quickAnswerContent" class="quick-answer-content"></div>
+    <div class="quick-answer-footer">💡 जानकारी समझने में दिक्कत हो तो BAAL-SETU से अपना सवाल पूछें।</div>
+  </div>
+</div>
 
 </body>
 </html>
