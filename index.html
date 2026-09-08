@@ -2079,6 +2079,76 @@ font-size:14px;
 
 
 /* =========================================================
+   BAAL-SETU SAFETY ESCAPE GAME
+   ========================================================= */
+.game-overlay{
+  position:fixed;
+  inset:0;
+  z-index:999998;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  background:rgba(10,15,30,.70);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.game-overlay.quiz-hidden{display:none!important}
+.game-box{
+  width:min(720px,100%);
+  max-height:92vh;
+  overflow:auto;
+  position:relative;
+  background:linear-gradient(145deg,#fffdf7,#f5fbff);
+  border:3px solid #9be7ff;
+  border-radius:28px;
+  padding:22px;
+  box-shadow:0 26px 70px rgba(0,0,0,.38);
+  animation:gameIn .24s ease-out;
+}
+.game-close{
+  position:absolute;
+  top:11px;
+  right:12px;
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:50%;
+  background:#f0f1f5;
+  color:#444;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  z-index:3;
+}
+.game-close:hover{background:#dff7ff;transform:scale(1.05)}
+.game-top{text-align:center;padding:4px 45px 10px}
+.game-top h2{margin:0;color:#1769aa;font-size:26px;font-weight:900}
+.game-top p{margin:7px 0 0;color:#59636f;font-weight:700;font-size:13px;line-height:1.5}
+.game-status{display:flex;justify-content:space-between;gap:10px;margin:10px 0 14px;padding:10px 13px;border-radius:16px;background:#eef9ff;font-weight:900;color:#24506a}
+.game-level{font-size:13px}.game-score{font-size:13px}.game-lives{font-size:15px;letter-spacing:2px}
+.game-scenario{background:#fff;border:2px solid #e2edf4;border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:0 7px 18px rgba(40,80,110,.08)}
+.game-scenario-icon{text-align:center;font-size:48px;margin-bottom:6px}
+.game-scenario h3{margin:0 0 9px;text-align:center;font-size:20px;color:#20242b}
+.game-scenario p{margin:0;text-align:center;font-size:15px;line-height:1.7;font-weight:700;color:#454d56}
+.game-options{display:grid;gap:10px}
+.game-option{width:100%;border:2px solid #dce8ef;background:#fff;border-radius:16px;padding:13px 14px;text-align:left;font-size:14px;font-weight:800;cursor:pointer;transition:.18s;box-shadow:0 4px 0 rgba(0,0,0,.06)}
+.game-option:hover{transform:translateY(-2px);border-color:#8edcff;background:#f5fcff}
+.game-option:disabled{cursor:default;opacity:1}
+.game-option.correct{border-color:#57c878;background:#eaffef}
+.game-option.wrong{border-color:#ff8c8c;background:#fff0f0}
+.game-feedback{margin-top:13px;padding:12px 14px;border-radius:15px;font-size:13px;line-height:1.6;font-weight:800}
+.game-feedback.ok{background:#e9fff0;color:#176b35}.game-feedback.no{background:#fff1f1;color:#9a2d2d}
+.game-next{display:block;margin:14px auto 0;border:0;border-radius:30px;padding:11px 22px;background:#1769aa;color:#fff;font-weight:900;font-size:14px;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.14)}
+.game-next:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.14)}
+.game-result{text-align:center;padding:8px 4px 2px}.game-result-emoji{font-size:65px}.game-result h3{margin:8px 0;color:#1769aa;font-size:25px}.game-result p{font-weight:700;color:#59636f;line-height:1.7}.game-restart{border:0;border-radius:30px;padding:12px 24px;background:#ff9f68;color:#222;font-weight:900;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.12)}
+@keyframes gameIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:520px){
+ .game-box{padding:16px 12px 18px;border-radius:22px;max-height:94vh}
+ .game-top h2{font-size:21px}.game-top p{font-size:12px}.game-scenario{padding:15px}.game-scenario-icon{font-size:40px}.game-scenario h3{font-size:18px}.game-scenario p{font-size:14px}.game-option{font-size:13px;padding:12px}.game-status{flex-wrap:wrap;justify-content:center}
+}
+
+/* =========================================================
    BAAL-SETU QUICK ANSWER POPUP
    ========================================================= */
 .quick-answer-overlay{
@@ -2432,8 +2502,25 @@ Child Protection • Child Rights • Safety
 <small>I Need Help</small>
 </button>
 
+<button class="q10 game-launch" onclick="openSafetyGame()">
+🎮 Safety Game
+<small>सुरक्षित रास्ता चुनो</small>
+</button>
+
 </div>
 
+
+<!-- SAFETY ESCAPE GAME MODAL -->
+<div id="safetyGameModal" class="game-overlay quiz-hidden" role="dialog" aria-modal="true" aria-label="Safety Escape Game">
+  <div class="game-box" onclick="event.stopPropagation()">
+    <button class="game-close" type="button" onclick="closeSafetyGame()" aria-label="बंद करें">✕</button>
+    <div class="game-top">
+      <h2>🎮 Safety Escape Game</h2>
+      <p>सही और सुरक्षित फैसला चुनो — हर सही जवाब तुम्हें Safe Zone के करीब ले जाएगा!</p>
+    </div>
+    <div id="gamePlayArea"></div>
+  </div>
+</div>
 
 <div class="quiz-wrap">
 
@@ -4221,6 +4308,168 @@ closeStoryModal();
 }
 
 }
+
+
+
+/* =========================================================
+   SAFETY ESCAPE GAME
+   ========================================================= */
+const safetyGameLevels = [
+  {
+    icon:"💍",
+    title:"लेवल 1 — जल्दी शादी",
+    text:"तुम्हें पता चलता है कि तुम्हारी दोस्त की कम उम्र में शादी होने वाली है। तुम क्या करोगे?",
+    options:[
+      "चुप रहूँगा/रहूँगी",
+      "किसी भरोसेमंद बड़े, शिक्षक या 1098/112 से मदद की जानकारी दूँगा/दूँगी",
+      "शादी में जाकर मज़ाक करूँगा/करूँगी"
+    ],
+    correct:1,
+    explain:"सही! ऐसी स्थिति में भरोसेमंद बड़े या सहायता सेवाओं से तुरंत मदद लेना सुरक्षित कदम है।"
+  },
+  {
+    icon:"🧒",
+    title:"लेवल 2 — बाल श्रम",
+    text:"एक बच्चा पढ़ाई छोड़कर दुकान पर काम कर रहा है और परेशान दिख रहा है। सबसे सुरक्षित कदम क्या है?",
+    options:[
+      "उसे डाँटकर वहाँ से भगा दूँ",
+      "किसी भरोसेमंद बड़े/शिक्षक को बताकर मदद माँगूँ",
+      "उसकी जगह खुद काम करूँ"
+    ],
+    correct:1,
+    explain:"सही! बच्चे की स्थिति किसी भरोसेमंद बड़े या संबंधित सहायता व्यवस्था तक पहुँचाना बेहतर है।"
+  },
+  {
+    icon:"📱",
+    title:"लेवल 3 — अनजान ऑनलाइन दोस्त",
+    text:"एक अनजान व्यक्ति तुम्हारा पता, फोटो और password माँगता है। क्या करना चाहिए?",
+    options:[
+      "सब कुछ भेज दूँ",
+      "मना करूँ, block/report करूँ और trusted adult को बताऊँ",
+      "उससे मिलने अकेले चला जाऊँ"
+    ],
+    correct:1,
+    explain:"सही! निजी जानकारी और password शेयर नहीं करना चाहिए। जरूरत पर trusted adult को बताना चाहिए।"
+  },
+  {
+    icon:"🛡️",
+    title:"लेवल 4 — असहज व्यवहार",
+    text:"कोई व्यक्ति ऐसा व्यवहार करता है जिससे तुम्हें असहज या असुरक्षित महसूस होता है। पहला सुरक्षित कदम क्या है?",
+    options:[
+      "वहाँ से दूर होकर सुरक्षित जगह जाना और भरोसेमंद बड़े को बताना",
+      "चुपचाप सहते रहना",
+      "अकेले उस व्यक्ति से मिलने जाना"
+    ],
+    correct:0,
+    explain:"सही! सुरक्षित जगह जाना और भरोसेमंद बड़े को बताना महत्वपूर्ण है।"
+  },
+  {
+    icon:"🚨",
+    title:"लेवल 5 — तुरंत खतरा",
+    text:"तुम या कोई बच्चा अभी खतरे में है। सबसे पहले क्या करना चाहिए?",
+    options:[
+      "अकेले समस्या सुलझाने की कोशिश करना",
+      "सुरक्षित जगह जाना और जरूरत के अनुसार 112/1098 या trusted adult से मदद लेना",
+      "किसी को न बताना"
+    ],
+    correct:1,
+    explain:"सही! तत्काल खतरे में सुरक्षित जगह जाएँ और जरूरत के अनुसार 112 या Child Helpline 1098 से मदद लें।"
+  }
+];
+
+let gameLevel=0;
+let gameScore=0;
+let gameAnswered=false;
+
+function openSafetyGame(){
+  gameLevel=0;
+  gameScore=0;
+  gameAnswered=false;
+  const modal=document.getElementById("safetyGameModal");
+  if(!modal) return;
+  modal.classList.remove("quiz-hidden");
+  document.body.classList.add("quick-answer-open");
+  renderSafetyGame();
+}
+
+function closeSafetyGame(){
+  const modal=document.getElementById("safetyGameModal");
+  if(modal) modal.classList.add("quiz-hidden");
+  document.body.classList.remove("quick-answer-open");
+}
+
+function renderSafetyGame(){
+  const area=document.getElementById("gamePlayArea");
+  if(!area) return;
+
+  if(gameLevel >= safetyGameLevels.length){
+    const total=safetyGameLevels.length;
+    const percent=Math.round((gameScore/total)*100);
+    let emoji="🌱", title="अच्छी शुरुआत!";
+    if(gameScore===total){emoji="🏆";title="Safety Champion!";}
+    else if(gameScore>=3){emoji="⭐";title="बहुत बढ़िया!";}
+
+    area.innerHTML=`
+      <div class="game-result">
+        <div class="game-result-emoji">${emoji}</div>
+        <h3>${title}</h3>
+        <p>तुमने <b>${gameScore} / ${total}</b> सही सुरक्षित फैसले चुने।<br>
+        स्कोर: <b>${percent}%</b><br><br>
+        याद रखो — परेशानी होने पर चुप मत रहो। किसी भरोसेमंद बड़े से बात करो। जरूरत पर <b>1098</b> या <b>112</b> से मदद लो।</p>
+        <button class="game-restart" onclick="openSafetyGame()">🔄 फिर से खेलें</button>
+      </div>`;
+    return;
+  }
+
+  const item=safetyGameLevels[gameLevel];
+  gameAnswered=false;
+  area.innerHTML=`
+    <div class="game-status">
+      <span class="game-level">Level ${gameLevel+1} / ${safetyGameLevels.length}</span>
+      <span class="game-score">⭐ Score: ${gameScore}</span>
+      <span class="game-lives">🛡️ Safe Zone</span>
+    </div>
+    <div class="game-scenario">
+      <div class="game-scenario-icon">${item.icon}</div>
+      <h3>${item.title}</h3>
+      <p>${item.text}</p>
+    </div>
+    <div class="game-options" id="gameOptions">
+      ${item.options.map((opt,i)=>`<button class="game-option" onclick="answerSafetyGame(${i})">${String.fromCharCode(65+i)}. ${opt}</button>`).join("")}
+    </div>
+    <div id="gameFeedback"></div>
+    <button id="gameNextBtn" class="game-next" style="display:none" onclick="nextSafetyGameLevel()">अगला Level ▶</button>`;
+}
+
+function answerSafetyGame(index){
+  if(gameAnswered) return;
+  gameAnswered=true;
+  const item=safetyGameLevels[gameLevel];
+  const buttons=document.querySelectorAll("#gameOptions .game-option");
+  buttons.forEach((btn,i)=>{
+    btn.disabled=true;
+    if(i===item.correct) btn.classList.add("correct");
+    if(i===index && i!==item.correct) btn.classList.add("wrong");
+  });
+
+  const feedback=document.getElementById("gameFeedback");
+  if(index===item.correct){
+    gameScore++;
+    feedback.innerHTML=`<div class="game-feedback ok">✅ सही फैसला! ${item.explain}</div>`;
+  }else{
+    feedback.innerHTML=`<div class="game-feedback no">❌ यह सबसे सुरक्षित विकल्प नहीं था। ${item.explain}</div>`;
+  }
+  document.getElementById("gameNextBtn").style.display="block";
+}
+
+function nextSafetyGameLevel(){
+  gameLevel++;
+  renderSafetyGame();
+}
+
+document.addEventListener("click",function(e){
+  if(e.target && e.target.id==="safetyGameModal") closeSafetyGame();
+});
 
 </script>
 
