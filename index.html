@@ -2685,10 +2685,9 @@ Child Protection • Child Rights • Safety
 <div class="quiz-options" id="quizOptions"></div>
 
 <div id="quizFeedback"></div>
+<div id="quizAutoNextHint" style="text-align:center;margin-top:8px;font-size:11px;color:#aeb7e8;font-weight:700;">उत्तर के बाद अगला सवाल अपने आप आएगा</div>
 
-<button class="quiz-next-btn quiz-hidden" id="quizNextBtn" onclick="nextQuestion()">
-अगला सवाल ➤
-</button>
+<button class="quiz-next-btn quiz-hidden" id="quizNextBtn" type="button" aria-hidden="true" tabindex="-1">अगला सवाल ➤</button>
 
 </div>
 
@@ -3787,89 +3786,118 @@ let quizSoundOn = true;
 let quizMusicStep = 0;
 
 function initQuizAudio(){
-  if(quizAudioCtx) return;
+  if(quizAudioCtx){
+    if(quizAudioCtx.state === "suspended"){
+      quizAudioCtx.resume().catch(()=>{});
+    }
+    return true;
+  }
   const Ctx = window.AudioContext || window.webkitAudioContext;
-  if(!Ctx) return;
-  quizAudioCtx = new Ctx();
-  quizMasterGain = quizAudioCtx.createGain();
-  quizMasterGain.gain.value = 0.075;
-  quizMasterGain.connect(quizAudioCtx.destination);
+  if(!Ctx) return false;
+  try{
+    quizAudioCtx = new Ctx();
+    quizMasterGain = quizAudioCtx.createGain();
+    quizMasterGain.gain.value = 0.16;
+    quizMasterGain.connect(quizAudioCtx.destination);
+    if(quizAudioCtx.state === "suspended"){
+      quizAudioCtx.resume().catch(()=>{});
+    }
+    return true;
+  }catch(e){
+    quizAudioCtx = null;
+    quizMasterGain = null;
+    return false;
+  }
 }
 
-function quizTone(freq, duration, type='sine', volume=0.08, when=0){
+function quizTone(freq, duration, type="sine", volume=0.10, when=0){
   if(!quizSoundOn) return;
-  initQuizAudio();
-  if(!quizAudioCtx || !quizMasterGain) return;
+  if(!initQuizAudio() || !quizAudioCtx || !quizMasterGain) return;
+
   const now = quizAudioCtx.currentTime + when;
   const osc = quizAudioCtx.createOscillator();
   const gain = quizAudioCtx.createGain();
+
   osc.type = type;
   osc.frequency.setValueAtTime(freq, now);
   gain.gain.setValueAtTime(0.0001, now);
-  gain.gain.exponentialRampToValueAtTime(Math.max(0.001, volume), now + 0.025);
+  gain.gain.exponentialRampToValueAtTime(Math.max(0.002, volume), now + 0.018);
   gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
   osc.connect(gain);
   gain.connect(quizMasterGain);
   osc.start(now);
-  osc.stop(now + duration + 0.03);
+  osc.stop(now + duration + 0.04);
 }
 
 function startQuizMusic(){
   if(!quizSoundOn) return;
-  initQuizAudio();
-  if(!quizAudioCtx) return;
-  if(quizAudioCtx.state === 'suspended') quizAudioCtx.resume();
+  if(!initQuizAudio()) return;
+
   if(quizMusicTimer) clearInterval(quizMusicTimer);
-  quizMusicStep = 0;
+
   const notes = [261.63,329.63,392.00,329.63,293.66,349.23,440.00,349.23];
+  quizMusicStep = 0;
+
+  // Immediate note so the user hears sound right after pressing Start.
+  quizTone(196.00,0.30,"sine",0.035);
+  quizTone(notes[0],0.22,"triangle",0.075,0.04);
+
   quizMusicTimer = setInterval(()=>{
     if(!quizSoundOn) return;
     const n = notes[quizMusicStep % notes.length];
-    quizTone(n,0.22,'triangle',0.045);
-    if(quizMusicStep % 4 === 0) quizTone(n/2,0.34,'sine',0.018,0.01);
+    quizTone(n,0.28,"triangle",0.065);
+    if(quizMusicStep % 4 === 0){
+      quizTone(n/2,0.38,"sine",0.025,0.02);
+    }
     quizMusicStep++;
-  }, 520);
+  }, 480);
 }
 
 function stopQuizMusic(){
-  if(quizMusicTimer){ clearInterval(quizMusicTimer); quizMusicTimer=null; }
+  if(quizMusicTimer){
+    clearInterval(quizMusicTimer);
+    quizMusicTimer = null;
+  }
 }
 
 function quizAnswerSound(correct){
   if(correct){
-    quizTone(523.25,0.12,'sine',0.10,0);
-    quizTone(659.25,0.16,'sine',0.10,0.09);
-    quizTone(783.99,0.22,'triangle',0.09,0.18);
+    quizTone(523.25,0.13,"sine",0.13);
+    quizTone(659.25,0.15,"sine",0.13,0.08);
+    quizTone(783.99,0.24,"triangle",0.12,0.17);
   }else{
-    quizTone(220,0.18,'sawtooth',0.045,0);
-    quizTone(174.61,0.25,'sine',0.04,0.12);
+    quizTone(220,0.18,"sawtooth",0.07);
+    quizTone(174.61,0.28,"sine",0.06,0.12);
   }
 }
 
 function quizStartSound(){
-  quizTone(261.63,0.12,'triangle',0.07,0);
-  quizTone(329.63,0.12,'triangle',0.07,0.10);
-  quizTone(392.00,0.22,'triangle',0.08,0.20);
+  quizTone(261.63,0.12,"triangle",0.10);
+  quizTone(329.63,0.12,"triangle",0.10,0.09);
+  quizTone(392.00,0.24,"triangle",0.11,0.18);
 }
 
 function quizResultSound(){
   const win = quizScore >= Math.ceil(quizQuestions.length*0.6);
   if(win){
-    [523.25,659.25,783.99,1046.50].forEach((n,i)=>quizTone(n,0.24,'triangle',0.08,i*0.11));
+    [523.25,659.25,783.99,1046.50].forEach((n,i)=>{
+      quizTone(n,0.26,"triangle",0.11,i*0.11);
+    });
   }else{
-    quizTone(392,0.16,'sine',0.06,0);
-    quizTone(329.63,0.22,'sine',0.05,0.13);
+    quizTone(392,0.17,"sine",0.07);
+    quizTone(329.63,0.24,"sine",0.06,0.13);
   }
 }
 
 function toggleQuizSound(ev){
   if(ev) ev.stopPropagation();
   quizSoundOn = !quizSoundOn;
-  const btn=document.getElementById('quizSoundBtn');
-  if(btn) btn.textContent = quizSoundOn ? '🔊' : '🔇';
+  const btn = document.getElementById("quizSoundBtn");
+  if(btn) btn.textContent = quizSoundOn ? "🔊" : "🔇";
+
   if(quizSoundOn){
     initQuizAudio();
-    if(quizAudioCtx && quizAudioCtx.state==='suspended') quizAudioCtx.resume();
     startQuizMusic();
   }else{
     stopQuizMusic();
@@ -4065,50 +4093,42 @@ optWrap.appendChild(btn);
 function selectQuizOption(idx){
 
 const item = quizQuestions[quizCurrent];
-
 const buttons = document.querySelectorAll("#quizOptions .quiz-option");
 
-
 buttons.forEach(function(btn, i){
-
-btn.disabled = true;
-
-if(i === item.correct){
-
-btn.classList.add("correct");
-
-}else if(i === idx && idx !== item.correct){
-
-btn.classList.add("wrong");
-
-}
-
+  btn.disabled = true;
+  if(i === item.correct){
+    btn.classList.add("correct");
+  }else if(i === idx && idx !== item.correct){
+    btn.classList.add("wrong");
+  }
 });
-
 
 const feedback = document.getElementById("quizFeedback");
 
 if(idx === item.correct){
-
-quizScore++;
-quizAnswerSound(true);
-
-feedback.innerHTML =
-'<div class="quiz-feedback ok">✅ सही जवाब! '+item.explain+'</div>';
-
+  quizScore++;
+  quizAnswerSound(true);
+  feedback.innerHTML =
+    '<div class="quiz-feedback ok">✅ सही जवाब! '+item.explain+'</div>';
 }else{
-
-quizAnswerSound(false);
-feedback.innerHTML =
-'<div class="quiz-feedback no">❌ थोड़ा सा गलत। '+item.explain+'</div>';
-
+  quizAnswerSound(false);
+  feedback.innerHTML =
+    '<div class="quiz-feedback no">❌ थोड़ा सा गलत। '+item.explain+'</div>';
 }
 
+// Answer ke baad automatically next question.
+setTimeout(function(){
+  quizCurrent++;
 
-document.getElementById("quizNextBtn").classList.remove("quiz-hidden");
+  if(quizCurrent < quizQuestions.length){
+    renderQuizQuestion();
+  }else{
+    showQuizResult();
+  }
+}, 1100);
 
 }
-
 
 function nextQuestion(){
 
