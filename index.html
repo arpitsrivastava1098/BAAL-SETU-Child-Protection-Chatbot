@@ -1104,6 +1104,34 @@ animation:none !important;
    QUIZ SECTION — KBC STYLE
    ========================================================= */
 
+/* Quiz original TV-show style sound controls */
+.quiz-sound-control{
+position:absolute;
+right:18px;
+top:18px;
+z-index:5;
+width:42px;
+height:42px;
+border:1px solid #ffd76a;
+border-radius:50%;
+background:rgba(8,12,55,.78);
+color:#ffe9a8;
+font-size:18px;
+cursor:pointer;
+box-shadow:0 0 12px rgba(255,215,110,.22);
+}
+.quiz-sound-control:hover{transform:scale(1.06);}
+.quiz-music-note{
+position:absolute;
+left:18px;
+top:18px;
+font-size:18px;
+opacity:.85;
+animation:quizNoteFloat 1.8s ease-in-out infinite;
+}
+@keyframes quizNoteFloat{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(-5px);opacity:1}}
+
+
 .quiz-wrap{
 margin:30px 0;
 }
@@ -2619,6 +2647,9 @@ Child Protection • Child Rights • Safety
 
 <div class="quiz-card" id="quizCard">
 
+<button class="quiz-sound-control" id="quizSoundBtn" onclick="toggleQuizSound(event)" aria-label="Quiz sound on/off">🔊</button>
+<span class="quiz-music-note">♪</span>
+
 <!-- INTRO SCREEN -->
 
 <div id="quizIntro" class="quiz-intro">
@@ -3748,6 +3779,103 @@ recognition.start();
    QUIZ
    ========================================================= */
 
+// Original BAAL-SETU quiz sound engine (Web Audio API) — no external/copyrighted music file.
+let quizAudioCtx = null;
+let quizMasterGain = null;
+let quizMusicTimer = null;
+let quizSoundOn = true;
+let quizMusicStep = 0;
+
+function initQuizAudio(){
+  if(quizAudioCtx) return;
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if(!Ctx) return;
+  quizAudioCtx = new Ctx();
+  quizMasterGain = quizAudioCtx.createGain();
+  quizMasterGain.gain.value = 0.075;
+  quizMasterGain.connect(quizAudioCtx.destination);
+}
+
+function quizTone(freq, duration, type='sine', volume=0.08, when=0){
+  if(!quizSoundOn) return;
+  initQuizAudio();
+  if(!quizAudioCtx || !quizMasterGain) return;
+  const now = quizAudioCtx.currentTime + when;
+  const osc = quizAudioCtx.createOscillator();
+  const gain = quizAudioCtx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, now);
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(Math.max(0.001, volume), now + 0.025);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+  osc.connect(gain);
+  gain.connect(quizMasterGain);
+  osc.start(now);
+  osc.stop(now + duration + 0.03);
+}
+
+function startQuizMusic(){
+  if(!quizSoundOn) return;
+  initQuizAudio();
+  if(!quizAudioCtx) return;
+  if(quizAudioCtx.state === 'suspended') quizAudioCtx.resume();
+  if(quizMusicTimer) clearInterval(quizMusicTimer);
+  quizMusicStep = 0;
+  const notes = [261.63,329.63,392.00,329.63,293.66,349.23,440.00,349.23];
+  quizMusicTimer = setInterval(()=>{
+    if(!quizSoundOn) return;
+    const n = notes[quizMusicStep % notes.length];
+    quizTone(n,0.22,'triangle',0.045);
+    if(quizMusicStep % 4 === 0) quizTone(n/2,0.34,'sine',0.018,0.01);
+    quizMusicStep++;
+  }, 520);
+}
+
+function stopQuizMusic(){
+  if(quizMusicTimer){ clearInterval(quizMusicTimer); quizMusicTimer=null; }
+}
+
+function quizAnswerSound(correct){
+  if(correct){
+    quizTone(523.25,0.12,'sine',0.10,0);
+    quizTone(659.25,0.16,'sine',0.10,0.09);
+    quizTone(783.99,0.22,'triangle',0.09,0.18);
+  }else{
+    quizTone(220,0.18,'sawtooth',0.045,0);
+    quizTone(174.61,0.25,'sine',0.04,0.12);
+  }
+}
+
+function quizStartSound(){
+  quizTone(261.63,0.12,'triangle',0.07,0);
+  quizTone(329.63,0.12,'triangle',0.07,0.10);
+  quizTone(392.00,0.22,'triangle',0.08,0.20);
+}
+
+function quizResultSound(){
+  const win = quizScore >= Math.ceil(quizQuestions.length*0.6);
+  if(win){
+    [523.25,659.25,783.99,1046.50].forEach((n,i)=>quizTone(n,0.24,'triangle',0.08,i*0.11));
+  }else{
+    quizTone(392,0.16,'sine',0.06,0);
+    quizTone(329.63,0.22,'sine',0.05,0.13);
+  }
+}
+
+function toggleQuizSound(ev){
+  if(ev) ev.stopPropagation();
+  quizSoundOn = !quizSoundOn;
+  const btn=document.getElementById('quizSoundBtn');
+  if(btn) btn.textContent = quizSoundOn ? '🔊' : '🔇';
+  if(quizSoundOn){
+    initQuizAudio();
+    if(quizAudioCtx && quizAudioCtx.state==='suspended') quizAudioCtx.resume();
+    startQuizMusic();
+  }else{
+    stopQuizMusic();
+  }
+}
+
 const quizQuestions = [
 
 {
@@ -3832,6 +3960,10 @@ const optionLetters = ["A","B","C","D"];
 
 
 function startQuiz(){
+
+initQuizAudio();
+quizStartSound();
+startQuizMusic();
 
 quizCurrent = 0;
 
@@ -3959,12 +4091,14 @@ const feedback = document.getElementById("quizFeedback");
 if(idx === item.correct){
 
 quizScore++;
+quizAnswerSound(true);
 
 feedback.innerHTML =
 '<div class="quiz-feedback ok">✅ सही जवाब! '+item.explain+'</div>';
 
 }else{
 
+quizAnswerSound(false);
 feedback.innerHTML =
 '<div class="quiz-feedback no">❌ थोड़ा सा गलत। '+item.explain+'</div>';
 
@@ -3994,6 +4128,9 @@ showQuizResult();
 
 
 function showQuizResult(){
+
+stopQuizMusic();
+quizResultSound();
 
 document.getElementById("quizPlay").classList.add("quiz-hidden");
 
