@@ -2271,6 +2271,21 @@ body.quick-answer-open{overflow:hidden}
   .mascot-image-area{position:relative;left:auto;top:auto;width:100%;min-height:280px;margin:0 auto 6px;transform:none;pointer-events:auto}
   .baal-setu-mascot-book{width:min(100%,340px);max-height:285px}
 }
+
+/* =========================================================
+   BAAL-SETU SAFETY SIMULATOR
+   ========================================================= */
+.tool-simulator{background:linear-gradient(135deg,#e8ddff,#dff7ff)}
+.sim-overlay{position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;padding:15px;background:rgba(10,15,30,.75);backdrop-filter:blur(7px)}
+.sim-box{width:min(700px,100%);max-height:92vh;overflow:auto;position:relative;background:linear-gradient(145deg,#fff,#f4fbff);border:3px solid #9be7ff;border-radius:28px;padding:25px;box-shadow:0 25px 70px rgba(0,0,0,.35)}
+.sim-close{position:absolute;right:14px;top:12px;width:40px;height:40px;border:0;border-radius:50%;background:#eef1f5;font-size:18px;font-weight:900;cursor:pointer}
+.sim-head{text-align:center;padding:5px 35px 15px}.sim-icon{font-size:52px}.sim-head h2{margin:5px 0;color:#1769aa;font-size:25px;font-weight:900}.sim-head p{margin:5px 0;color:#647080;font-weight:700}
+.sim-progress{text-align:center;color:#1769aa;font-size:13px;font-weight:900;margin-bottom:8px}.sim-progress-bar{height:9px;background:#e5edf3;border-radius:10px;overflow:hidden;margin-bottom:18px}.sim-progress-fill{width:10%;height:100%;background:linear-gradient(90deg,#6c63ff,#45c9ff);transition:width .3s ease}
+.sim-situation{background:#fff;border:2px solid #dcecf4;border-radius:20px;padding:20px;text-align:center;box-shadow:0 7px 20px rgba(30,80,110,.08)}.sim-situation-icon{font-size:48px;margin-bottom:8px}.sim-situation h3{margin:0 0 10px;color:#20242b;font-size:19px}.sim-situation p{margin:0;color:#505b68;font-size:15px;font-weight:700;line-height:1.7}
+.sim-options{display:grid;gap:11px;margin-top:15px}.sim-option{width:100%;padding:14px 16px;border:2px solid #d7e2ea;border-radius:17px;background:#fff;text-align:left;font-size:14px;font-weight:800;color:#26313b;cursor:pointer;transition:.2s}.sim-option:hover{transform:translateX(4px);border-color:#6c63ff;box-shadow:0 7px 18px rgba(108,99,255,.15)}.sim-option.correct{background:#e7fff0;border-color:#35c878;color:#146b3b}.sim-option.wrong{background:#fff0f0;border-color:#ff7070;color:#9a2424}.sim-option:disabled{cursor:default}
+.sim-feedback{margin-top:15px;padding:15px;border-radius:16px;font-size:14px;font-weight:700;line-height:1.6}.sim-feedback.good{background:#e9fff1;border:2px solid #42d483;color:#17683b}.sim-feedback.try{background:#fff8df;border:2px solid #ffd166;color:#795900}
+.sim-next{display:block;margin:16px auto 0;border:0;border-radius:25px;padding:13px 28px;background:linear-gradient(135deg,#6c63ff,#8f7cff);color:#fff;font-size:15px;font-weight:900;cursor:pointer}.sim-result{text-align:center;padding:25px 10px}.sim-result-score{font-size:42px;font-weight:900;color:#6c63ff}
+@media(max-width:520px){.sim-box{padding:18px;border-radius:22px}.sim-head h2{font-size:21px}.sim-situation p{font-size:14px}.sim-option{padding:13px}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -2463,6 +2478,12 @@ Child Protection • Child Rights • Safety
     <strong>Teacher Corner</strong>
     <small>शिक्षकों के लिए Toolkit</small>
   </button>
+
+  <button class="dashboard-tool tool-simulator" onclick="openSafetySimulator()">
+    <span class="tool-icon">🧠</span>
+    <strong>Safety Simulator</strong>
+    <small>स्थिति समझो • सही फैसला चुनो</small>
+  </button>
 </div>
 
 <div class="dashboard-mini-note">
@@ -2556,6 +2577,25 @@ Child Protection • Child Rights • Safety
       <p>सही और सुरक्षित फैसला चुनो — हर सही जवाब तुम्हें Safe Zone के करीब ले जाएगा!</p>
     </div>
     <div id="gamePlayArea"></div>
+  </div>
+</div>
+
+<!-- BAAL-SETU SAFETY SIMULATOR MODAL -->
+<div id="safetySimulator" class="sim-overlay" style="display:none;" role="dialog" aria-modal="true" aria-label="BAAL-SETU Safety Simulator" onclick="if(event.target===this)closeSafetySimulator()">
+  <div class="sim-box" onclick="event.stopPropagation()">
+    <button class="sim-close" type="button" onclick="closeSafetySimulator()" aria-label="बंद करें">✕</button>
+    <div class="sim-head">
+      <div class="sim-icon">🧠</div>
+      <h2>BAAL-SETU Safety Simulator</h2>
+      <p>स्थिति समझो और सुरक्षित फैसला चुनो!</p>
+    </div>
+    <div id="simProgress" class="sim-progress">स्थिति 1 / 10</div>
+    <div class="sim-progress-bar"><div id="simProgressFill" class="sim-progress-fill"></div></div>
+    <div id="simQuestion"></div>
+    <div id="simOptions"></div>
+    <div id="simFeedback"></div>
+    <button id="simNext" class="sim-next" onclick="nextSimulatorQuestion()" style="display:none;">अगली स्थिति ➜</button>
+    <div id="simResult" style="display:none;"></div>
   </div>
 </div>
 
@@ -4499,6 +4539,47 @@ document.addEventListener("click",function(e){
 </div>
 
 
+
+<script>
+/* =========================================================
+   BAAL-SETU SAFETY SIMULATOR
+   ========================================================= */
+const safetySimulatorQuestions = [
+  {icon:"💍",title:"बाल विवाह",text:"तुम्हें पता चलता है कि तुम्हारी दोस्त की कम उम्र में शादी होने वाली है। तुम क्या करोगे?",options:["चुप रहूँगा/रहूँगी","भरोसेमंद बड़े, शिक्षक या सहायता सेवा से मदद लेने की कोशिश करूँगा/करूँगी","शादी में जाकर मज़ाक करूँगा/करूँगी"],correct:1,explain:"सही कदम है कि बच्चे की सुरक्षा को प्राथमिकता दें और किसी भरोसेमंद बड़े या उचित सहायता सेवा तक बात पहुँचाएँ।"},
+  {icon:"🧒",title:"बाल श्रम",text:"एक बच्चा पढ़ाई छोड़कर दुकान पर काम कर रहा है। तुम क्या करोगे?",options:["उसका मज़ाक बनाऊँगा","चुपचाप आगे चला जाऊँगा","किसी भरोसेमंद बड़े या संबंधित व्यक्ति को बताने में मदद करूँगा"],correct:2,explain:"बच्चे की पढ़ाई और सुरक्षा महत्वपूर्ण है। उसकी स्थिति को सुरक्षित तरीके से किसी जिम्मेदार व्यक्ति तक पहुँचाना बेहतर कदम है।"},
+  {icon:"📱",title:"Online Safety",text:"कोई अनजान व्यक्ति तुमसे तुम्हारी private photo मांगता है।",options:["Photo भेज दूँगा","मना करूँगा, बातचीत रोकूँगा और trusted adult को बताऊँगा","अपना address भी भेज दूँगा"],correct:1,explain:"Private photo या personal information अनजान व्यक्ति के साथ share नहीं करनी चाहिए।"},
+  {icon:"🛡️",title:"सुरक्षा",text:"कोई व्यक्ति तुम्हें डराता है और कहता है कि किसी को मत बताना।",options:["चुप रहूँगा","किसी भरोसेमंद बड़े व्यक्ति को बताऊँगा","उसे अपनी और जानकारी दूँगा"],correct:1,explain:"डर या धमकी की स्थिति में चुप रहना जरूरी नहीं है। भरोसेमंद बड़े से मदद लेना सुरक्षित कदम है।"},
+  {icon:"🏫",title:"School Safety",text:"तुम्हारा दोस्त स्कूल में परेशान दिख रहा है लेकिन सबके सामने बात नहीं करना चाहता।",options:["सबके सामने उससे पूछूँगा","उसका मज़ाक बनाऊँगा","शांत जगह पर उसकी बात सुनूँगा और जरूरत पर trusted adult की मदद लूँगा"],correct:2,explain:"बच्चे की privacy और dignity का सम्मान करते हुए उसकी बात सुनना बेहतर है।"},
+  {icon:"👧",title:"सुरक्षित बातचीत",text:"एक बच्चा कहता है कि उसे किसी बात से डर लग रहा है।",options:["कहूँगा कि डरने की कोई बात नहीं","उसकी बात ध्यान से सुनूँगा और भरोसेमंद बड़े की मदद लूँगा","उसे डाँटूँगा"],correct:1,explain:"बच्चे की बात को गंभीरता से सुनना और जरूरत पर सुरक्षित मदद तक पहुँचाना महत्वपूर्ण है।"},
+  {icon:"🚨",title:"Emergency",text:"तुम या कोई बच्चा तत्काल खतरे में है।",options:["अकेले समस्या हल करने की कोशिश करूँगा","तुरंत emergency help के लिए 112 से संपर्क करूँगा","किसी को नहीं बताऊँगा"],correct:1,explain:"तत्काल खतरे में emergency सहायता के लिए 112 से संपर्क किया जा सकता है।"},
+  {icon:"📞",title:"Child Helpline",text:"किसी बच्चे को protection या सहायता की जरूरत है।",options:["1098 Child Helpline की जानकारी दूँगा","उसे अकेला छोड़ दूँगा","समस्या को छिपाऊँगा"],correct:0,explain:"Child Helpline 1098 बच्चों से जुड़ी सहायता और protection concerns के लिए उपलब्ध है।"},
+  {icon:"💻",title:"Cyber Safety",text:"किसी online account पर तुम्हें परेशान करने वाले messages मिल रहे हैं।",options:["और personal information भेजूँगा","Messages का record रखूँगा और trusted adult को बताऊँगा","अपना password share करूँगा"],correct:1,explain:"Online परेशानी में evidence सुरक्षित रखना और trusted adult से मदद लेना उपयोगी कदम है।"},
+  {icon:"🤝",title:"मदद माँगना",text:"तुम्हारा दोस्त कहता है कि उसे घर या बाहर किसी समस्या के कारण मदद चाहिए।",options:["कहूँगा कि किसी को मत बताना","उसकी बात सुनूँगा और जरूरत के अनुसार भरोसेमंद बड़े से मदद लेने में साथ दूँगा","उसकी समस्या social media पर डाल दूँगा"],correct:1,explain:"बच्चे की privacy का सम्मान करते हुए सुरक्षित और भरोसेमंद सहायता तक पहुँचाना महत्वपूर्ण है।"}
+];
+let simCurrent=0,simScore=0,simAnswered=false;
+function openSafetySimulator(){const m=document.getElementById("safetySimulator");if(!m)return;m.style.display="flex";simCurrent=0;simScore=0;simAnswered=false;document.getElementById("simResult").style.display="none";renderSimulatorQuestion();}
+function closeSafetySimulator(){const m=document.getElementById("safetySimulator");if(m)m.style.display="none";}
+function renderSimulatorQuestion(){
+  const q=safetySimulatorQuestions[simCurrent];simAnswered=false;
+  document.getElementById("simProgress").textContent="स्थिति "+(simCurrent+1)+" / "+safetySimulatorQuestions.length;
+  document.getElementById("simProgressFill").style.width=((simCurrent+1)/safetySimulatorQuestions.length*100)+"%";
+  document.getElementById("simQuestion").innerHTML='<div class="sim-situation"><div class="sim-situation-icon">'+q.icon+'</div><h3>'+q.title+'</h3><p>'+q.text+'</p></div>';
+  document.getElementById("simOptions").innerHTML=q.options.map(function(option,index){return '<button class="sim-option" onclick="answerSimulator('+index+')">'+String.fromCharCode(65+index)+'. '+option+'</button>';}).join("");
+  document.getElementById("simFeedback").innerHTML="";document.getElementById("simNext").style.display="none";
+}
+function answerSimulator(index){
+  if(simAnswered)return;simAnswered=true;const q=safetySimulatorQuestions[simCurrent];const buttons=document.querySelectorAll(".sim-option");buttons.forEach(function(btn){btn.disabled=true;});
+  if(index===q.correct){simScore++;buttons[index].classList.add("correct");document.getElementById("simFeedback").innerHTML='<div class="sim-feedback good">🌟 <b>बहुत बढ़िया!</b><br>'+q.explain+'</div>';}else{buttons[index].classList.add("wrong");buttons[q.correct].classList.add("correct");document.getElementById("simFeedback").innerHTML='<div class="sim-feedback try">💡 <b>एक बार और सोचो!</b><br>'+q.explain+'</div>';}
+  document.getElementById("simNext").style.display="block";
+}
+function nextSimulatorQuestion(){simCurrent++;if(simCurrent>=safetySimulatorQuestions.length){showSimulatorResult();return;}renderSimulatorQuestion();}
+function showSimulatorResult(){
+  document.getElementById("simQuestion").innerHTML="";document.getElementById("simOptions").innerHTML="";document.getElementById("simFeedback").innerHTML="";document.getElementById("simNext").style.display="none";
+  const pct=Math.round(simScore/safetySimulatorQuestions.length*100);let title="अच्छी कोशिश!";if(pct>=80)title="🏆 Safety Champion!";else if(pct>=60)title="🌟 बहुत अच्छा!";else title="💪 फिर से कोशिश करो!";
+  const result=document.getElementById("simResult");result.style.display="block";result.innerHTML='<div class="sim-result"><div style="font-size:55px;">🏆</div><h2>'+title+'</h2><div class="sim-result-score">'+simScore+' / '+safetySimulatorQuestions.length+'</div><p>आपने '+safetySimulatorQuestions.length+' में से '+simScore+' सुरक्षित फैसले चुने।</p><button class="sim-next" onclick="openSafetySimulator()">🔄 फिर से खेलें</button><button class="sim-next" onclick="closeSafetySimulator()" style="margin-top:10px;">✓ बंद करें</button></div>';
+}
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeSafetySimulator();});
+</script>
 <script>
 function openTeacherCorner(){
   const m=document.getElementById('teacherCornerModal'); if(m)m.classList.add('show');
