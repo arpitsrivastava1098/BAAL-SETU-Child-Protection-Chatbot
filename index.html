@@ -2288,6 +2288,16 @@ body.quick-answer-open{overflow:hidden}
 @media(max-width:520px){.sim-box{padding:18px;border-radius:22px}.sim-head h2{font-size:21px}.sim-situation p{font-size:14px}.sim-option{padding:13px}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+.baal-credit{margin-top:18px;text-align:center;padding:16px 12px 10px;border-top:1px solid rgba(255,255,255,.12);animation:creditFade 1.2s ease both;}
+.credit-main{font-size:15px;font-weight:600;letter-spacing:.2px;}
+.credit-main strong{font-weight:800;}
+.credit-role{margin-top:5px;font-size:13px;font-weight:700;opacity:.9;letter-spacing:.5px;}
+.credit-copy{margin-top:9px;font-size:11px;opacity:.62;letter-spacing:.25px;animation:copyrightPulse 2.8s ease-in-out infinite;}
+@keyframes creditFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes copyrightPulse{0%,100%{opacity:.45}50%{opacity:.9}}
+</style>
 </head>
 
 <body>
@@ -2960,10 +2970,10 @@ BAAL-SETU एक जागरूकता और मार्गदर्शन 
 
 </div>
 
-<div class="developer">
-
-Designed & Developed by Arpit Srivastava
-
+<div class="developer baal-credit">
+  <div class="credit-main">Designed &amp; Developed by <strong>Arpit Srivastava</strong></div>
+  <div class="credit-role">Child Protection Expert</div>
+  <div class="credit-copy">© <span id="copyrightYear"></span> Arpit Srivastava • Copyright All Rights Reserved</div>
 </div>
 
 </div>
@@ -4547,16 +4557,16 @@ document.addEventListener("click",function(e){
    BAAL-SETU SAFETY SIMULATOR
    ========================================================= */
 const safetySimulatorQuestions = [
-  {icon:"💍",title:"बाल विवाह",text:"तुम्हें पता चलता है कि तुम्हारी दोस्त की कम उम्र में शादी होने वाली है। तुम क्या करोगे?",options:["चुप रहूँगा/रहूँगी","भरोसेमंद बड़े, शिक्षक या सहायता सेवा से मदद लेने की कोशिश करूँगा/करूँगी","शादी में जाकर मज़ाक करूँगा/करूँगी"],correct:1,explain:"सही कदम है कि बच्चे की सुरक्षा को प्राथमिकता दें और किसी भरोसेमंद बड़े या उचित सहायता सेवा तक बात पहुँचाएँ।"},
-  {icon:"🧒",title:"बाल श्रम",text:"एक बच्चा पढ़ाई छोड़कर दुकान पर काम कर रहा है। तुम क्या करोगे?",options:["उसका मज़ाक बनाऊँगा","चुपचाप आगे चला जाऊँगा","किसी भरोसेमंद बड़े या संबंधित व्यक्ति को बताने में मदद करूँगा"],correct:2,explain:"बच्चे की पढ़ाई और सुरक्षा महत्वपूर्ण है। उसकी स्थिति को सुरक्षित तरीके से किसी जिम्मेदार व्यक्ति तक पहुँचाना बेहतर कदम है।"},
-  {icon:"📱",title:"Online Safety",text:"कोई अनजान व्यक्ति तुमसे तुम्हारी private photo मांगता है।",options:["Photo भेज दूँगा","मना करूँगा, बातचीत रोकूँगा और trusted adult को बताऊँगा","अपना address भी भेज दूँगा"],correct:1,explain:"Private photo या personal information अनजान व्यक्ति के साथ share नहीं करनी चाहिए।"},
-  {icon:"🛡️",title:"सुरक्षा",text:"कोई व्यक्ति तुम्हें डराता है और कहता है कि किसी को मत बताना।",options:["चुप रहूँगा","किसी भरोसेमंद बड़े व्यक्ति को बताऊँगा","उसे अपनी और जानकारी दूँगा"],correct:1,explain:"डर या धमकी की स्थिति में चुप रहना जरूरी नहीं है। भरोसेमंद बड़े से मदद लेना सुरक्षित कदम है।"},
-  {icon:"🏫",title:"School Safety",text:"तुम्हारा दोस्त स्कूल में परेशान दिख रहा है लेकिन सबके सामने बात नहीं करना चाहता।",options:["सबके सामने उससे पूछूँगा","उसका मज़ाक बनाऊँगा","शांत जगह पर उसकी बात सुनूँगा और जरूरत पर trusted adult की मदद लूँगा"],correct:2,explain:"बच्चे की privacy और dignity का सम्मान करते हुए उसकी बात सुनना बेहतर है।"},
-  {icon:"👧",title:"सुरक्षित बातचीत",text:"एक बच्चा कहता है कि उसे किसी बात से डर लग रहा है।",options:["कहूँगा कि डरने की कोई बात नहीं","उसकी बात ध्यान से सुनूँगा और भरोसेमंद बड़े की मदद लूँगा","उसे डाँटूँगा"],correct:1,explain:"बच्चे की बात को गंभीरता से सुनना और जरूरत पर सुरक्षित मदद तक पहुँचाना महत्वपूर्ण है।"},
-  {icon:"🚨",title:"Emergency",text:"तुम या कोई बच्चा तत्काल खतरे में है।",options:["अकेले समस्या हल करने की कोशिश करूँगा","तुरंत emergency help के लिए 112 से संपर्क करूँगा","किसी को नहीं बताऊँगा"],correct:1,explain:"तत्काल खतरे में emergency सहायता के लिए 112 से संपर्क किया जा सकता है।"},
-  {icon:"📞",title:"Child Helpline",text:"किसी बच्चे को protection या सहायता की जरूरत है।",options:["1098 Child Helpline की जानकारी दूँगा","उसे अकेला छोड़ दूँगा","समस्या को छिपाऊँगा"],correct:0,explain:"Child Helpline 1098 बच्चों से जुड़ी सहायता और protection concerns के लिए उपलब्ध है।"},
-  {icon:"💻",title:"Cyber Safety",text:"किसी online account पर तुम्हें परेशान करने वाले messages मिल रहे हैं।",options:["और personal information भेजूँगा","Messages का record रखूँगा और trusted adult को बताऊँगा","अपना password share करूँगा"],correct:1,explain:"Online परेशानी में evidence सुरक्षित रखना और trusted adult से मदद लेना उपयोगी कदम है।"},
-  {icon:"🤝",title:"मदद माँगना",text:"तुम्हारा दोस्त कहता है कि उसे घर या बाहर किसी समस्या के कारण मदद चाहिए।",options:["कहूँगा कि किसी को मत बताना","उसकी बात सुनूँगा और जरूरत के अनुसार भरोसेमंद बड़े से मदद लेने में साथ दूँगा","उसकी समस्या social media पर डाल दूँगा"],correct:1,explain:"बच्चे की privacy का सम्मान करते हुए सुरक्षित और भरोसेमंद सहायता तक पहुँचाना महत्वपूर्ण है।"}
+  {icon:"🔐",title:"OTP और Password",text:"तुम्हारा दोस्त कहता है—"मुझे अपना OTP और password दे दो, मैं तुम्हारा game account ठीक कर दूँगा।" तुम क्या करोगे?",options:["दे दूँगा क्योंकि वह दोस्त है","मना करूँगा और password/OTP किसी से share नहीं करूँगा","पहले social media पर पोस्ट करूँगा"],correct:1,explain:"OTP और password निजी जानकारी हैं। इन्हें किसी के साथ share नहीं करना चाहिए, चाहे वह दोस्त ही क्यों न हो।"},
+  {icon:"🚶",title:"रास्ते में अनजान व्यक्ति",text:"स्कूल से लौटते समय कोई अनजान व्यक्ति तुम्हें अपने साथ चलने और घर छोड़ने की बात कहता है।",options:["उसके साथ चला जाऊँगा","दूरी बनाए रखूँगा और किसी भरोसेमंद बड़े/सुरक्षित जगह की ओर जाऊँगा","उसे अपना घर दिखाऊँगा"],correct:1,explain:"अनजान व्यक्ति के साथ अकेले नहीं जाना चाहिए। सुरक्षित जगह और भरोसेमंद बड़े की मदद लेना बेहतर है।"},
+  {icon:"🎁",title:"Free Recharge का लालच",text:"Online कोई कहता है कि free recharge मिलेगा, बस एक link खोलकर अपना नाम, mobile number और code भरना है।",options:["तुरंत link खोलूँगा","पहले भरोसेमंद बड़े से पूछूँगा और संदिग्ध link से बचूँगा","अपनी पूरी जानकारी भर दूँगा"],correct:1,explain:"Free offer के नाम पर personal information या suspicious link माँगा जाए तो सावधान रहना चाहिए।"},
+  {icon:"🤐",title:"दोस्त की परेशानी",text:"तुम्हारा दोस्त बताता है कि कुछ बच्चे उसे रोज परेशान करते हैं और कहता है—"किसी को मत बताना।"",options:["बात को मज़ाक समझकर छोड़ दूँगा","उसकी बात ध्यान से सुनूँगा और सुरक्षित मदद के लिए trusted adult को बताने में साथ दूँगा","उसकी बात सबके सामने बता दूँगा"],correct:1,explain:"दोस्त की privacy का सम्मान करते हुए उसकी सुरक्षा को प्राथमिकता देना जरूरी है। जरूरत हो तो trusted adult की मदद लें।"},
+  {icon:"🏟️",title:"अकेले मिलने का दबाव",text:"कोच/बड़ा व्यक्ति कहता है कि तुम उससे ऐसी जगह अकेले मिलो जहाँ कोई और न हो। तुम्हें असहज महसूस हो रहा है।",options:["डर के कारण अकेले चला जाऊँगा","असहज लगने पर मना करूँगा और भरोसेमंद बड़े को बताऊँगा","किसी को बताए बिना चला जाऊँगा"],correct:1,explain:"अगर कोई स्थिति असहज या असुरक्षित लगे, तो बच्चे को ‘ना’ कहने और भरोसेमंद बड़े से मदद लेने का अधिकार है।"},
+  {icon:"💬",title:"Online Friend मिलने बुलाए",text:"सोशल मीडिया पर मिला कोई व्यक्ति खुद को तुम्हारी उम्र का बताता है और अकेले मिलने के लिए बुलाता है।",options:["अकेले मिलने चला जाऊँगा","मिलने से मना करूँगा और trusted adult को बताऊँगा","पहले अपना address भेज दूँगा"],correct:1,explain:"Online पहचान हमेशा वास्तविक नहीं होती। ऐसे व्यक्ति से अकेले मिलना या address share करना सुरक्षित नहीं है।"},
+  {icon:"⚠️",title:"धमकी वाला Message",text:"तुम्हें message मिलता है—"अगर किसी को बताया तो तुम्हें नुकसान होगा।"",options:["डरकर चुप रहूँगा","message का record सुरक्षित रखूँगा और trusted adult से मदद लूँगा","धमकी देने वाले को अपना address भेजूँगा"],correct:1,explain:"धमकी मिलने पर अकेले सामना करने के बजाय evidence सुरक्षित रखना और भरोसेमंद बड़े से मदद लेना बेहतर है।"},
+  {icon:"🔒",title:"ऐसा Secret जो अच्छा नहीं लगता",text:"कोई बड़ा कहता है—"यह हमारा secret है, किसी को बताना नहीं" और तुम्हें अंदर से असहज महसूस होता है।",options:["Secret हमेशा छिपाऊँगा","असहज महसूस होने पर trusted adult को बताऊँगा","खुद को दोष दूँगा"],correct:1,explain:"जो secret डर, दबाव या असहजता पैदा करे उसे छिपाना जरूरी नहीं है। भरोसेमंद बड़े से बात करना सुरक्षित कदम है।"},
+  {icon:"🏫",title:"School में unsafe जगह",text:"तुम देखते हो कि स्कूल की एक जगह पर बच्चों के साथ धक्का-मुक्की हो रही है। तुम अकेले हो।",options:["बीच में जाकर लड़ाई रोकूँगा","दूरी बनाए रखकर शिक्षक/स्कूल के जिम्मेदार व्यक्ति को बताऊँगा","वीडियो बनाकर social media पर डाल दूँगा"],correct:1,explain:"Unsafe situation में खुद को खतरे में डालकर बीच में जाना जरूरी नहीं है। जिम्मेदार वयस्क को सूचना देना बेहतर है।"},
+  {icon:"🧭",title:"भीड़ में रास्ता खो जाना",text:"मेले/भीड़ में तुम अपने परिवार से अलग हो गए हो।",options:["अकेले बाहर निकलने की कोशिश करूँगा","सुरक्षित जगह पर रहूँगा और पुलिस/सुरक्षा कर्मी या भरोसेमंद वयस्क से मदद माँगूँगा","किसी अनजान व्यक्ति के साथ घर चला जाऊँगा"],correct:1,explain:"भीड़ में अलग होने पर सुरक्षित जगह पर रहना और पुलिस, सुरक्षा कर्मी या भरोसेमंद वयस्क से मदद लेना बेहतर है।"}
 ];
 let simCurrent=0,simScore=0,simAnswered=false;
 function openSafetySimulator(){const m=document.getElementById("safetySimulator");if(!m)return;m.style.display="flex";simCurrent=0;simScore=0;simAnswered=false;document.getElementById("simResult").style.display="none";renderSimulatorQuestion();}
@@ -4570,9 +4580,22 @@ function renderSimulatorQuestion(){
   document.getElementById("simFeedback").innerHTML="";document.getElementById("simNext").style.display="none";
 }
 function answerSimulator(index){
-  if(simAnswered)return;simAnswered=true;const q=safetySimulatorQuestions[simCurrent];const buttons=document.querySelectorAll(".sim-option");buttons.forEach(function(btn){btn.disabled=true;});
-  if(index===q.correct){simScore++;buttons[index].classList.add("correct");document.getElementById("simFeedback").innerHTML='<div class="sim-feedback good">🌟 <b>बहुत बढ़िया!</b><br>'+q.explain+'</div>';}else{buttons[index].classList.add("wrong");buttons[q.correct].classList.add("correct");document.getElementById("simFeedback").innerHTML='<div class="sim-feedback try">💡 <b>एक बार और सोचो!</b><br>'+q.explain+'</div>';}
-  document.getElementById("simNext").style.display="block";
+  if(simAnswered)return;
+  simAnswered=true;
+  const q=safetySimulatorQuestions[simCurrent];
+  const buttons=document.querySelectorAll(".sim-option");
+  buttons.forEach(function(btn){btn.disabled=true;});
+  if(index===q.correct) simScore++;
+
+  // Game-style flow: answer देते ही अगला सवाल
+  setTimeout(function(){
+    simCurrent++;
+    if(simCurrent>=safetySimulatorQuestions.length){
+      showSimulatorResult();
+      return;
+    }
+    renderSimulatorQuestion();
+  },180);
 }
 function nextSimulatorQuestion(){simCurrent++;if(simCurrent>=safetySimulatorQuestions.length){showSimulatorResult();return;}renderSimulatorQuestion();}
 function showSimulatorResult(){
@@ -4600,6 +4623,7 @@ const teacherTools={
 function showTeacherTool(key){const p=document.getElementById('teacherPanel');const t=teacherTools[key];if(!p||!t)return;p.innerHTML='<h3>'+t.title+'</h3>'+t.html;p.classList.add('show');p.scrollIntoView({behavior:'smooth',block:'nearest'});}
 function teacherCase(type){const data={marriage:['बाल विवाह की सूचना मिले','बच्चे की सुरक्षा को प्राथमिकता दें; अकेले जाकर परिवार से टकराव या सार्वजनिक रूप से बच्चे की पहचान उजागर न करें। उपयुक्त child-protection mechanism/सक्षम प्राधिकारी तक सूचना पहुँचाने की प्रक्रिया अपनाएँ।'],labour:['बाल श्रम दिखाई दे','बच्चे को दोष न दें और स्वयं जोखिम लेकर कार्रवाई न करें। बच्चे की सुरक्षा सुनिश्चित करते हुए उपयुक्त विभाग/child-protection mechanism को सूचना और referral दें।'],absence:['बच्चा लगातार स्कूल नहीं आ रहा','पहले सुरक्षित तरीके से कारण समझें। परिवार/उपयुक्त school system से संपर्क करें और यदि child-protection concern मिले तो उचित referral करें।'],abuse:['सुरक्षा/दुर्व्यवहार की चिंता हो','बच्चे की बात शांत होकर सुनें, उसे दोष न दें, अनावश्यक पूछताछ न करें और गंभीर/तत्काल स्थिति में उचित सहायता व सक्षम प्राधिकारी से संपर्क करें।']};const d=data[type];const p=document.getElementById('teacherPanel');p.innerHTML='<h3>🚨 '+d[0]+'</h3><div class="tc-step"><strong>क्या करें</strong>'+d[1]+'</div><div class="tc-note">जरूरत के अनुसार 1098 (Child Helpline) या तत्काल आपात स्थिति में 112 का उपयोग करें।</div>';p.classList.add('show');p.scrollIntoView({behavior:'smooth',block:'nearest'});}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeTeacherCorner();});
+document.addEventListener("DOMContentLoaded",function(){const y=document.getElementById("copyrightYear");if(y)y.textContent=new Date().getFullYear();});
 </script>
 
 </body>
